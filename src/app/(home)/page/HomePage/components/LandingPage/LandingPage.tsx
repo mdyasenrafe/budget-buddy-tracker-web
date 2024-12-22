@@ -16,12 +16,15 @@ export const LandingPage = () => {
             reach your financial goals—all in one place.
           </Text>
 
-          <Button
-            className="!px-8 !h-[44px] text-white !rounded-lg hover:bg-green-700 max-w-[456px] w-full"
-            customColor="primary"
-          >
-            Get Started Now
-          </Button>
+          <Link href="/register" passHref>
+            <Button
+              className="!px-8 !h-[44px] text-white !rounded-lg hover:bg-green-700 max-w-[456px] w-full"
+              customColor="primary"
+            >
+              Get Started Now
+            </Button>
+          </Link>
+
           <div className="mt-6">
             <Text variant="body" className="text-gray-600">
               Already have an account?{" "}
