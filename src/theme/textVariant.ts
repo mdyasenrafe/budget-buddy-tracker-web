@@ -15,7 +15,7 @@ enum TextVariants {
 }
 
 export const TextStyles: Record<TextVariants, string> = {
-  h1: "text-5xl font-bold text-gray-900 dark:text-white font-poppins",
+  h1: "text-4xl lg:text-6xl font-bold text-gray-900 dark:text-white font-poppins !leading-[54px] lg:!leading-[80px]",
   [TextVariants.h2]:
     "text-4xl font-bold text-gray-900 dark:text-white font-poppins",
   [TextVariants.h3]:
