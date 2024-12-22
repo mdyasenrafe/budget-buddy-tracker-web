@@ -1,5 +1,5 @@
 import React, { CSSProperties, HTMLAttributes } from "react";
-import { ColorKey, TextStyles, TextVariant } from "../../../theme";
+import { ColorKey, TextStyles, TextVariant, colors } from "../../../theme";
 
 interface TextProps extends HTMLAttributes<HTMLElement> {
   variant?: TextVariant;
@@ -13,15 +13,19 @@ export const Text: React.FC<TextProps> = ({
   children,
   className = "",
   color,
+  style,
   ...props
 }) => {
   const variantClassName = TextStyles[variant];
-  const textStyle = `${variantClassName} ${className} block  ${
-    color ? `text-${color}` : ""
-  }`;
+  const inlineStyle = {
+    ...style,
+    color: color ? colors[color] : undefined,
+  };
+
+  const textStyle = `${variantClassName} ${className} block`;
 
   return (
-    <span className={textStyle} {...props}>
+    <span className={textStyle} style={inlineStyle} {...props}>
       {children}
     </span>
   );

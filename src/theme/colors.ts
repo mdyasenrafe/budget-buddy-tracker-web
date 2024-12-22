@@ -1,11 +1,13 @@
-export enum colors {
-  warning = "#FF8A00",
-  danger = "#EA4B48",
-  white = "#FFFFFF",
-  grey = "#e1e1e1",
-  red = "#FF0000",
-  green = "#00FF00",
-  black = "#1A1A1A",
-}
+export const colors = {
+  primary: "#2F7E79",
+  secondary: "#246BFD",
+  grey: "#616161",
+  black: "#212121",
+  white: "#FFFFFF",
+  tabsBackground: "#fff",
+  primaryGlass: "#e1def8",
+  antiFlashWhite: "#fafafa",
+  orangePeel: "#EC9126",
+};
 
 export type ColorKey = keyof typeof colors;
