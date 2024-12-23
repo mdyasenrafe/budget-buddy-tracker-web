@@ -5,7 +5,7 @@ import { Row, Col } from "antd";
 import Link from "next/link";
 import { Button, Container, Text } from "@/components/atoms";
 import Image from "next/image";
-import { FormInput, FormWrapper } from "@/components/form";
+import { FormInput, FormUpload, FormWrapper } from "@/components/form";
 import { SubmitHandler } from "react-hook-form";
 
 type SignupFormFields = {
@@ -26,11 +26,11 @@ export const SignupPage = () => {
         <Col
           xs={24}
           lg={12}
-          className="bg-[#2F7E79] w-full h-screen !flex justify-center items-center"
+          className="bg-[#2F7E79] w-full min-h-screen  justify-center items-center !hidden lg:!flex"
         >
           <Image
             alt="Mountains"
-            src="/assets/images/signup.png" // Replace with your signup-specific illustration
+            src="/assets/images/signup.png"
             width={0}
             height={0}
             sizes="80vw"
@@ -39,7 +39,7 @@ export const SignupPage = () => {
         </Col>
 
         {/* Right Section - Sign-Up Form */}
-        <Col xs={24} lg={12} className="p-8 !flex flex-col justify-center">
+        <Col xs={24} lg={12} className="py-8 !flex flex-col justify-center">
           <Container>
             <div className="flex items-center justify-center">
               <Image
@@ -63,7 +63,7 @@ export const SignupPage = () => {
               </Text>
             </div>
 
-            <div className="mt-10">
+            <div>
               <FormWrapper onSubmit={onSubmit}>
                 <FormInput
                   name="name"
@@ -82,6 +82,7 @@ export const SignupPage = () => {
                   type="password"
                   placeholder="Type your Password"
                 />
+                <FormUpload name="profile" label="Upload profile picture" />
                 <Button
                   htmlType="submit"
                   customColor="primary"
