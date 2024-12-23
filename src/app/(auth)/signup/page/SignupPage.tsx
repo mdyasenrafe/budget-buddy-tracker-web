@@ -8,19 +8,21 @@ import Image from "next/image";
 import { FormInput, FormWrapper } from "@/components/form";
 import { SubmitHandler } from "react-hook-form";
 
-type SignInFormFields = {
+type SignupFormFields = {
+  name: string;
   email: string;
   password: string;
 };
 
-export default function SigninPage() {
-  const onSubmit: SubmitHandler<SignInFormFields> = async (data) => {
+export const SignupPage = () => {
+  const onSubmit: SubmitHandler<SignupFormFields> = async (data) => {
     console.log("Form Submitted: ", data);
   };
 
   return (
-    <div className="w-full">
+    <div className="bg-gray-50 w-full">
       <Row>
+        {/* Left Section - Illustration */}
         <Col
           xs={24}
           lg={12}
@@ -28,7 +30,7 @@ export default function SigninPage() {
         >
           <Image
             alt="Mountains"
-            src="/assets/images/login.png"
+            src="/assets/images/signup.png" // Replace with your signup-specific illustration
             width={0}
             height={0}
             sizes="80vw"
@@ -36,7 +38,7 @@ export default function SigninPage() {
           />
         </Col>
 
-        {/* Right Section - Sign-In Form */}
+        {/* Right Section - Sign-Up Form */}
         <Col xs={24} lg={12} className="p-8 !flex flex-col justify-center">
           <Container>
             <div className="flex items-center justify-center">
@@ -46,43 +48,58 @@ export default function SigninPage() {
                 width={50}
                 height={50}
               />
-              <Text variant="h4" className="text-gray-800 ml-2">
+              <Text variant="h4" className="text-primary ml-2">
                 Budget Buddy Tracker
               </Text>
             </div>
 
-            <div className="my-6 ">
+            <div className="my-6">
               <Text variant="h2" className="text-gray-800 mt-4">
-                Sign In
+                Sign Up
               </Text>
               <Text variant="p3" className="text-gray-500 mt-2">
-                Welcome back! Log in to your account and start managing your
-                budgets with ease.
+                Create your account to track expenses, set budgets, and achieve
+                your financial goals effortlessly.
               </Text>
             </div>
 
             <div className="mt-10">
               <FormWrapper onSubmit={onSubmit}>
-                <FormInput name="email" label="Email" type="email" />
-                <FormInput name="password" label="Password" type="password" />
+                <FormInput
+                  name="name"
+                  label="Name"
+                  placeholder="Type your Name"
+                />
+                <FormInput
+                  name="email"
+                  label="Email"
+                  type="email"
+                  placeholder="Type your Email"
+                />
+                <FormInput
+                  name="password"
+                  label="Password"
+                  type="password"
+                  placeholder="Type your Password"
+                />
                 <Button
                   htmlType="submit"
                   customColor="primary"
                   className="w-full !h-[44px] hover:bg-primary-dark transition duration-300 mt-4"
                 >
                   <Text className="text-white" variant="p3">
-                    Sign In
+                    Sign Up
                   </Text>
                 </Button>
               </FormWrapper>
             </div>
 
             <div className="text-center mt-4">
-              <Link href="/signup" className="!flex justify-center ">
+              <Link href="/signin" className="!flex justify-center">
                 <Text variant="p4" className="text-gray-600">
-                  Don’t have an account?{" "}
+                  Already have an account?{" "}
                   <span className="text-primary underline cursor-pointer">
-                    Sign Up
+                    Sign In
                   </span>
                 </Text>
               </Link>
@@ -92,4 +109,4 @@ export default function SigninPage() {
       </Row>
     </div>
   );
-}
+};

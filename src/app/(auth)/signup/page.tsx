@@ -1,10 +1,7 @@
 import { Text } from "@/components/atoms";
 import React from "react";
+import { SignupPage } from "./page/SignupPage";
 
 export default function page() {
-  return (
-    <div>
-      <Text>This is a signup page</Text>
-    </div>
-  );
+  return <SignupPage />;
 }
