@@ -16,7 +16,7 @@ export const LandingPage = () => {
             reach your financial goals—all in one place.
           </Text>
 
-          <Link href="/register" passHref>
+          <Link href="/signup">
             <Button
               className="!px-8 !h-[44px] text-white !rounded-lg hover:bg-green-700 max-w-[456px] w-full"
               customColor="primary"
@@ -28,7 +28,7 @@ export const LandingPage = () => {
           <div className="mt-6">
             <Text variant="body" className="text-gray-600">
               Already have an account?{" "}
-              <Link href="/login">
+              <Link href="/signin">
                 <span className="text-green-600 underline hover:text-green-700 cursor-pointer">
                   Log in
                 </span>
