@@ -7,6 +7,11 @@ import { Button, Container, Text } from "@/components/atoms";
 import Image from "next/image";
 import { FormInput, FormWrapper } from "@/components/form";
 import { SubmitHandler } from "react-hook-form";
+import { useRouter, useSearchParams } from "next/navigation";
+import { addUser, useLoginMutation } from "@/redux/features/auth";
+import { useAppDispatch } from "@/redux";
+import { saveAccessToken } from "@/utils/auth";
+import { toast } from "sonner";
 
 type SignInFormFields = {
   email: string;
@@ -14,8 +19,22 @@ type SignInFormFields = {
 };
 
 export default function SigninPage() {
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect") || "/";
+  const [login, { isLoading }] = useLoginMutation();
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+
   const onSubmit: SubmitHandler<SignInFormFields> = async (data) => {
-    console.log("Form Submitted: ", data);
+    try {
+      const res = await login(data).unwrap();
+      saveAccessToken(res?.token as string);
+      dispatch(addUser({ user: res.data, token: res.token as string }));
+      toast.success(res?.message);
+      router.push(redirect as string);
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to login. Please try again.");
+    }
   };
 
   return (
