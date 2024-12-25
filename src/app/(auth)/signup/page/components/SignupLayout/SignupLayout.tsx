@@ -2,22 +2,22 @@ import React from "react";
 import { Row, Col } from "antd";
 import { Container } from "@/components/atoms";
 
-type SigninLayoutProps = {
+type SignupLayoutProps = {
   children: React.ReactNode;
 };
 
-export const SigninLayout: React.FC<SigninLayoutProps> = ({ children }) => {
+export const SignupLayout: React.FC<SignupLayoutProps> = ({ children }) => {
   return (
-    <div className="w-full">
+    <div className="bg-gray-50 w-full">
       <Row>
         <Col
           xs={24}
           lg={12}
-          className="bg-[#2F7E79] w-full h-screen  justify-center items-center !hidden lg:!flex"
+          className="bg-[#2F7E79] w-full min-h-screen justify-center items-center !hidden lg:!flex"
         >
           <img
-            alt="Login Illustration"
-            src="/assets/images/login.png"
+            alt="Signup Illustration"
+            src="/assets/images/signup.png"
             className="w-[90%] h-[80%]"
           />
         </Col>
