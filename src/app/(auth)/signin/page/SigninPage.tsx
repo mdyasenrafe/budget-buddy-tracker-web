@@ -93,6 +93,7 @@ export default function SigninPage() {
                   htmlType="submit"
                   customColor="primary"
                   className="w-full !h-[44px] hover:bg-primary-dark transition duration-300 mt-4"
+                  loading={isLoading}
                 >
                   <Text className="text-white" variant="p3">
                     Sign In

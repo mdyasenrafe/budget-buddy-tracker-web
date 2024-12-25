@@ -55,6 +55,7 @@ export const SignupPage = () => {
         ...data,
         role: "user",
         status: "pending",
+        source: "web",
       };
 
       const res = await signup(payload).unwrap();
@@ -136,6 +137,8 @@ export const SignupPage = () => {
                   htmlType="submit"
                   customColor="primary"
                   className="w-full !h-[44px] hover:bg-primary-dark transition duration-300 mt-4"
+                  disabled={isLoading || imageLoading}
+                  loading={isLoading || imageLoading}
                 >
                   <Text className="text-white" variant="p3">
                     Sign Up
