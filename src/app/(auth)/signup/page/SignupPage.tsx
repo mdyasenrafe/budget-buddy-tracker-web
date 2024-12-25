@@ -24,7 +24,7 @@ type SignupFormFields = {
   name: string;
   email: string;
   password: string;
-  profile: string;
+  photo: string;
 };
 
 export const SignupPage = () => {
@@ -38,13 +38,13 @@ export const SignupPage = () => {
 
   const onSubmit: SubmitHandler<SignupFormFields> = async (data) => {
     try {
-      if (data.profile) {
+      if (data.photo) {
         const thumbRes = await imageUpload({
-          file: data.profile,
+          file: data.photo,
         }).unwrap();
 
         if (thumbRes?.data?.url) {
-          data.profile = thumbRes.data.url;
+          data.photo = thumbRes.data.url;
         } else {
           toast.error("Something went wrong! Please try again");
           return;
@@ -131,7 +131,7 @@ export const SignupPage = () => {
                   type="password"
                   placeholder="Type your Password"
                 />
-                <FormUpload name="profile" label="Upload profile picture" />
+                <FormUpload name="photo" label="Upload profile picture" />
                 <Button
                   htmlType="submit"
                   customColor="primary"

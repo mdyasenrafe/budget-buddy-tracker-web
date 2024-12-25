@@ -44,7 +44,7 @@ export const FormInput: React.FC<TFormInputProps> = React.forwardRef(
                   <Text
                     variant={"p5"}
                     style={{ color: "red" }}
-                    className="mt-2"
+                    className="mt-2 !text-red-500"
                   >
                     {error.message}
                   </Text>

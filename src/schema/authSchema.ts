@@ -9,9 +9,7 @@ export const signupSchema = z.object({
   password: z
     .string()
     .min(6, { message: "Your password must be at least 6 characters long." }),
-  profile: z
-    .string()
-    .min(1, { message: "Profile picture URL cannot be empty" }),
+  photo: z.string().min(1, { message: "Profile picture URL cannot be empty" }),
 });
 
 export const signinSchema = z.object({

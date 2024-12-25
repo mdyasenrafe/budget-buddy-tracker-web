@@ -12,6 +12,8 @@ import { addUser, useLoginMutation } from "@/redux/features/auth";
 import { useAppDispatch } from "@/redux";
 import { saveAccessToken } from "@/utils/auth";
 import { toast } from "sonner";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signinSchema } from "@/schema";
 
 type SignInFormFields = {
   email: string;
@@ -81,7 +83,10 @@ export default function SigninPage() {
             </div>
 
             <div className="mt-10">
-              <FormWrapper onSubmit={onSubmit}>
+              <FormWrapper
+                onSubmit={onSubmit}
+                resolver={zodResolver(signinSchema)}
+              >
                 <FormInput name="email" label="Email" type="email" />
                 <FormInput name="password" label="Password" type="password" />
                 <Button

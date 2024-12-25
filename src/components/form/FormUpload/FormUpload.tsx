@@ -23,7 +23,7 @@ export const FormUpload: React.FC<TFormUploadProps> = React.forwardRef(
     useEffect(() => {
       if (defaultValue?.length !== 0 && defaultValue !== "") {
         if (
-          name === "profile" &&
+          name === "photo" &&
           defaultValue !== "" &&
           defaultValue?.length !== 0 &&
           defaultValue
@@ -73,7 +73,7 @@ export const FormUpload: React.FC<TFormUploadProps> = React.forwardRef(
         reader.onerror = (error) => reject(error);
       });
 
-    const isProfilePicture = name === "profile";
+    const isProfilePicture = name === "photo";
 
     const handlePreview = async (file: any) => {
       if (!file.url && !file.preview) {
@@ -92,7 +92,11 @@ export const FormUpload: React.FC<TFormUploadProps> = React.forwardRef(
               label={<Text variant="p4">{label}</Text>}
               help={
                 error && (
-                  <Text variant={"p6"} style={{ color: "red" }}>
+                  <Text
+                    variant={"p6"}
+                    style={{ color: "red" }}
+                    className="!text-red-500"
+                  >
                     {error.message}
                   </Text>
                 )

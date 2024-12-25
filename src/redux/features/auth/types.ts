@@ -29,5 +29,5 @@ export type TSignupPayload = {
   password: string;
   role: "user" | "admin";
   status: "active" | "inactive" | "pending" | "deleted";
-  profile: string;
+  photo: string;
 };
