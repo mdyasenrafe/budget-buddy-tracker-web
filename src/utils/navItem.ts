@@ -1,11 +1,11 @@
 import { NavItem } from "@/types";
 import {
   AiOutlineHome,
-  AiOutlineFundProjectionScreen,
   AiOutlineCreditCard,
   AiOutlineDollarCircle,
   AiOutlinePlusCircle,
 } from "react-icons/ai";
+import { SiSimpleanalytics } from "react-icons/si";
 
 export const navItems: NavItem[] = [
   {
@@ -19,7 +19,7 @@ export const navItems: NavItem[] = [
     id: 2,
     label: "Analytics",
     path: "/analytics",
-    icon: AiOutlineFundProjectionScreen,
+    icon: SiSimpleanalytics,
     desktop: true,
   },
   {

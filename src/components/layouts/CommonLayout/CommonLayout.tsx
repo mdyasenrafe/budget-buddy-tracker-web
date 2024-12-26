@@ -3,6 +3,7 @@ import { Row, Col } from "antd";
 import { TProps } from "@/types";
 import React, { Suspense } from "react";
 import { LeftSideBar } from "./components";
+import { BottomNavBar } from "../BottomNavBar";
 
 export const CommonLayout: React.FC<TProps> = ({ children }) => {
   return (
@@ -16,9 +17,9 @@ export const CommonLayout: React.FC<TProps> = ({ children }) => {
             <main>{children}</main>
           </Col>
 
-          {/* <Col xs={24} lg={0}>
+          <Col xs={24} lg={0}>
             <BottomNavBar />
-          </Col> */}
+          </Col>
         </Row>
       </Container>
     </Suspense>
