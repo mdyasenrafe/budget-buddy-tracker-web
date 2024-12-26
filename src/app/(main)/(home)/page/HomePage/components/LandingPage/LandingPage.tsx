@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export const LandingPage = () => {
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-6">
+    <div className="!min-h-screen bg-gray-50 flex items-center justify-center px-6">
       <Row align="middle" className="max-w-screen-lg w-full mt-8">
         <Col xs={24} lg={12} className="text-center lg:text-left">
           <Text variant="h1" className="text-green-700 mb-4">

@@ -13,7 +13,7 @@ export const SignupLayout: React.FC<SignupLayoutProps> = ({ children }) => {
         <Col
           xs={24}
           lg={12}
-          className="bg-[#2F7E79] w-full min-h-screen justify-center items-center !hidden lg:!flex"
+          className="bg-[#2F7E79] w-full !min-h-screen justify-center items-center !hidden lg:!flex"
         >
           <img
             alt="Signup Illustration"
