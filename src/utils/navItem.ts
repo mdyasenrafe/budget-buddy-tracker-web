@@ -4,7 +4,7 @@ import {
   AiOutlineFundProjectionScreen,
   AiOutlineCreditCard,
   AiOutlineDollarCircle,
-  AiOutlinePlusCircle, // Added a better icon for "add transaction"
+  AiOutlinePlusCircle,
 } from "react-icons/ai";
 
 export const navItems: NavItem[] = [
