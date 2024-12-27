@@ -27,7 +27,7 @@ export type SignupFormFields = {
 
 export const SignupPage = () => {
   const searchParams = useSearchParams();
-  const redirect = searchParams.get("redirect") || "/";
+  const redirect = searchParams.get("redirect") || "/dashboard";
   const dispatch = useAppDispatch();
   const router = useRouter();
 
