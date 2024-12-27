@@ -12,15 +12,21 @@ import { MdLogout } from "react-icons/md";
 import { LogoutModal } from "./components";
 import { LuCirclePlus } from "react-icons/lu";
 import { navItems } from "@/utils";
+import { useGetCardOverviewQuery } from "@/redux/features/cardOverview";
+import { CardModal } from "@/components/molecules/modals";
 
 export const LeftSideBar = () => {
   const [isMounted, setIsMounted] = useState(false);
+  const [isCardModalOpen, setCardModalOpen] = useState(false);
 
   // hooks
   const dispatch = useAppDispatch();
   const router = useRouter();
   const currentUser = useAppSelector(getCurrentUser);
   const { isModalOpen, openModal, closeModal } = useModal();
+
+  // Fetch card overview data
+  const { data: cardOverview, isLoading } = useGetCardOverviewQuery();
 
   const handleLogout = () => {
     dispatch(logout());
@@ -29,7 +35,11 @@ export const LeftSideBar = () => {
 
   useEffect(() => {
     setIsMounted(true);
-  }, [isMounted]);
+
+    if (!isLoading && !cardOverview?.data) {
+      setCardModalOpen(true);
+    }
+  }, [isMounted, cardOverview, isLoading]);
 
   return (
     <aside className="h-screen w-full bg-primary text-center pt-8 !sticky overflow-y-hidden top-0 p-4">
@@ -55,6 +65,7 @@ export const LeftSideBar = () => {
               )
           )}
         </div>
+
         <div className="mt-6">
           <Button
             icon={<LuCirclePlus />}
@@ -82,6 +93,11 @@ export const LeftSideBar = () => {
         isModalOpen={isModalOpen}
         closeModal={closeModal}
         onConfirmLogout={handleLogout}
+      />
+
+      <CardModal
+        isOpen={isCardModalOpen}
+        closeModal={() => setCardModalOpen(false)}
       />
     </aside>
   );

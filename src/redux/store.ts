@@ -6,6 +6,7 @@ import themeSlice from "./features/theme/themeSlice";
 import storage from "redux-persist/lib/storage";
 import authSlice from "./features/auth/authSlice";
 import { baseApi } from "@/api/baseApi";
+import cardOverviewSlice from "./features/cardOverview/cardOverviewSlice";
 
 // Persist config for theme slice
 const themePersistConfig = {
@@ -25,6 +26,7 @@ export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
     themeMode: persistedThemeReducer,
+    cardOverview: cardOverviewSlice,
     [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
