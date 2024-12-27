@@ -1,7 +1,7 @@
 import React from "react";
-import { Button, Text } from "@/components/atoms";
+import { Text } from "@/components/atoms";
 import { Row, Col } from "antd";
-import Link from "next/link";
+import { CallToAction } from "./components/CallToAction";
 
 export const LandingPage = () => {
   return (
@@ -16,25 +16,7 @@ export const LandingPage = () => {
             reach your financial goals—all in one place.
           </Text>
 
-          <Link href="/signup">
-            <Button
-              className="!px-8 !h-[44px] text-white !rounded-lg hover:bg-green-700 max-w-[456px] w-full"
-              customColor="primary"
-            >
-              Get Started Now
-            </Button>
-          </Link>
-
-          <div className="mt-6">
-            <Text variant="body" className="text-gray-600">
-              Already have an account?{" "}
-              <Link href="/signin">
-                <span className="text-green-600 underline hover:text-green-700 cursor-pointer">
-                  Log in
-                </span>
-              </Link>
-            </Text>
-          </div>
+          <CallToAction />
         </Col>
 
         <Col xs={24} lg={12} className="flex justify-center">
