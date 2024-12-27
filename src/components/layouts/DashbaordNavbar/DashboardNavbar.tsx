@@ -1,13 +1,16 @@
 import { Container } from "@/components/atoms";
-import { ProfileDropdown, ThemeToggle } from "./components";
+import { ProfileDropdown, ThemeToggle, HeaderContent } from "./components";
 
 export const DashboardNavbar = () => {
   return (
-    <nav className="py-4 shadow-lg bg-white !h-[90px]">
+    <nav className="shadow-lg bg-white !h-[80px] flex items-center">
       <Container>
-        <div className="flex items-center justify-end gap-3">
-          <ThemeToggle />
-          <ProfileDropdown />
+        <div className="flex items-center justify-between">
+          <HeaderContent />
+          <div className="flex items-center justify-end gap-3">
+            <ThemeToggle />
+            <ProfileDropdown />
+          </div>
         </div>
       </Container>
     </nav>

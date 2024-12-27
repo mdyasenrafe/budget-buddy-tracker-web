@@ -1,10 +1,8 @@
-"use client";
-
-import { Container } from "@/components/atoms";
 import React from "react";
+import { DashboardPage } from "./page/DashboardPage";
 
 const page = () => {
-  return <div>page</div>;
+  return <DashboardPage />;
 };
 
 export default page;

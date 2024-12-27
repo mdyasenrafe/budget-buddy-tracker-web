@@ -11,7 +11,7 @@ export const AuthHeader: React.FC = () => {
         width={50}
         height={50}
       />
-      <Text variant="h4" className="text-gray-800 ml-2">
+      <Text variant="h5" className="text-gray-800 ml-2">
         Budget Buddy Tracker
       </Text>
     </div>
