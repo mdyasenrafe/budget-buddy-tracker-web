@@ -16,7 +16,13 @@ export const FormTextArea: React.FC<TFormTextAreaProps> = ({ name, label }) => {
       <Controller
         name={name}
         render={({ field, fieldState: { error } }) => (
-          <Form.Item label={<Text variant="p2">{label}</Text>}>
+          <Form.Item
+            label={
+              <Text variant="p3" className="!font-semibold">
+                {label}
+              </Text>
+            }
+          >
             <Input.TextArea
               {...field}
               id={name}

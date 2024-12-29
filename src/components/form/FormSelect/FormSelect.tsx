@@ -20,7 +20,13 @@ export const FormSelect: React.FC<TFormSelectProps> = React.forwardRef(
         control={control}
         render={({ field, fieldState: { error } }) => {
           return (
-            <Form.Item label={<Text variant="p2">{label}</Text>}>
+            <Form.Item
+              label={
+                <Text variant="p3" className="!font-semibold">
+                  {label}
+                </Text>
+              }
+            >
               <Select
                 style={{ width: "100%", fontSize: 14 }}
                 {...props}

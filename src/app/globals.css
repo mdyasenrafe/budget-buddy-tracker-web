@@ -118,3 +118,6 @@ input:focus {
   top: 8px !important;
   background: #001529 !important;
 }
+:where(.css-dev-only-do-not-override-oowdyr).ant-select-dropdown .ant-select-item-option-content {
+  font-family: "Poppins", sans-serif !important;
+}

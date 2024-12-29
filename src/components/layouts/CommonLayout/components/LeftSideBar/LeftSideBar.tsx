@@ -14,6 +14,7 @@ import { LuCirclePlus } from "react-icons/lu";
 import { navItems } from "@/utils";
 import { useGetCardOverviewQuery } from "@/redux/features/cardOverview";
 import { CardModal } from "@/components/molecules/modals";
+import { useFetchCategoriesQuery } from "@/redux/features/category";
 
 export const LeftSideBar = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -27,6 +28,7 @@ export const LeftSideBar = () => {
 
   // Fetch card overview data
   const { data: cardOverview, isLoading } = useGetCardOverviewQuery();
+  const { data, isLoading: categoryLoading, error } = useFetchCategoriesQuery();
 
   const handleLogout = () => {
     dispatch(logout());
