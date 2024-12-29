@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Text } from "@/components/atoms";
-import { Modal } from "@/components/Modal";
+import { Modal } from "@/components/atoms";
 
 type LogoutModalProps = {
   isModalOpen: boolean;

@@ -7,7 +7,7 @@ import { TbChartBar } from "react-icons/tb";
 import { FiCreditCard } from "react-icons/fi";
 import { useAppSelector } from "@/redux";
 import { TCard, selectCard } from "@/redux/features/cardOverview";
-import { CardOverview } from "@/components/molecules";
+import { CardOverview } from "@/components/organism";
 import { DashboardMetric } from "./components";
 import { dashboardMetrics } from "./constant";
 

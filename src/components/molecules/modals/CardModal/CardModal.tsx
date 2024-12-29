@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import { Modal } from "@/components";
-import { Button, Text } from "@/components/atoms";
+import { Button, Modal, Text } from "@/components/atoms";
 import { FormInput, FormWrapper } from "@/components/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cardOverviewModalSchema } from "@/schema";
