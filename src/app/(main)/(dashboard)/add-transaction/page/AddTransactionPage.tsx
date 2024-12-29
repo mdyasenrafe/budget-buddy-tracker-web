@@ -1,12 +1,10 @@
-"use client";
-
-import React, { useCallback } from "react";
+import React from "react";
 import { SectionHeader } from "@/components/molecules";
 import { AddTransactionForm } from "./components";
 
 export const AddTransactionPage: React.FC = () => {
   return (
-    <div className="p-6">
+    <div className="pt-10 pb-32 lg:pb-10">
       <SectionHeader
         title="Add Transaction"
         description="Keep track of where your money goes by adding transactions. It helps you stay organized and make better financial decisions."
