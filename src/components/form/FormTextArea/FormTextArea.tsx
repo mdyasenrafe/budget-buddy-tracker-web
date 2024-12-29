@@ -4,13 +4,18 @@ import { Form, Input } from "antd";
 import React from "react";
 import { Controller } from "react-hook-form";
 import { Text } from "../../atoms";
+import { TextAreaProps } from "antd/es/input";
 
 type TFormTextAreaProps = {
   name: string;
   label?: string;
-};
+} & TextAreaProps;
 
-export const FormTextArea: React.FC<TFormTextAreaProps> = ({ name, label }) => {
+export const FormTextArea: React.FC<TFormTextAreaProps> = ({
+  name,
+  label,
+  ...props
+}) => {
   return (
     <div style={{ marginBottom: "20px" }}>
       <Controller
@@ -25,10 +30,10 @@ export const FormTextArea: React.FC<TFormTextAreaProps> = ({ name, label }) => {
           >
             <Input.TextArea
               {...field}
+              {...props}
               id={name}
               size="large"
               maxLength={2000}
-              autoSize={{ minRows: 7, maxRows: 7 }}
               className="font-poppins text-[14px]"
             />
             {error && (

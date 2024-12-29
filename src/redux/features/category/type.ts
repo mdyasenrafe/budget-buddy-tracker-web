@@ -8,4 +8,5 @@ export interface TCategory {
 export type TCategoryState = {
   incomeCategories: TCategory[] | null;
   expenseCategories: TCategory[] | null;
+  loading: boolean;
 };

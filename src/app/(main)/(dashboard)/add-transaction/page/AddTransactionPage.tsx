@@ -11,14 +11,14 @@ import {
 import { SectionHeader } from "@/components/molecules";
 import { useAppSelector } from "@/redux";
 import {
+  getCateogryLoadingState,
   getExpenseCategories,
   getIncomeCategories,
 } from "@/redux/features/category";
+import { LoadingSpinner } from "@/components/atoms/LoadingSpinner";
 
 export const AddTransactionPage = () => {
-  // Options for transaction type
   const transactionTypes = ["Income", "Expense"];
-
   const [selectedTransactionType, setSelectedTransactionType] =
     useState<string>("Income");
 
@@ -35,6 +35,8 @@ export const AddTransactionPage = () => {
       label: category?.label,
     })
   );
+
+  const isLoading = useAppSelector(getCateogryLoadingState);
 
   const handleTransactionTypeSelect = (type: string) => {
     setSelectedTransactionType(type);
@@ -87,9 +89,14 @@ export const AddTransactionPage = () => {
             }
             showSearch
             placeholder="Select Categories"
+            loading={isLoading}
           />
 
-          <FormTextArea name="description" label="Description" />
+          <FormTextArea
+            name="description"
+            label="Description"
+            autoSize={{ minRows: 2, maxRows: 2 }}
+          />
         </FormWrapper>
       </div>
     </div>
