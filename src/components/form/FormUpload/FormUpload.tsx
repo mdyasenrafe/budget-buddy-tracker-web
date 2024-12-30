@@ -89,7 +89,11 @@ export const FormUpload: React.FC<TFormUploadProps> = React.forwardRef(
           control={control}
           render={({ field, fieldState: { error } }) => (
             <Form.Item
-              label={<Text variant="p4">{label}</Text>}
+              label={
+                <Text variant="p3" className="!font-semibold">
+                  {label}
+                </Text>
+              }
               help={
                 error && (
                   <Text
@@ -130,9 +134,11 @@ export const FormUpload: React.FC<TFormUploadProps> = React.forwardRef(
                     </Text>
                   </button>
                 ) : (
-                  <Button iconPosition="start" icon={<FaUpload />}>
-                    Upload
-                  </Button>
+                  <div>
+                    <Button iconPosition="start" icon={<FaUpload />}>
+                      Upload
+                    </Button>
+                  </div>
                 )}
               </Upload>
             </Form.Item>

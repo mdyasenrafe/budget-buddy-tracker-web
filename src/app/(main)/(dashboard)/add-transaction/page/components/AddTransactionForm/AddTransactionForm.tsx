@@ -3,9 +3,11 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { Button, Text } from "@/components/atoms";
 import {
+  FormDatePicker,
   FormInput,
   FormSelect,
   FormTextArea,
+  FormUpload,
   FormWrapper,
 } from "@/components/form";
 import { useAppSelector } from "@/redux";
@@ -84,11 +86,23 @@ export const AddTransactionForm: React.FC = () => {
         loading={isLoading}
       />
 
+      <FormDatePicker
+        name="date"
+        label="Transaction Date"
+        placeholder="Select the date of the transaction"
+      />
+
       <FormTextArea
         name="description"
         label="Description"
-        autoSize={{ minRows: 2, maxRows: 2 }}
+        autoSize={{ minRows: 2, maxRows: 3 }}
         placeholder="Add a brief description"
+      />
+      <FormUpload
+        name="photo"
+        label={`Upload ${
+          selectedTransactionType === "Income" ? "proof of income" : "receipt"
+        }`}
       />
     </FormWrapper>
   );
