@@ -19,6 +19,7 @@ import {
   FaLightbulb,
 } from "react-icons/fa";
 import { filteredBudgetData } from "./data";
+import { IconRenderer } from "./components";
 
 export const BudgetTrackerPage = () => {
   return (
@@ -31,18 +32,23 @@ export const BudgetTrackerPage = () => {
 
               return (
                 <div key={budget.name} className="mb-5 border p-3 rounded-md">
-                  <div className="mb-2">
-                    <div className="flex justify-between items-center">
-                      <Text variant="p3" className="!font-medium">
-                        {budget.name}
-                      </Text>
-                      <Text variant="p3" className="!font-medium">
-                        ৳{budget.limit}
+                  <div className="flex items-center space-x-3 mb-2">
+                    <div className="w-[36px] h-[36px] border flex items-center justify-center rounded-full bg-[#ecf4e9]">
+                      <IconRenderer category={budget.category} />{" "}
+                    </div>
+                    <div className="flex-grow">
+                      <div className="flex justify-between items-center">
+                        <Text variant="p3" className="!font-medium">
+                          {budget.name}
+                        </Text>
+                        <Text variant="p3" className="!font-medium">
+                          ৳{budget.limit}
+                        </Text>
+                      </div>
+                      <Text variant="p5" className="font-semibold text-primary">
+                        {budget.category}
                       </Text>
                     </div>
-                    <Text variant="p5" className="font-semibold text-primary">
-                      {budget.category}
-                    </Text>
                   </div>
                   <ProgressBar
                     percentage={percentageSpent}
