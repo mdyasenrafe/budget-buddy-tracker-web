@@ -1,27 +1,21 @@
 "use client";
 
+import React, { useState } from "react";
 import { Button, Text } from "@/components/atoms";
 import { ProgressBar } from "@/components/molecules";
 import { colors } from "@/theme";
 import { Col, Row } from "antd";
-import React from "react";
-import {
-  FaPlus,
-  FaShoppingCart,
-  FaUtensils,
-  FaBus,
-  FaHeartbeat,
-  FaBook,
-  FaPlane,
-  FaPiggyBank,
-  FaGamepad,
-  FaMoneyBillAlt,
-  FaLightbulb,
-} from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 import { filteredBudgetData } from "./data";
 import { IconRenderer } from "./components";
 
 export const BudgetTrackerPage = () => {
+  const [selectedBudget, setSelectedBudget] = useState<string | null>(null);
+
+  const handleBudgetClick = (name: string) => {
+    setSelectedBudget((prev) => (prev === name ? null : name));
+  };
+
   return (
     <div className="py-10">
       <Row gutter={[16, 16]}>
@@ -29,12 +23,25 @@ export const BudgetTrackerPage = () => {
           <div className="border p-3 rounded-lg mb-5">
             {filteredBudgetData.map((budget) => {
               const percentageSpent = (budget.spend / budget.limit) * 100;
+              const isSelected = selectedBudget === budget.name;
 
               return (
-                <div key={budget.name} className="mb-5 border p-3 rounded-md">
+                <div
+                  key={budget.name}
+                  className={`mb-5 border p-3 rounded-md cursor-pointer ${
+                    isSelected ? "bg-[#ecf4e9]" : ""
+                  }`}
+                  onClick={() => handleBudgetClick(budget.name)}
+                >
                   <div className="flex items-center space-x-3 mb-2">
-                    <div className="w-[36px] h-[36px] border flex items-center justify-center rounded-full bg-[#ecf4e9]">
-                      <IconRenderer category={budget.category} />{" "}
+                    <div
+                      className={`w-[36px] h-[36px] border flex items-center justify-center rounded-full ${
+                        isSelected
+                          ? "bg-primary text-white"
+                          : "bg-[#ecf4e9] text-black"
+                      }`}
+                    >
+                      <IconRenderer category={budget.category} />
                     </div>
                     <div className="flex-grow">
                       <div className="flex justify-between items-center">
