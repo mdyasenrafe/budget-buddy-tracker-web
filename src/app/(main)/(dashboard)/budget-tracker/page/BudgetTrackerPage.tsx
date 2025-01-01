@@ -28,14 +28,14 @@ export const BudgetTrackerPage = () => {
               return (
                 <div
                   key={budget.name}
-                  className={`mb-5 border p-3 rounded-md cursor-pointer ${
+                  className={`mb-5 border p-3 rounded-md cursor-pointer transition-all duration-300 ${
                     isSelected ? "bg-[#ecf4e9]" : ""
                   }`}
                   onClick={() => handleBudgetClick(budget.name)}
                 >
                   <div className="flex items-center space-x-3 mb-2">
                     <div
-                      className={`w-[36px] h-[36px] border flex items-center justify-center rounded-full ${
+                      className={`w-[36px] h-[36px] border flex items-center justify-center rounded-full  transition-all duration-300 ${
                         isSelected
                           ? "bg-primary text-white"
                           : "bg-[#ecf4e9] text-black"
