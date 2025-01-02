@@ -1,2 +1,10 @@
 dashboard:
-    we need to show compare our balance by monthly by line chart
+    we need to show compare our balance by monthly by line chart or bar chart
+    we need to show total balance compare by line chart 
+    we need to breakdown our cost by category using pie chart
+
+budget-tracker:
+    1. we need to show three graphs  on right side
+        1.1 =>  need to show monthly spending or weekly spending by line chart
+        1.2 => bar chart comparing how much spend and left
+        1.3 => pie chart or react-circular-progressba realated how much completed
