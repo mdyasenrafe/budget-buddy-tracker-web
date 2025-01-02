@@ -27,10 +27,11 @@ type IconRendererProps = {
 };
 
 const SIZE = 16;
+
 const categoryIconMap: Record<string, React.ReactNode> = {
   groceries: <FaShoppingCart size={SIZE} />,
-  utilities: <FaLightbulb />,
-  healthcare: <FaHeartbeat />,
+  utilities: <FaLightbulb size={SIZE} />,
+  healthcare: <FaHeartbeat size={SIZE} />,
   transportation: <FaBus />,
   education: <FaGraduationCap />,
   travel: <FaPlane />,
