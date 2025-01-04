@@ -74,10 +74,10 @@ export const BudgetTrackerPage = () => {
                     height="20px"
                     showLabel={false}
                   />
-                  <div className="flex justify-between mt-2">
-                    <Text variant="p4" className="text-red">
+                  <div className="flex justify-end mt-2">
+                    {/* <Text variant="p4" className="text-red">
                       Spent: ৳{budget.spend}
-                    </Text>
+                    </Text> */}
                     <Text
                       variant="p4"
                       className={`font-bold ${
@@ -112,19 +112,16 @@ export const BudgetTrackerPage = () => {
         <Col span={16}>
           {selectedBudgetDetails ? (
             <div className="p-5 bg-white rounded-xl shadow-md">
-              {/* Budget Overview */}
               <div className="mb-6">
-                <h2 className="text-2xl font-bold">
-                  {selectedBudgetDetails.name}
-                </h2>
-                <p className="text-gray-500 text-sm">
+                <Text variant="h3">{selectedBudgetDetails.name}</Text>
+                <Text variant="p5" className="text-primary !font-semibold">
                   {selectedBudgetDetails.category}
-                </p>
+                </Text>
               </div>
 
               {/* Insights Section */}
               <div className="flex justify-between items-center mb-5">
-                <div>
+                <div className="border p-3 rounded-lg shadow-md">
                   <p className="text-sm text-gray-400">Budget Limit</p>
                   <p className="text-xl font-semibold">
                     ৳{selectedBudgetDetails.limit}
