@@ -24,11 +24,28 @@ export const BudgetTrackerPage = () => {
     (budget) => budget.name === selectedBudget
   );
 
+  const budgetDetails = [
+    {
+      label: "Budget Limit",
+      value: selectedBudgetDetails?.limit,
+      className: "",
+    },
+    {
+      label: "Amount Spent",
+      value: selectedBudgetDetails?.spend,
+      className: "text-red-500",
+    },
+    {
+      label: "Remaining",
+      value: 50,
+      className: "text-green-500",
+    },
+  ];
+
   return (
     <div className="py-10">
       <Row gutter={[16, 16]}>
-        {/* Left Panel */}
-        <Col span={8}>
+        <Col xs={24} md={8}>
           <div className="border mb-5 p-3 rounded-lg">
             {filteredBudgetData.map((budget) => {
               const percentageSpent = (budget.spend / budget.limit) * 100;
@@ -108,8 +125,7 @@ export const BudgetTrackerPage = () => {
           </div>
         </Col>
 
-        {/* Right Panel */}
-        <Col span={16}>
+        <Col xs={24} md={16}>
           {selectedBudgetDetails ? (
             <div className="p-5 bg-white rounded-xl shadow-md">
               <div className="mb-6">
@@ -118,33 +134,25 @@ export const BudgetTrackerPage = () => {
                   {selectedBudgetDetails.category}
                 </Text>
               </div>
-
-              {/* Insights Section */}
-              <div className="flex justify-between items-center mb-5">
-                <div className="border p-3 rounded-lg shadow-md">
-                  <p className="text-sm text-gray-400">Budget Limit</p>
-                  <p className="text-xl font-semibold">
-                    ৳{selectedBudgetDetails.limit}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">Amount Spent</p>
-                  <p className="text-xl font-semibold text-red-500">
-                    ৳{selectedBudgetDetails.spend}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">Remaining</p>
-                  <p className="text-xl font-semibold text-green-500">
-                    ৳{selectedBudgetDetails.limit - selectedBudgetDetails.spend}
-                  </p>
-                </div>
+              <div className="flex justify-between items-center mb-10">
+                {budgetDetails.map((detail, index) => (
+                  <div
+                    key={index}
+                    className="border w-[30%] p-3 rounded-lg shadow-md"
+                  >
+                    <Text
+                      className="!text-gray-400 text-xs md:text-sm"
+                      variant="p5"
+                    >
+                      {detail.label}
+                    </Text>
+                    <Text variant="h3" className={detail.className}>
+                      ৳{detail?.value}
+                    </Text>
+                  </div>
+                ))}
               </div>
-              <h3 className="text-lg font-semibold mb-4">Spending Overview</h3>
 
-              <div className="mb-6">
-                <div className="flex justify-between"></div>
-              </div>
               <div className="mb-6">
                 <h3 className="text-lg font-semibold mb-4">Spending Trend</h3>
                 <LineChart
