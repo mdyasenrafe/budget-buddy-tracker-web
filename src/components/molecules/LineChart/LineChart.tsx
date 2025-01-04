@@ -1,12 +1,7 @@
 import { Line } from "react-chartjs-2";
-import { ChartData, ChartDataset, ChartOptions, TooltipItem } from "chart.js";
+import { ChartData, ChartOptions, TooltipItem } from "chart.js";
 
-type LineChartDataset = ChartDataset<"line">;
-
-type LineChartProps = {
-  labels: string[];
-  datasets: LineChartDataset[];
-};
+type LineChartProps = ChartData<"line">;
 
 export const LineChart = ({ labels, datasets }: LineChartProps) => {
   const chartData: ChartData<"line"> = {
