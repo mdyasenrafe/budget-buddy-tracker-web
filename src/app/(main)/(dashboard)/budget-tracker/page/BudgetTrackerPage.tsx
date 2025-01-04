@@ -166,16 +166,6 @@ export const BudgetTrackerPage = () => {
                   ]}
                 />
               </div>
-
-              {/* Actions */}
-              <div className="flex space-x-3">
-                <Button variant="filled" className="flex-1">
-                  Add Expense
-                </Button>
-                <Button variant="filled" className="flex-1">
-                  Adjust Budget
-                </Button>
-              </div>
             </div>
           ) : (
             <div className="text-center p-10">
