@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Button, Text } from "@/components/atoms";
-import { ProgressBar } from "@/components/molecules";
+import { LineChart, ProgressBar } from "@/components/molecules";
 import { colors } from "@/theme";
 import { Col, Row } from "antd";
 import { FaPlus } from "react-icons/fa";
@@ -23,38 +23,6 @@ export const BudgetTrackerPage = () => {
   const selectedBudgetDetails = filteredBudgetData.find(
     (budget) => budget.name === selectedBudget
   );
-
-  // Pie chart data for the selected budget category
-  const pieChartData = selectedBudgetDetails
-    ? {
-        labels: [selectedBudgetDetails.category],
-        datasets: [
-          {
-            data: [selectedBudgetDetails.spend],
-            backgroundColor: ["#FF6384"],
-          },
-        ],
-      }
-    : { labels: [], datasets: [] };
-
-  // Bar chart data for the selected budget's "Limit vs. Spend"
-  const barChartData = selectedBudgetDetails
-    ? {
-        labels: [selectedBudgetDetails.name],
-        datasets: [
-          {
-            label: "Budget Limit",
-            data: [selectedBudgetDetails.limit],
-            backgroundColor: "#36A2EB",
-          },
-          {
-            label: "Amount Spent",
-            data: [selectedBudgetDetails.spend],
-            backgroundColor: "#FF6384",
-          },
-        ],
-      }
-    : { labels: [], datasets: [] };
 
   return (
     <div className="py-10">
@@ -143,58 +111,78 @@ export const BudgetTrackerPage = () => {
         {/* Right Panel */}
         <Col span={16}>
           {selectedBudgetDetails ? (
-            <>
-              {/* Top Section: Graphs */}
-              <div className="border-b mb-5 pb-5">
-                <h2 className="text-lg font-bold mb-3">Spending Overview</h2>
-                <Row gutter={[16, 16]}>
-                  <Col span={12}>
-                    <Pie data={pieChartData} />
-                  </Col>
-                  <Col span={12}>
-                    <Bar data={barChartData} />
-                  </Col>
-                </Row>
+            <div className="p-5 bg-white rounded-xl shadow-md">
+              {/* Budget Overview */}
+              <div className="mb-6">
+                <h2 className="text-2xl font-bold">
+                  {selectedBudgetDetails.name}
+                </h2>
+                <p className="text-gray-500 text-sm">
+                  {selectedBudgetDetails.category}
+                </p>
               </div>
 
-              {/* Middle Section: Budget Details */}
-              <div>
-                <h2 className="text-lg font-bold mb-3">Budget Details</h2>
-                <div className="p-4 bg-gray-100 rounded-lg mb-5">
-                  <h3 className="text-md font-semibold">
-                    {selectedBudgetDetails.name}
-                  </h3>
-                  <p>Limit: ৳{selectedBudgetDetails.limit}</p>
-                  <p>Spent: ৳{selectedBudgetDetails.spend}</p>
-                  <p>
-                    Remaining: ৳
-                    {selectedBudgetDetails.limit - selectedBudgetDetails.spend}
+              {/* Insights Section */}
+              <div className="flex justify-between items-center mb-5">
+                <div>
+                  <p className="text-sm text-gray-400">Budget Limit</p>
+                  <p className="text-xl font-semibold">
+                    ৳{selectedBudgetDetails.limit}
                   </p>
-                  <p
-                    className={`font-bold ${
-                      selectedBudgetDetails.spend /
-                        selectedBudgetDetails.limit >
-                      1
-                        ? "text-red-500"
-                        : "text-green-500"
-                    }`}
-                  >
-                    {selectedBudgetDetails.spend / selectedBudgetDetails.limit >
-                    1
-                      ? "Over Budget"
-                      : `${(
-                          (selectedBudgetDetails.spend /
-                            selectedBudgetDetails.limit) *
-                          100
-                        ).toFixed(1)}% Spent`}
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Amount Spent</p>
+                  <p className="text-xl font-semibold text-red-500">
+                    ৳{selectedBudgetDetails.spend}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Remaining</p>
+                  <p className="text-xl font-semibold text-green-500">
+                    ৳{selectedBudgetDetails.limit - selectedBudgetDetails.spend}
                   </p>
                 </div>
               </div>
-            </>
+              <h3 className="text-lg font-semibold mb-4">Spending Overview</h3>
+
+              <div className="mb-6">
+                <div className="flex justify-between"></div>
+              </div>
+              <div className="mb-6">
+                <h3 className="text-lg font-semibold mb-4">Spending Trend</h3>
+                <LineChart
+                  labels={["Week 1", "Week 2", "Week 3", "Week 4"]}
+                  datasets={[
+                    {
+                      label: "Spending",
+                      data: [100, 200, 280, 100],
+                      backgroundColor: "rgba(75,192,192,0.4)",
+                      borderColor: "rgba(75,192,192,1)",
+                      pointBackgroundColor: colors.grey,
+                      pointBorderColor: colors.grey,
+                      pointHoverBackgroundColor: colors.grey,
+                      pointHoverBorderColor: colors.grey,
+                    },
+                  ]}
+                />
+              </div>
+
+              {/* Actions */}
+              <div className="flex space-x-3">
+                <Button variant="filled" className="flex-1">
+                  Add Expense
+                </Button>
+                <Button variant="filled" className="flex-1">
+                  Adjust Budget
+                </Button>
+              </div>
+            </div>
           ) : (
-            <p className="text-center text-lg text-gray-500">
-              Select a budget to see details.
-            </p>
+            <div className="text-center p-10">
+              <p className="text-lg text-gray-600">
+                Select a budget to view details
+              </p>
+            </div>
           )}
         </Col>
       </Row>
