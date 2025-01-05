@@ -1,4 +1,11 @@
-export const filteredBudgetData = [
+export type TBudget = {
+  limit: number;
+  category: string;
+  name: string;
+  spend: number;
+};
+
+export const filteredBudgetData: TBudget[] = [
   {
     limit: 750,
     category: "Groceries",

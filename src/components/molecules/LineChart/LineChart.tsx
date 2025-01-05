@@ -1,5 +1,8 @@
 import { Line } from "react-chartjs-2";
 import { ChartData, ChartOptions, TooltipItem } from "chart.js";
+import { Chart, registerables } from "chart.js";
+
+Chart.register(...registerables);
 
 type LineChartProps = ChartData<"line">;
 
