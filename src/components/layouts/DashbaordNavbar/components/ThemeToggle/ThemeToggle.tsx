@@ -28,9 +28,9 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({}) => {
       aria-label="Toggle Theme"
     >
       {isDarkModeEnabled && isMounted ? (
-        <FiMoon className="w-6 h-6 text-gray-500 dark:text-gray-300" />
+        <FiMoon className="w-7 h-7 text-gray-500 dark:text-gray-300" />
       ) : (
-        <FiSun className="w-6 h-6 text-yellow-500" />
+        <FiSun className="w-7 h-7 text-yellow-500" />
       )}
     </div>
   );

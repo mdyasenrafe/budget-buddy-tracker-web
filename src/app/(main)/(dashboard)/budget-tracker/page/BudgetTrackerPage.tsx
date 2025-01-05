@@ -4,17 +4,32 @@ import React, { useState } from "react";
 import { Button, Text } from "@/components/atoms";
 import { LineChart, ProgressBar, SectionHeader } from "@/components/molecules";
 import { colors } from "@/theme";
-import { Col, Row } from "antd";
-import { FaPlus } from "react-icons/fa";
-import { Pie, Bar } from "react-chartjs-2";
-import { IconRenderer } from "./components";
-import { filteredBudgetData } from "./data";
+import { Col, Row, Dropdown, Menu } from "antd";
+import { FaPlus, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { Chart, registerables } from "chart.js";
+import dayjs from "dayjs";
+import { filteredBudgetData } from "./data";
+import { IconRenderer } from "./components";
 
 Chart.register(...registerables);
 
 export const BudgetTrackerPage = () => {
+  const [selectedMonth, setSelectedMonth] = useState<string>(
+    dayjs().format("MMMM YYYY")
+  );
   const [selectedBudget, setSelectedBudget] = useState<string | null>(null);
+
+  const months = Array.from({ length: 12 }, (_, i) =>
+    dayjs().subtract(i, "month").format("MMMM YYYY")
+  );
+
+  const handleMonthChange = (direction: "prev" | "next") => {
+    const currentIndex = months.indexOf(selectedMonth);
+    const newIndex = direction === "prev" ? currentIndex + 1 : currentIndex - 1;
+    if (months[newIndex]) {
+      setSelectedMonth(months[newIndex]);
+    }
+  };
 
   const handleBudgetClick = (name: string) => {
     setSelectedBudget(name);
@@ -37,7 +52,7 @@ export const BudgetTrackerPage = () => {
     },
     {
       label: "Remaining",
-      value: 50,
+      value: selectedBudgetDetails?.limit - (selectedBudgetDetails?.spend || 0),
       className: "text-green-500",
     },
   ];
@@ -48,10 +63,33 @@ export const BudgetTrackerPage = () => {
         title="Budget Tracker"
         description="Easily track your expenses, set monthly budgets, and stay on top of your finances with simple charts and progress updates. Keep your spending organized and make better financial decisions effortlessly."
       />
+
+      <div className="flex justify-between items-center py-5">
+        <Button
+          customColor="secondary"
+          onClick={() => handleMonthChange("prev")}
+        >
+          <FaChevronLeft />
+        </Button>
+        <div>
+          <Text variant="h4">{selectedMonth}</Text>
+        </div>
+        <Button
+          customColor="secondary"
+          onClick={() => handleMonthChange("next")}
+          disabled={selectedMonth === dayjs().format("MMMM YYYY")}
+        >
+          <FaChevronRight />
+        </Button>
+      </div>
+
       <div className="py-10">
         <Row gutter={[16, 16]}>
           <Col xs={24} md={8}>
             <div className="border mb-5 p-3 rounded-lg">
+              <div className="my-3">
+                <Text variant="h3">Budgets</Text>
+              </div>
               {filteredBudgetData.map((budget) => {
                 const percentageSpent = (budget.spend / budget.limit) * 100;
                 const isSelected = selectedBudget === budget.name;
@@ -100,9 +138,6 @@ export const BudgetTrackerPage = () => {
                       showLabel={false}
                     />
                     <div className="flex justify-end mt-2">
-                      {/* <Text variant="p4" className="text-red">
-                      Spent: ৳{budget.spend}
-                    </Text> */}
                       <Text
                         variant="p4"
                         className={`font-bold ${
@@ -149,7 +184,7 @@ export const BudgetTrackerPage = () => {
                       className="border w-[30%] p-3 rounded-lg shadow-md"
                     >
                       <Text
-                        className="!text-gray-400 text-xs md:text-sm"
+                        className="!text-gray-400 text-[8px] md:text-sm"
                         variant="p5"
                       >
                         {detail.label}
@@ -162,7 +197,9 @@ export const BudgetTrackerPage = () => {
                 </div>
 
                 <div className="mb-6">
-                  <h3 className="text-lg font-semibold mb-4">Spending Trend</h3>
+                  <Text variant="h4" className="mb-4">
+                    Spending Trend
+                  </Text>
                   <LineChart
                     labels={["Week 1", "Week 2", "Week 3", "Week 4"]}
                     datasets={[
@@ -181,10 +218,8 @@ export const BudgetTrackerPage = () => {
                 </div>
               </div>
             ) : (
-              <div className="text-center p-10">
-                <p className="text-lg text-gray-600">
-                  Select a budget to view details
-                </p>
+              <div className="text-center p-10 border rounded">
+                <Text variant="p3">Select a budget to view details</Text>
               </div>
             )}
           </Col>
