@@ -32,7 +32,7 @@ export const BudgetDetails = memo(({ budgetDetails }: BudgetDetailsProps) => {
   ];
 
   return (
-    <div className="p-5 bg-white border rounded-lg">
+    <div className="p-5 bg-white border rounded-lg mb-20">
       <Text variant="h3">{budgetDetails.name}</Text>
       <Text variant="p5" className="text-primary">
         {budgetDetails.category}
