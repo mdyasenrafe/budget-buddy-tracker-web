@@ -60,7 +60,7 @@ export const AddBudgetForm = () => {
           loading={isLoading}
         >
           <Text className="text-white" variant="p3">
-            Sign In
+            Submit
           </Text>
         </Button>
       )}
