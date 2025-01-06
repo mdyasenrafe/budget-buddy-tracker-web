@@ -9,7 +9,7 @@ export const AddBudgetPage = () => {
       <SectionHeader
         title="Add Your Budget"
         description={
-          "Set up your monthly spending limits and organize your expenses into categories. Keep track of your spending and carry over any leftover money to the next month. Start managing your money easily and effectively."
+          "Set monthly spending limits, track your expenses, and manage your money easily."
         }
       />
 
