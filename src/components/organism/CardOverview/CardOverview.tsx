@@ -29,21 +29,36 @@ export const CardOverview: React.FC<CardOverviewProps> = ({
 
           <div className="mt-6">
             <div>
-              <Text className="tracking-wider" variant="h3" color="white">
-                {formatCardNumber(activeCard.last4Digits)}
+              <Text variant="h3" color="white">
+                ৳{activeCard?.totalBalance}
               </Text>
             </div>
           </div>
 
           <div className="flex justify-between mt-4 items-center">
             <div>
-              <Text color="white" className="font-semibold">
-                {activeCard.accountHolderName}
+              <Text
+                className="!font-semibold text-grey"
+                variant="p4"
+                color="white"
+              >
+                Card Number
+              </Text>
+              <Text variant="h3" color="white">
+                {formatCardNumber(activeCard.last4Digits)}
               </Text>
             </div>
-            <div className="text-sm">
-              <span className="text-gray-400">EXP:</span>&nbsp;
-              <span>{activeCard.expireDate}</span>
+            <div>
+              <Text
+                className="!font-semibold text-grey"
+                variant="p5"
+                color="white"
+              >
+                EXP:
+              </Text>
+              <Text variant="h5" className="!font-bold" color="white">
+                {activeCard.expireDate}
+              </Text>
             </div>
           </div>
         </div>
