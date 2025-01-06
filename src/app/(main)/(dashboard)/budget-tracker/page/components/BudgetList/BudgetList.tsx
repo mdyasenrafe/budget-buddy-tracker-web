@@ -5,6 +5,7 @@ import { BudgetItem } from "./components";
 import { FaPlus } from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import { useRouter } from "next/navigation";
 
 type BudgetListProps = {
   budgets: TBudget[];
@@ -14,12 +15,21 @@ type BudgetListProps = {
 
 export const BudgetList = memo(
   ({ budgets, selectedBudget, onBudgetClick }: BudgetListProps) => {
+    const router = useRouter();
+
+    const handleAddBudgetRedirect = () => {
+      router.push("/budget-tracker/add-budget");
+    };
+
     return (
       <div>
         <div className="border mb-5 rounded-lg">
           <div className="my-3 border-b p-3 flex justify-between">
             <Text variant="h3">Budgets</Text>
-            <div className="w-[40px] h-[40px] bg-primary rounded-full flex justify-center items-center cursor-pointer lg:hidden">
+            <div
+              className="w-[40px] h-[40px] bg-primary rounded-full flex justify-center items-center cursor-pointer lg:hidden"
+              onClick={handleAddBudgetRedirect}
+            >
               <FaPlus color="white" size={24} />
             </div>
           </div>
@@ -54,7 +64,10 @@ export const BudgetList = memo(
             ))}
           </div>
         </div>
-        <div className="bottom-10 w-[80%] sticky z-10 mx-auto hidden lg:flex">
+        <div
+          className="bottom-10 w-[80%] sticky z-10 mx-auto hidden lg:flex"
+          onClick={handleAddBudgetRedirect}
+        >
           <Button
             customColor="primary"
             className="w-full !h-[48px]"
