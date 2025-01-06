@@ -1,10 +1,6 @@
 "use client";
 
 import React from "react";
-import { BiWalletAlt } from "react-icons/bi";
-import { RiMoneyDollarCircleLine } from "react-icons/ri";
-import { TbChartBar } from "react-icons/tb";
-import { FiCreditCard } from "react-icons/fi";
 import { useAppSelector } from "@/redux";
 import { TCard, selectCard } from "@/redux/features/cardOverview";
 import { CardOverview } from "@/components/organism";

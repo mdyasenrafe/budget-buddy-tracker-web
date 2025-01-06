@@ -1,17 +1,22 @@
 import { TCategory } from "@/redux/features/category";
 
 export const getCategoryOptions = (
-  selectedTransactionType: string,
   incomeCategories: TCategory[] | null,
-  expenseCategories: TCategory[] | null
+  expenseCategories: TCategory[] | null,
+  selectedTransactionType?: "Income" | "Expense"
 ) => {
-  const categories =
-    selectedTransactionType === "Income" ? incomeCategories : expenseCategories;
+  let categories: TCategory[] = [];
 
-  return (
-    categories?.map((category) => ({
-      value: category?.value,
-      label: category?.label,
-    })) ?? []
-  );
+  if (selectedTransactionType === "Income") {
+    categories = incomeCategories || [];
+  } else if (selectedTransactionType === "Expense") {
+    categories = expenseCategories || [];
+  } else {
+    categories = [...(incomeCategories || []), ...(expenseCategories || [])];
+  }
+
+  return categories.map((category) => ({
+    value: category?.value,
+    label: category?.label,
+  }));
 };

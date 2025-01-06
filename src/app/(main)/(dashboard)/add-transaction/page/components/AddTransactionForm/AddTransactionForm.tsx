@@ -18,10 +18,12 @@ import {
 } from "@/redux/features/category";
 import { getCategoryOptions } from "@/utils";
 
+const transactionTypes = ["Income", "Expense"] as const;
+type TTransactionType = (typeof transactionTypes)[number];
+
 export const AddTransactionForm: React.FC = () => {
-  const transactionTypes = useMemo(() => ["Income", "Expense"], []);
   const [selectedTransactionType, setSelectedTransactionType] =
-    useState<string>("Income");
+    useState<TTransactionType>("Income");
 
   const incomeCategories = useAppSelector(getIncomeCategories);
   const expenseCategories = useAppSelector(getExpenseCategories);
@@ -30,14 +32,14 @@ export const AddTransactionForm: React.FC = () => {
   const categoryOptions = useMemo(
     () =>
       getCategoryOptions(
-        selectedTransactionType,
         incomeCategories,
-        expenseCategories
+        expenseCategories,
+        selectedTransactionType
       ),
     [selectedTransactionType, incomeCategories, expenseCategories]
   );
 
-  const handleTransactionTypeSelect = useCallback((type: string) => {
+  const handleTransactionTypeSelect = useCallback((type: TTransactionType) => {
     setSelectedTransactionType(type);
   }, []);
 
