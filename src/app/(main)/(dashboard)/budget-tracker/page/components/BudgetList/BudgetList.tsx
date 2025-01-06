@@ -17,8 +17,11 @@ export const BudgetList = memo(
     return (
       <div>
         <div className="border mb-5 rounded-lg">
-          <div className="my-3 border-b p-3">
+          <div className="my-3 border-b p-3 flex justify-between">
             <Text variant="h3">Budgets</Text>
+            <div className="w-[40px] h-[40px] bg-primary rounded-full flex justify-center items-center cursor-pointer lg:hidden">
+              <FaPlus color="white" size={24} />
+            </div>
           </div>
 
           <div className="block md:hidden">
@@ -51,7 +54,7 @@ export const BudgetList = memo(
             ))}
           </div>
         </div>
-        <div className="bottom-10 w-[80%] sticky z-10 mx-auto">
+        <div className="bottom-10 w-[80%] sticky z-10 mx-auto hidden lg:flex">
           <Button
             customColor="primary"
             className="w-full !h-[48px]"
