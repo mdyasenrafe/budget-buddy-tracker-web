@@ -1,11 +1,10 @@
-import React, { memo, useMemo } from "react";
-import { ProgressBar } from "@/components/molecules";
-import { Card } from "antd";
+import React, { memo } from "react";
 import { Button, Text } from "@/components/atoms";
 import { TBudget } from "../../data";
-import { BudgetItem, IconRenderer } from "./components";
-import { colors } from "@/theme";
+import { BudgetItem } from "./components";
 import { FaPlus } from "react-icons/fa";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 
 type BudgetListProps = {
   budgets: TBudget[];
@@ -21,7 +20,27 @@ export const BudgetList = memo(
           <div className="my-3 border-b p-3">
             <Text variant="h3">Budgets</Text>
           </div>
-          <div className="p-3">
+
+          <div className="block md:hidden">
+            <Swiper
+              spaceBetween={16}
+              slidesPerView={1.1}
+              grabCursor
+              style={{ padding: "1rem" }}
+            >
+              {budgets.map((budget) => (
+                <SwiperSlide key={budget.name} className="h-full">
+                  <BudgetItem
+                    budget={budget}
+                    isSelected={selectedBudget === budget.name}
+                    onClick={() => onBudgetClick(budget.name)}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+
+          <div className="hidden md:block p-3">
             {budgets.map((budget) => (
               <BudgetItem
                 key={budget.name}

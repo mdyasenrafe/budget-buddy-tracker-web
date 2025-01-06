@@ -4,6 +4,7 @@ import { Text } from "@/components/atoms";
 import { colors } from "@/theme";
 import { TBudget } from "../../../../data";
 import { IconRenderer } from "../IconRenderer";
+import { truncateText } from "@/utils";
 
 type BudgetItemProps = {
   budget: TBudget;
@@ -20,7 +21,7 @@ export const BudgetItem = memo(
 
     return (
       <div
-        className={`mb-5 border p-3 rounded-md cursor-pointer transition-all duration-300 ${
+        className={`mb-5 border p-3 rounded-md cursor-pointer transition-all duration-300 h-full ${
           isSelected ? "bg-[#ecf4e9]" : ""
         }`}
         onClick={onClick}
@@ -36,9 +37,9 @@ export const BudgetItem = memo(
           <div className="flex-grow">
             <div className="flex justify-between items-center">
               <Text variant="p3" className="!font-medium">
-                {budget.name}
+                {truncateText(budget.name, 23)}
               </Text>
-              <Text variant="p3" className="!font-medium">
+              <Text variant="p3" className="!font-medium hidden md:block">
                 ৳{budget.limit}
               </Text>
             </div>
