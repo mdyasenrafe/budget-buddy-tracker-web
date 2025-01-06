@@ -14,7 +14,7 @@ export const DashboardPage = () => {
     <div className="p-6 space-y-6">
       {activeCard && (
         <div>
-          <CardOverview activeCard={activeCard as TCard} />
+          <CardOverview activeCard={activeCard as TCard} selected={true} />
         </div>
       )}
 
