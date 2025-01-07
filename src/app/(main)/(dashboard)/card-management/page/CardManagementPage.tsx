@@ -6,12 +6,14 @@ import { MyCard } from "./components";
 import { TCard } from "@/redux/features/cardOverview";
 import { Text, Button } from "@/components/atoms";
 import { FaPlus } from "react-icons/fa6";
-import { Bar } from "react-chartjs-2";
+import { Bar, Doughnut } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   BarElement,
+  DoughnutController,
+  ArcElement,
   Title,
   Tooltip,
   Legend,
@@ -23,6 +25,8 @@ ChartJS.register(
   CategoryScale,
   LinearScale,
   BarElement,
+  DoughnutController,
+  ArcElement,
   Title,
   Tooltip,
   Legend
@@ -46,7 +50,30 @@ export const CardManagementPage: React.FC = () => {
       {
         label: "Income",
         data: [600, 700, 800, 900],
-        backgroundColor: "#bcf49d",
+        backgroundColor: "#5FC8C3",
+      },
+    ],
+  };
+
+  const doughnutChartData = {
+    labels: ["Food", "Travel", "Shopping", "Bills", "Others"],
+    datasets: [
+      {
+        data: [300, 150, 200, 100, 50],
+        backgroundColor: [
+          "#2F7E79", // Primary color
+          "#3E9C96", // Slightly lighter shade
+          "#4BB2AE", // Even lighter shade
+          "#5FC8C3", // Another lighter shade
+          "#79DAD4", // Lightest shade
+        ],
+        hoverBackgroundColor: [
+          "#256864", // Slightly darker shade
+          "#2F7E79", // Primary color
+          "#3E9C96",
+          "#4BB2AE",
+          "#5FC8C3",
+        ],
       },
     ],
   };
@@ -103,6 +130,12 @@ export const CardManagementPage: React.FC = () => {
               <div className="border shadow-md w-full lg:w-[48%] rounded-lg mt-6 lg:mt-0">
                 <div className="mb-6 border-b p-4">
                   <Text variant="h4">Spending Categories</Text>
+                </div>
+                <div className="p-4 w-full h-[350px]">
+                  <Doughnut
+                    data={doughnutChartData}
+                    options={{ maintainAspectRatio: false }}
+                  />
                 </div>
               </div>
             </div>
