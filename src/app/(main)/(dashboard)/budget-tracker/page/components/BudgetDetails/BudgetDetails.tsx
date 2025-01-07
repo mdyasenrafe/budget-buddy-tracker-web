@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import { Text } from "@/components/atoms";
 import { TBudget } from "../../data";
 import { colors } from "@/theme";
-import { LineChart } from "@/components/molecules";
+import { LineChart } from "@/components/molecules/chart";
 
 type BudgetDetailsProps = {
   budgetDetails: TBudget | null;

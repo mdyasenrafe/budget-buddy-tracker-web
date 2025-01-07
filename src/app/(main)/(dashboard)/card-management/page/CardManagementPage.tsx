@@ -1,12 +1,12 @@
 "use client";
 
-import { BarChart, LineChart, SectionHeader } from "@/components/molecules";
+import { SectionHeader } from "@/components/molecules";
 import React, { useCallback, useState } from "react";
 import { MyCard } from "./components";
 import { TCard } from "@/redux/features/cardOverview";
 import { Text, Button } from "@/components/atoms";
 import { FaPlus } from "react-icons/fa6";
-import { Bar, Doughnut } from "react-chartjs-2";
+import { Doughnut } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -19,6 +19,7 @@ import {
   Legend,
 } from "chart.js";
 import { colors } from "@/theme";
+import { BarChart, LineChart } from "@/components/molecules/chart";
 
 // Register the necessary Chart.js components
 ChartJS.register(
