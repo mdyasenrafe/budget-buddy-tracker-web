@@ -9,9 +9,9 @@ import { Text } from "@/components/atoms";
 import { ChartCard } from "@/components/molecules";
 import { colors } from "@/theme";
 
-interface CardDetailsProps {
+type CardDetailsProps = {
   selectedCard: TCard;
-}
+};
 
 export const CardDetails: React.FC<CardDetailsProps> = ({ selectedCard }) => {
   const barChartData = useMemo(
