@@ -6,32 +6,12 @@ import { MyCard } from "./components";
 import { TCard } from "@/redux/features/cardOverview";
 import { Text, Button } from "@/components/atoms";
 import { FaPlus } from "react-icons/fa6";
-import { Doughnut } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  DoughnutController,
-  ArcElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
 import { colors } from "@/theme";
-import { BarChart, LineChart } from "@/components/molecules/chart";
-
-// Register the necessary Chart.js components
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  DoughnutController,
-  ArcElement,
-  Title,
-  Tooltip,
-  Legend
-);
+import {
+  BarChart,
+  DoughnutChart,
+  LineChart,
+} from "@/components/molecules/chart";
 
 export const CardManagementPage: React.FC = () => {
   const [selectedCard, setSelectedCard] = useState<TCard | null>(null);
@@ -133,10 +113,11 @@ export const CardManagementPage: React.FC = () => {
                   <Text variant="h4">Spending Categories</Text>
                 </div>
                 <div className="p-4 w-full h-[350px]">
-                  <Doughnut
-                    data={doughnutChartData}
-                    options={{ maintainAspectRatio: false }}
+                  <DoughnutChart
+                    labels={doughnutChartData.labels}
+                    datasets={doughnutChartData.datasets}
                   />
+                  ;
                 </div>
               </div>
             </div>
