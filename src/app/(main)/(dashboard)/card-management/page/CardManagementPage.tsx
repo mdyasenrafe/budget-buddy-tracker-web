@@ -1,6 +1,6 @@
 "use client";
 
-import { LineChart, SectionHeader } from "@/components/molecules";
+import { BarChart, LineChart, SectionHeader } from "@/components/molecules";
 import React, { useCallback, useState } from "react";
 import { MyCard } from "./components";
 import { TCard } from "@/redux/features/cardOverview";
@@ -51,19 +51,6 @@ export const CardManagementPage: React.FC = () => {
     ],
   };
 
-  const barChartOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top" as const,
-      },
-      title: {
-        display: true,
-        text: "Spending vs. Income",
-      },
-    },
-  };
-
   return (
     <div>
       <SectionHeader
@@ -109,7 +96,7 @@ export const CardManagementPage: React.FC = () => {
                   <Text variant="h4">Spending vs. Income</Text>
                 </div>
                 <div className="p-4">
-                  <Bar data={barChartData} options={barChartOptions} />
+                  <BarChart {...barChartData} />
                 </div>
               </div>
 
