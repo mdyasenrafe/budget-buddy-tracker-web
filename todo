@@ -2,6 +2,7 @@ dashboard:
         we need to show compare our balance by monthly by line chart or bar chart
         we need to show total balance compare by line chart 
         we need to breakdown our cost by category using pie chart
+        Monthly Budgets
 
  Analytics Page:
         Spending vs. Income Overview:
@@ -9,9 +10,12 @@ dashboard:
         expense breakdown
         transcation history
         Trend Analysis
+        Visual Comparison of Budget vs. Actual Spending.
 
     card management:
         Spending vs. Income Overview:
         Trend Analysis
         category analysis
         transcation history
+
+
