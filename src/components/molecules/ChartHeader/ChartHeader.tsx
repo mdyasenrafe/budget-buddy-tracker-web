@@ -12,7 +12,7 @@ export const ChartCard: React.FC<ChartCardProps> = ({
   children,
   className,
 }) => (
-  <div className={`border shadow-md w-full lg:w-[48%] rounded-lg ${className}`}>
+  <div className={`border w-full rounded-lg ${className}`}>
     <div className="mb-6 border-b p-4">
       <Text variant="h4">{title}</Text>
     </div>

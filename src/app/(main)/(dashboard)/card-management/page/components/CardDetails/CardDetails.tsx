@@ -83,19 +83,22 @@ export const CardDetails: React.FC<CardDetailsProps> = ({ selectedCard }) => {
       <div className="border py-3 rounded-md flex items-center justify-center my-6 px-3 lg:px-0">
         <Text variant="h3">{selectedCard?.bankName}</Text>
       </div>
-      <div className="lg:flex justify-between w-full">
+      <div className="lg:grid grid-cols-2 grid-rows-2 grid-flow-col justify-between w-full gap-6">
         <ChartCard title="Spending vs. Income">
           <BarChart {...barChartData} />
         </ChartCard>
-        <ChartCard title="Spending Categories">
+        <ChartCard title="Balance Trend" className="mt-6 lg:mt-0">
+          <LineChart {...lineChartData} />
+        </ChartCard>
+        <ChartCard
+          title="Spending Categories"
+          className="row-span-2 mt-6 lg:mt-0"
+        >
           <div className="w-full h-[350px]">
             <DoughnutChart {...doughnutChartData} />
           </div>
         </ChartCard>
       </div>
-      <ChartCard title="Balance Trend" className="mt-6">
-        <LineChart {...lineChartData} />
-      </ChartCard>
     </div>
   );
 };
