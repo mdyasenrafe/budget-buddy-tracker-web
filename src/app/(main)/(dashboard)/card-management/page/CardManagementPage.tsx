@@ -39,14 +39,14 @@ export const CardManagementPage = () => {
                 640: { slidesPerView: 1 },
                 768: { slidesPerView: 2.5 },
                 1024: { slidesPerView: 2.5 },
-                1600: { slidesPerView: 4 },
+                1600: { slidesPerView: 3.5 },
               }}
               className="mt-4"
             >
               {CardsData.map((card) => (
                 <SwiperSlide
                   key={card._id}
-                  className="h-full flex items-stretch"
+                  className="h-full flex items-stretch w-full"
                 >
                   <div
                     onClick={() =>
@@ -54,7 +54,7 @@ export const CardManagementPage = () => {
                         prevId === card._id ? null : card._id
                       )
                     }
-                    className="cursor-pointer h-full flex items-stretch"
+                    className="cursor-pointer h-full flex items-stretch w-full"
                   >
                     <CardOverview
                       activeCard={card}
@@ -66,6 +66,7 @@ export const CardManagementPage = () => {
             </Swiper>
           </div>
         </div>
+        <div>blance trend </div>
       </div>
     </div>
   );
