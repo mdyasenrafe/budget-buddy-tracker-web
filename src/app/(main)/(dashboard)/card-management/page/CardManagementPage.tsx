@@ -1,20 +1,68 @@
 "use client";
 
-import { Text } from "@/components/atoms";
-import { SectionHeader } from "@/components/molecules";
-import { CardOverview } from "@/components/organism";
-import { useAppSelector } from "@/redux";
-import { TUser, getCurrentUser } from "@/redux/features/auth";
+import { LineChart, SectionHeader } from "@/components/molecules";
+import React, { useCallback, useState } from "react";
+import { MyCard } from "./components";
 import { TCard } from "@/redux/features/cardOverview";
-import React, { useState } from "react";
-import { FaPlus } from "react-icons/fa";
-import { CardsData } from "./data";
+import { Text, Button } from "@/components/atoms";
+import { FaPlus } from "react-icons/fa6";
+import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { colors } from "@/theme";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
+// Register the necessary Chart.js components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
-export const CardManagementPage = () => {
-  const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
+export const CardManagementPage: React.FC = () => {
+  const [selectedCard, setSelectedCard] = useState<TCard | null>(null);
+
+  const handleSelectedCard = useCallback((id: TCard) => {
+    setSelectedCard(id);
+  }, []);
+
+  const barChartData = {
+    labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
+    datasets: [
+      {
+        label: "Spending",
+        data: [400, 300, 500, 600],
+        backgroundColor: colors.primary,
+      },
+      {
+        label: "Income",
+        data: [600, 700, 800, 900],
+        backgroundColor: "#bcf49d",
+      },
+    ],
+  };
+
+  const barChartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top" as const,
+      },
+      title: {
+        display: true,
+        text: "Spending vs. Income",
+      },
+    },
+  };
 
   return (
     <div>
@@ -24,49 +72,77 @@ export const CardManagementPage = () => {
       />
 
       <div className="py-20 md:py-10">
-        <div className="border p-6 rounded-lg shadow-lg bg-[#ecf4e9] w-full">
-          <div className="flex justify-between">
-            <Text variant="h4">My Cards</Text>
-            <div className="w-[40px] h-[40px] bg-primary rounded-full flex justify-center items-center cursor-pointer">
-              <FaPlus color="white" size={24} />
+        <MyCard
+          selectedCardId={selectedCard?._id as string}
+          onSelectedCard={handleSelectedCard}
+        />
+
+        {!selectedCard ? (
+          <div className="mt-10 flex flex-col items-center border py-5 rounded-lg">
+            <div className="text-center">
+              <Text variant="h3" className="text-gray-600">
+                No Card Selected
+              </Text>
+              <Text variant="p3" className="text-gray-500 mt-2">
+                Select a card to view detailed insights about your spending,
+                income, and trends.
+              </Text>
+            </div>
+            <Button
+              customColor="primary"
+              className=" !h-[48px]"
+              icon={<FaPlus color="white" />}
+            >
+              <Text variant="p4" className="font-semibold text-white">
+                Add New Card
+              </Text>
+            </Button>
+          </div>
+        ) : (
+          <div className="mt-10">
+            <div className="border py-3 rounded-md flex items-center justify-center my-6">
+              <Text variant="h3">{selectedCard?.bankName}</Text>
+            </div>
+            <div className="lg:flex justify-between w-full">
+              <div className="border shadow-md w-[48%] rounded-lg">
+                <div className="mb-6 border-b p-4">
+                  <Text variant="h4">Spending vs. Income</Text>
+                </div>
+                <div className="p-4">
+                  <Bar data={barChartData} options={barChartOptions} />
+                </div>
+              </div>
+
+              <div className="border shadow-md w-[48%]">
+                <div className="mb-6 border-b p-4">
+                  <Text variant="h4">Spending Categories</Text>
+                </div>
+              </div>
+            </div>
+            <div className="border shadow-md w-[48%] rounded-lg mt-4">
+              <div className="mb-6 border-b p-4 ">
+                <Text variant="h4">Balance Trend</Text>
+              </div>
+              <div className="px-4">
+                <LineChart
+                  labels={["Week 1", "Week 2", "Week 3", "Week 4"]}
+                  datasets={[
+                    {
+                      label: "Spending",
+                      data: [100, 200, 280, 100],
+                      backgroundColor: "rgba(75,192,192,0.4)",
+                      borderColor: "rgba(75,192,192,1)",
+                      pointBackgroundColor: colors.grey,
+                      pointBorderColor: colors.grey,
+                      pointHoverBackgroundColor: colors.grey,
+                      pointHoverBorderColor: colors.grey,
+                    },
+                  ]}
+                />
+              </div>
             </div>
           </div>
-          <div>
-            <Swiper
-              slidesPerView={1}
-              spaceBetween={10}
-              breakpoints={{
-                640: { slidesPerView: 1 },
-                768: { slidesPerView: 2.5 },
-                1024: { slidesPerView: 2.5 },
-                1600: { slidesPerView: 3.5 },
-              }}
-              className="mt-4"
-            >
-              {CardsData.map((card) => (
-                <SwiperSlide
-                  key={card._id}
-                  className="h-full flex items-stretch w-full"
-                >
-                  <div
-                    onClick={() =>
-                      setSelectedCardId((prevId) =>
-                        prevId === card._id ? null : card._id
-                      )
-                    }
-                    className="cursor-pointer"
-                  >
-                    <CardOverview
-                      activeCard={card}
-                      selected={selectedCardId === card._id}
-                    />
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-        </div>
-        <div>blance trend </div>
+        )}
       </div>
     </div>
   );
