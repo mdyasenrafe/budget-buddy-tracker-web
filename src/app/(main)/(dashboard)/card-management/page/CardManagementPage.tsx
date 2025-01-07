@@ -87,11 +87,11 @@ export const CardManagementPage: React.FC = () => {
           </div>
         ) : (
           <div className="mt-10">
-            <div className="border py-3 rounded-md flex items-center justify-center my-6">
+            <div className="border py-3 rounded-md flex items-center justify-center my-6 px-3 lg:px-0">
               <Text variant="h3">{selectedCard?.bankName}</Text>
             </div>
             <div className="lg:flex justify-between w-full">
-              <div className="border shadow-md w-[48%] rounded-lg">
+              <div className="border shadow-md w-full lg:w-[48%] rounded-lg">
                 <div className="mb-6 border-b p-4">
                   <Text variant="h4">Spending vs. Income</Text>
                 </div>
@@ -100,13 +100,13 @@ export const CardManagementPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="border shadow-md w-[48%]">
+              <div className="border shadow-md w-full lg:w-[48%] rounded-lg mt-6 lg:mt-0">
                 <div className="mb-6 border-b p-4">
                   <Text variant="h4">Spending Categories</Text>
                 </div>
               </div>
             </div>
-            <div className="border shadow-md w-[48%] rounded-lg mt-4">
+            <div className="border shadow-md w-full lg:w-[48%] rounded-lg mt-6">
               <div className="mb-6 border-b p-4 ">
                 <Text variant="h4">Balance Trend</Text>
               </div>
