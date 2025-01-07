@@ -15,7 +15,7 @@ export const CardOverview: React.FC<CardOverviewProps> = ({
   selected = false,
 }) => {
   return (
-    <div className="h-full">
+    <div className="h-full w-full">
       {showHeaderBankName && (
         <div className="border py-2 rounded-md flex items-center justify-center mt-6 lg:mt-0">
           <Text variant="h3">{activeCard.bankName}</Text>

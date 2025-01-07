@@ -54,7 +54,7 @@ export const CardManagementPage = () => {
                         prevId === card._id ? null : card._id
                       )
                     }
-                    className="cursor-pointer h-full flex items-stretch w-full"
+                    className="cursor-pointer"
                   >
                     <CardOverview
                       activeCard={card}
