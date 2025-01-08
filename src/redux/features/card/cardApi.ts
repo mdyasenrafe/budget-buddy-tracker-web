@@ -7,13 +7,16 @@ const cardApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getCards: build.query<TResponse<TCard[]>, void>({
       query: () => `/card`,
+      providesTags: ["Card"],
     }),
+
     createCard: build.mutation<TResponse<TCard>, TCreateCardPayload>({
       query: (payload) => ({
         url: "/card",
         method: "POST",
         body: payload,
       }),
+      invalidatesTags: ["Card"],
     }),
   }),
 });
