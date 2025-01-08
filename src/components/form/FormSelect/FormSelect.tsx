@@ -40,7 +40,7 @@ export const FormSelect: React.FC<TFormSelectProps> = React.forwardRef(
                 }`}
               />
               {error && (
-                <Text variant={"p6"} style={{ color: "red" }}>
+                <Text variant={"p5"} className="mt-2 !text-red-500">
                   {error.message}
                 </Text>
               )}

@@ -34,7 +34,11 @@ export const FormDatePicker: React.FC<FormDatePickerProps> = ({
               size={"large"}
               className={`font-poppins text-[14px] `}
             />
-            {error && <small style={{ color: "red" }}>{error.message}</small>}
+            {error && (
+              <Text variant={"p5"} className="mt-2 !text-red-500">
+                {error.message}
+              </Text>
+            )}
           </Form.Item>
         );
       }}
