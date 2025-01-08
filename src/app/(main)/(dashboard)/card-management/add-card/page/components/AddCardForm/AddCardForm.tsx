@@ -8,16 +8,22 @@ import {
   FormWrapper,
 } from "@/components/form";
 import { bankList } from "@/constant";
-import { TCreateCardPayload } from "@/redux/features/card";
+import {
+  TCreateCardPayload,
+  useCreateCardMutation,
+} from "@/redux/features/card";
 import { TCardFormValues, addCardSchema } from "@/schema";
 import { formatExpireDate } from "@/utils/formatExpireDate";
 import { zodResolver } from "@hookform/resolvers/zod";
 import dayjs, { Dayjs } from "dayjs";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
 
 export const AddCardForm = () => {
   // states
   const [isMounted, setIsMounted] = useState(false);
+  // hooks
+  const [createCard, { isLoading }] = useCreateCardMutation();
 
   // Format bank options
   const bankOptions = useMemo(
@@ -29,13 +35,21 @@ export const AddCardForm = () => {
     []
   );
 
-  const handleSubmit = useCallback((data: TCardFormValues) => {
+  const handleSubmit = useCallback(async (data: TCardFormValues) => {
     const formattedExpireDate = formatExpireDate(data?.expireDate);
     const payload: TCreateCardPayload = {
       ...data,
       totalBalance: Number(data?.totalBalance),
       expireDate: formattedExpireDate,
     };
+    try {
+      const res = await createCard(payload).unwrap();
+      toast.success("Card added successfully! 🎉");
+    } catch (err: any) {
+      const errorMessage =
+        err?.data?.message || "An unexpected error occurred. Please try again.";
+      toast.error(`Failed to add card: ${errorMessage}`);
+    }
   }, []);
 
   useEffect(() => {
@@ -88,6 +102,8 @@ export const AddCardForm = () => {
           htmlType="submit"
           customColor="primary"
           className="w-full !h-[44px] hover:bg-primary-dark transition duration-300 mt-4"
+          disabled={isLoading}
+          loading={isLoading}
         >
           <Text className="text-white" variant="p3">
             Add Card
