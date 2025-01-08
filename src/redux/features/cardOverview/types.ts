@@ -9,7 +9,7 @@ export type TCard = {
   userId: TUser;
   last4Digits: string;
   bankName: string;
-  accountHolderName: string;
+  accountHolderName?: string;
   expireDate: string;
   totalBalance: number;
   totalDeposit: number;

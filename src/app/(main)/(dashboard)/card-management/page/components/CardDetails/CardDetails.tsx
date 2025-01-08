@@ -97,6 +97,7 @@ export const CardDetails: React.FC<CardDetailsProps> = ({ selectedCard }) => {
           <div className="w-full h-[350px]">
             <DoughnutChart {...doughnutChartData} />
           </div>
+          <div></div>
         </ChartCard>
       </div>
     </div>
