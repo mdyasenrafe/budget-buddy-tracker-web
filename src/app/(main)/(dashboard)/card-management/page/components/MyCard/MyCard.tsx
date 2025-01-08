@@ -11,10 +11,11 @@ import { useRouter } from "next/navigation";
 type MyCardProps = {
   selectedCardId: string | null;
   onSelectedCard: (card: TCard) => void;
+  cards: TCard[];
 };
 
 export const MyCard: React.FC<MyCardProps> = React.memo(
-  ({ selectedCardId, onSelectedCard }) => {
+  ({ selectedCardId, onSelectedCard, cards }) => {
     const router = useRouter();
     const swiperBreakpoints = useMemo(
       () => ({
@@ -48,7 +49,7 @@ export const MyCard: React.FC<MyCardProps> = React.memo(
             breakpoints={swiperBreakpoints}
             className="mt-4"
           >
-            {CardsData.map((card) => (
+            {cards.map((card) => (
               <SwiperSlide
                 key={card._id}
                 className="h-full flex items-stretch w-full"
