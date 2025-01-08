@@ -9,9 +9,10 @@ import {
 } from "@/components/form";
 import { bankList } from "@/constant";
 import { TCreateCardPayload } from "@/redux/features/card";
-import { addCardSchema } from "@/schema";
+import { TCardFormValues, addCardSchema } from "@/schema";
 import { formatExpireDate } from "@/utils/formatExpireDate";
 import { zodResolver } from "@hookform/resolvers/zod";
+import dayjs, { Dayjs } from "dayjs";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 export const AddCardForm = () => {
@@ -28,14 +29,22 @@ export const AddCardForm = () => {
     []
   );
 
-  const handleSubmit = useCallback((data: TCreateCardPayload) => {
+  const handleSubmit = useCallback((data: TCardFormValues) => {
     const formattedExpireDate = formatExpireDate(data?.expireDate);
-    console.log(formattedExpireDate);
+    const payload: TCreateCardPayload = {
+      ...data,
+      totalBalance: Number(data?.totalBalance),
+      expireDate: formattedExpireDate,
+    };
   }, []);
 
   useEffect(() => {
     setIsMounted(true);
   }, [isMounted]);
+
+  const disablePastDates = (currentDate: Dayjs | null): boolean => {
+    return !!currentDate && currentDate.isBefore(dayjs().startOf("day"));
+  };
 
   return (
     <FormWrapper onSubmit={handleSubmit} resolver={zodResolver(addCardSchema)}>
@@ -67,6 +76,7 @@ export const AddCardForm = () => {
         label="Card Expiry Date"
         picker="month"
         placeholder="Select card expiry date"
+        disabledDate={disablePastDates}
       />
       <Text variant="p4" className="text-gray-500 my-4 w-full">
         <strong>Note:</strong> We only use this information to help you manage
