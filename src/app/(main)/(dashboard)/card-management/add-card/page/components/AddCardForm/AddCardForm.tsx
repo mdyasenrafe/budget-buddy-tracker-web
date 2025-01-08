@@ -8,7 +8,10 @@ import {
   FormWrapper,
 } from "@/components/form";
 import { bankList } from "@/constant";
+import { TCreateCardPayload } from "@/redux/features/card";
+import { addCardSchema } from "@/schema";
 import { formatExpireDate } from "@/utils/formatExpireDate";
+import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 export const AddCardForm = () => {
@@ -25,8 +28,8 @@ export const AddCardForm = () => {
     []
   );
 
-  const handleSubmit = useCallback((data: any) => {
-    const formattedExpireDate = formatExpireDate(data.expireDate as Date);
+  const handleSubmit = useCallback((data: TCreateCardPayload) => {
+    const formattedExpireDate = formatExpireDate(data?.expireDate);
     console.log(formattedExpireDate);
   }, []);
 
@@ -35,7 +38,7 @@ export const AddCardForm = () => {
   }, [isMounted]);
 
   return (
-    <FormWrapper onSubmit={handleSubmit}>
+    <FormWrapper onSubmit={handleSubmit} resolver={zodResolver(addCardSchema)}>
       <FormInput
         name="accountHolderName"
         label="Cardholder Name"
