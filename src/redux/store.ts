@@ -8,6 +8,7 @@ import authSlice from "./features/auth/authSlice";
 import { baseApi } from "@/api/baseApi";
 import cardOverviewSlice from "./features/cardOverview/cardOverviewSlice";
 import categorySlice from "./features/category/categorySlice";
+import cardSlice from "./features/card/cardSlice";
 
 // Persist config for theme slice
 const themePersistConfig = {
@@ -28,6 +29,8 @@ export const store = configureStore({
     auth: persistedAuthReducer,
     themeMode: persistedThemeReducer,
     cardOverview: cardOverviewSlice,
+    card: cardSlice,
+
     category: categorySlice,
     [baseApi.reducerPath]: baseApi.reducer,
   },
