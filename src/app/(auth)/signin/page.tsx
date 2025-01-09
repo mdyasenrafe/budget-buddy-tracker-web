@@ -1,6 +1,10 @@
-import React from "react";
+import React, { Suspense } from "react";
 import SigninPage from "./page/SigninPage";
 
 export default function page() {
-  return <SigninPage />;
+  return (
+    <Suspense>
+      <SigninPage />
+    </Suspense>
+  );
 }
