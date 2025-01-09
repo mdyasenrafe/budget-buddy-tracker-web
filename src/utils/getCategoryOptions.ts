@@ -1,10 +1,11 @@
+import { TOption } from "@/components/form";
 import { TCategory } from "@/redux/features/category";
 
 export const getCategoryOptions = (
   incomeCategories: TCategory[] | null,
   expenseCategories: TCategory[] | null,
   selectedTransactionType?: "Income" | "Expense"
-) => {
+): TOption[] => {
   let categories: TCategory[] = [];
 
   if (selectedTransactionType === "Income") {
@@ -16,7 +17,7 @@ export const getCategoryOptions = (
   }
 
   return categories.map((category) => ({
-    value: category?.value,
-    label: category?.label,
+    value: category?._id as string,
+    label: category?.label as string,
   }));
 };

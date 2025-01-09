@@ -5,10 +5,12 @@ import { Select, Form, SelectProps } from "antd";
 import { Controller, useFormContext } from "react-hook-form";
 import { Text } from "../../atoms";
 
+export type TOption = { value: string; label: string; disabled?: boolean };
+
 type TFormSelectProps = {
   label: string;
   name: string;
-  options: { value: string; label: string; disabled?: boolean }[];
+  options: TOption[];
 } & SelectProps;
 
 export const FormSelect: React.FC<TFormSelectProps> = React.forwardRef(

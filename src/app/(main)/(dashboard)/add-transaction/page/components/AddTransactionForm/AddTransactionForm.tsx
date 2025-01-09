@@ -16,7 +16,9 @@ import {
   getExpenseCategories,
   getIncomeCategories,
 } from "@/redux/features/category";
-import { getCategoryOptions } from "@/utils";
+import { formatCardSelectOptions, getCategoryOptions } from "@/utils";
+import { TCard } from "@/redux/features/cardOverview";
+import { useGetCardsQuery } from "@/redux/features/card";
 
 const transactionTypes = ["Income", "Expense"] as const;
 type TTransactionType = (typeof transactionTypes)[number];
@@ -27,7 +29,10 @@ export const AddTransactionForm: React.FC = () => {
 
   const incomeCategories = useAppSelector(getIncomeCategories);
   const expenseCategories = useAppSelector(getExpenseCategories);
+
   const isLoading = useAppSelector(getCateogryLoadingState);
+  // api hooks
+  const { data: cardsData, isLoading: isCardLoading } = useGetCardsQuery();
 
   const categoryOptions = useMemo(
     () =>
@@ -37,6 +42,10 @@ export const AddTransactionForm: React.FC = () => {
         selectedTransactionType
       ),
     [selectedTransactionType, incomeCategories, expenseCategories]
+  );
+  const cardOptions = useMemo(
+    () => formatCardSelectOptions(cardsData?.data as TCard[]),
+    [cardsData, isCardLoading]
   );
 
   const handleTransactionTypeSelect = useCallback((type: TTransactionType) => {
@@ -86,6 +95,15 @@ export const AddTransactionForm: React.FC = () => {
           selectedTransactionType === "Income" ? "income" : "expense"
         } category`}
         loading={isLoading}
+      />
+
+      <FormSelect
+        name="card"
+        label="Available Cards"
+        options={cardOptions}
+        showSearch
+        placeholder="Select a payment card"
+        loading={isCardLoading}
       />
 
       <FormDatePicker
