@@ -3,14 +3,20 @@
 import { Button, Text } from "@/components/atoms";
 import { FormInput, FormSelect, FormWrapper } from "@/components/form";
 import { useAppSelector } from "@/redux";
-import { useCreateBudgetMutation } from "@/redux/features/budget";
+import {
+  TBudgetCreateRequest,
+  useCreateBudgetMutation,
+} from "@/redux/features/budget";
 import {
   getCateogryLoadingState,
   getExpenseCategories,
   getIncomeCategories,
 } from "@/redux/features/category";
+import { TCreateBudgetFormData, createBudgetSchema } from "@/schema";
 import { getCategoryOptions } from "@/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
 
 export const AddBudgetForm = () => {
   // states
@@ -28,14 +34,30 @@ export const AddBudgetForm = () => {
   const [createBudget, { isLoading: isBudgetCreateLoading }] =
     useCreateBudgetMutation();
 
-  const handleSubmit = useCallback(() => {}, []);
+  const handleSubmit = useCallback(async (data: TCreateBudgetFormData) => {
+    const payload: TBudgetCreateRequest = {
+      ...data,
+      limit: Number(data?.limit),
+    };
+    try {
+      const res = await createBudget(payload).unwrap();
+      toast.success("Budget added successfully! 🎉");
+    } catch (err: any) {
+      const errorMessage =
+        err?.data?.message || "An unexpected error occurred. Please try again.";
+      toast.error(`Failed to add card: ${errorMessage}`);
+    }
+  }, []);
 
   useEffect(() => {
     setIsMounted(true);
   }, [isMounted]);
 
   return (
-    <FormWrapper onSubmit={handleSubmit}>
+    <FormWrapper
+      onSubmit={handleSubmit}
+      resolver={zodResolver(createBudgetSchema)}
+    >
       <FormInput
         name="name"
         type="text"
