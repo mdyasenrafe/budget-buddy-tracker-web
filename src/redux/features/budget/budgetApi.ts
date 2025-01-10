@@ -10,9 +10,11 @@ const budgetApi = baseApi.injectEndpoints({
         method: "POST",
         body: payload,
       }),
+      invalidatesTags: ["Budget"],
     }),
     getBudget: build.query<TResponse<TBudget>, number>({
       query: (monthIndex) => `/budget/${monthIndex}`,
+      providesTags: ["Budget"],
     }),
   }),
 });
