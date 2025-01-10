@@ -2,16 +2,20 @@
 
 import React, { useState, useCallback, useMemo } from "react";
 import { SectionHeader } from "@/components/molecules";
-import { TBudget, filteredBudgetData } from "./data";
 import dayjs from "dayjs";
 import { BudgetDetails, BudgetList, MonthNavigator } from "./components";
 import { Col, Row } from "antd";
+import { TBudget, useGetBudgetQuery } from "@/redux/features/budget";
+import { LoadingSpinner } from "@/components/atoms/LoadingSpinner";
 
 export const BudgetTrackerPage = () => {
+  // states
   const [selectedMonth, setSelectedMonth] = useState<string>(
     dayjs().format("MMMM YYYY")
   );
   const [selectedBudget, setSelectedBudget] = useState<string | null>(null);
+  // api hooks
+  const { isLoading, data } = useGetBudgetQuery(dayjs().month());
 
   const handleMonthChange = useCallback((month: string) => {
     setSelectedMonth(month);
@@ -22,7 +26,7 @@ export const BudgetTrackerPage = () => {
   }, []);
 
   const selectedBudgetDetails = useMemo(
-    () => filteredBudgetData.find((budget) => budget.name === selectedBudget),
+    () => data?.data.find((budget) => budget.name === selectedBudget),
     [selectedBudget]
   );
 
@@ -39,18 +43,22 @@ export const BudgetTrackerPage = () => {
       /> */}
 
       <div className="py-10">
-        <Row gutter={[16, 16]}>
-          <Col xs={24} md={8}>
-            <BudgetList
-              budgets={filteredBudgetData}
-              selectedBudget={selectedBudget}
-              onBudgetClick={handleBudgetClick}
-            />
-          </Col>
-          <Col xs={24} md={16}>
-            <BudgetDetails budgetDetails={selectedBudgetDetails as TBudget} />
-          </Col>
-        </Row>
+        {isLoading ? (
+          <LoadingSpinner />
+        ) : (
+          <Row gutter={[16, 16]}>
+            <Col xs={24} md={8}>
+              <BudgetList
+                budgets={data?.data as TBudget[]}
+                selectedBudget={selectedBudget}
+                onBudgetClick={handleBudgetClick}
+              />
+            </Col>
+            <Col xs={24} md={16}>
+              <BudgetDetails budgetDetails={selectedBudgetDetails as TBudget} />
+            </Col>
+          </Row>
+        )}
       </div>
     </div>
   );

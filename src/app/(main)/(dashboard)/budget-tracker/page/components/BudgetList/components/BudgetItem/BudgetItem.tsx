@@ -2,9 +2,9 @@ import React, { memo, useMemo } from "react";
 import { ProgressBar } from "@/components/molecules";
 import { Text } from "@/components/atoms";
 import { colors } from "@/theme";
-import { TBudget } from "../../../../data";
 import { IconRenderer } from "../IconRenderer";
 import { truncateText } from "@/utils";
+import { TBudget } from "@/redux/features/budget";
 
 type BudgetItemProps = {
   budget: TBudget;
@@ -15,7 +15,7 @@ type BudgetItemProps = {
 export const BudgetItem = memo(
   ({ budget, isSelected, onClick }: BudgetItemProps) => {
     const percentageSpent = useMemo(
-      () => (budget.spend / budget.limit) * 100,
+      () => (budget.spent / budget.limit) * 100,
       [budget]
     );
 
@@ -32,7 +32,7 @@ export const BudgetItem = memo(
               isSelected ? "bg-primary text-white" : "bg-[#ecf4e9] text-black"
             }`}
           >
-            <IconRenderer category={budget.category} />
+            <IconRenderer category={budget?.category?.label} />
           </div>
           <div className="flex-grow">
             <div className="flex justify-between items-center">
@@ -44,7 +44,7 @@ export const BudgetItem = memo(
               </Text>
             </div>
             <Text variant="p5" className="font-semibold text-primary">
-              {budget.category}
+              {budget?.category?.label}
             </Text>
           </div>
         </div>

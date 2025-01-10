@@ -1,8 +1,8 @@
 import React, { memo } from "react";
 import { Text } from "@/components/atoms";
-import { TBudget } from "../../data";
 import { colors } from "@/theme";
 import { LineChart } from "@/components/molecules/chart";
+import { TBudget } from "@/redux/features/budget";
 
 type BudgetDetailsProps = {
   budgetDetails: TBudget | null;
@@ -21,12 +21,12 @@ export const BudgetDetails = memo(({ budgetDetails }: BudgetDetailsProps) => {
     { label: "Budget Limit", value: budgetDetails.limit, className: "" },
     {
       label: "Amount Spent",
-      value: budgetDetails.spend,
+      value: budgetDetails.spent,
       className: "text-red-500",
     },
     {
       label: "Remaining",
-      value: budgetDetails.limit - budgetDetails.spend,
+      value: budgetDetails.limit - budgetDetails.spent,
       className: "text-green-500",
     },
   ];
@@ -35,7 +35,7 @@ export const BudgetDetails = memo(({ budgetDetails }: BudgetDetailsProps) => {
     <div className="p-5 bg-white border rounded-lg mb-20">
       <Text variant="h3">{budgetDetails.name}</Text>
       <Text variant="p5" className="text-primary">
-        {budgetDetails.category}
+        {budgetDetails?.category?.label}
       </Text>
       <div className="grid grid-cols-3 gap-4 my-6">
         {details.map((detail, index) => (

@@ -1,11 +1,12 @@
 import React, { memo } from "react";
 import { Button, Text } from "@/components/atoms";
-import { TBudget } from "../../data";
+
 import { BudgetItem } from "./components";
 import { FaPlus } from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { useRouter } from "next/navigation";
+import { TBudget } from "@/redux/features/budget";
 
 type BudgetListProps = {
   budgets: TBudget[];
