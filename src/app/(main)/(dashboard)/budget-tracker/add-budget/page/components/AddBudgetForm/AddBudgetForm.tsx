@@ -3,6 +3,7 @@
 import { Button, Text } from "@/components/atoms";
 import { FormInput, FormSelect, FormWrapper } from "@/components/form";
 import { useAppSelector } from "@/redux";
+import { useCreateBudgetMutation } from "@/redux/features/budget";
 import {
   getCateogryLoadingState,
   getExpenseCategories,
@@ -12,7 +13,9 @@ import { getCategoryOptions } from "@/utils";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 export const AddBudgetForm = () => {
+  // states
   const [isMounted, setIsMounted] = useState(false);
+  // hooks
   const incomeCategories = useAppSelector(getIncomeCategories);
   const expenseCategories = useAppSelector(getExpenseCategories);
   const isLoading = useAppSelector(getCateogryLoadingState);
@@ -21,10 +24,11 @@ export const AddBudgetForm = () => {
     () => getCategoryOptions(incomeCategories, expenseCategories, "Expense"),
     [incomeCategories, expenseCategories]
   );
+  // api hooks
+  const [createBudget, { isLoading: isBudgetCreateLoading }] =
+    useCreateBudgetMutation();
 
-  const handleSubmit = useCallback(() => {
-    const formData = {};
-  }, []);
+  const handleSubmit = useCallback(() => {}, []);
 
   useEffect(() => {
     setIsMounted(true);
@@ -57,7 +61,8 @@ export const AddBudgetForm = () => {
           htmlType="submit"
           customColor="primary"
           className="w-full !h-[44px] hover:bg-primary-dark transition duration-300 mt-4"
-          loading={isLoading}
+          loading={isLoading || isBudgetCreateLoading}
+          disabled={isBudgetCreateLoading || isBudgetCreateLoading}
         >
           <Text className="text-white" variant="p3">
             Submit
