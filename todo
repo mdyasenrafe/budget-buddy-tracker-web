@@ -21,3 +21,6 @@ dashboard:
 
 ui update
 
+bugs:
+    1. budget card need to slide on mobile device
+    2. need to add metric card on cards page
