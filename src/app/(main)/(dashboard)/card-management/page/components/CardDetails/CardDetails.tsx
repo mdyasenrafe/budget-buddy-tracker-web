@@ -40,15 +40,15 @@ export const CardDetails: React.FC<CardDetailsProps> = ({ selectedCard }) => {
         {
           data: [300, 150, 70, 80, 50],
           backgroundColor: [
-            colors.primaryBase,
             colors.secondary,
+            colors.primaryBase,
             colors.primaryLight1,
             colors.primaryLight2,
             colors.primaryLight3,
           ],
           hoverBackgroundColor: [
-            colors.primaryDark,
             colors.primaryBase,
+            colors.primaryDark,
             colors.primaryLight3,
             colors.primaryLight2,
             colors.primaryLight1,
