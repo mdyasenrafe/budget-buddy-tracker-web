@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { SectionHeader } from "@/components/molecules";
 import { EmptyCardState, MyCard } from "./components";
 import { TCard } from "@/redux/features/cardOverview";
@@ -17,6 +17,17 @@ export const CardManagementPage: React.FC = () => {
   const handleSelectedCard = useCallback((id: TCard) => {
     setSelectedCard(id);
   }, []);
+
+  useEffect(() => {
+    if (selectedCard && data?.data) {
+      const isCardValid = data?.data.some(
+        (card) => card._id === selectedCard._id
+      );
+      if (!isCardValid) {
+        setSelectedCard(null);
+      }
+    }
+  }, [selectedCard, data?.data]);
 
   return (
     <div>
