@@ -1,7 +1,11 @@
-import { Text } from "@/components/atoms";
+import { Button, Text } from "@/components/atoms";
 import { TCard } from "@/redux/features/cardOverview";
 import { formatCardNumber } from "@/utils";
+import { Dropdown, MenuProps } from "antd";
+import Link from "next/link";
 import React from "react";
+import { FiMoreVertical } from "react-icons/fi";
+import { CardOverviewDropdown } from "./components";
 
 interface CardOverviewProps {
   activeCard: TCard;
@@ -21,6 +25,7 @@ export const CardOverview: React.FC<CardOverviewProps> = ({
           <Text variant="h3">{activeCard.bankName}</Text>
         </div>
       )}
+      <CardOverviewDropdown selected={selected} activeCard={activeCard} />
       <div className="flex justify-center mt-4">
         <div
           className={`rounded-lg px-4 shadow-lg w-full max-w-[400px] py-6 h-full ${
