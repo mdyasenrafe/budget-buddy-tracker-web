@@ -18,7 +18,18 @@ const cardApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Card"],
     }),
+    deleteCard: build.mutation<TResponse<TCard>, string>({
+      query: (id) => ({
+        url: `/card/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Card"],
+    }),
   }),
 });
 
-export const { useGetCardsQuery, useCreateCardMutation } = cardApi;
+export const {
+  useGetCardsQuery,
+  useCreateCardMutation,
+  useDeleteCardMutation,
+} = cardApi;

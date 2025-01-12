@@ -1,7 +1,9 @@
 import { Button, Modal, Text } from "@/components/atoms";
+import { useDeleteCardMutation } from "@/redux/features/card";
 import { TCard } from "@/redux/features/cardOverview";
 import React from "react";
 import { HiOutlineExclamationTriangle } from "react-icons/hi2";
+import { toast } from "sonner";
 
 type CardDeleteModalProps = {
   isModalOpen: boolean;
@@ -14,6 +16,20 @@ export const CardDeleteModal: React.FC<CardDeleteModalProps> = ({
   closeModal,
   activeCard,
 }) => {
+  const [deleteCard, { isLoading }] = useDeleteCardMutation();
+  const handleDelete = async () => {
+    try {
+      const result = await deleteCard(activeCard?._id as string).unwrap();
+      closeModal();
+      toast.success(
+        `Successfully deleted the card: ${activeCard?.bankName} 🎉.`
+      );
+    } catch (err: any) {
+      const errorMessage =
+        err?.data?.message || "An unexpected error occurred. Please try again.";
+      toast.error(`Failed to add card: ${errorMessage}`);
+    }
+  };
   return (
     <Modal isModalOpen={isModalOpen} closeModal={closeModal} title="" centered>
       <div className="flex items-center justify-center flex-col">
@@ -29,10 +45,18 @@ export const CardDeleteModal: React.FC<CardDeleteModalProps> = ({
           </Text>
         </div>
         <div className="flex justify-between mt-6 w-full gap-x-8">
-          <Button className="!bg-white !h-[40px] !rounded-full w-full">
+          <Button
+            className="!bg-white !h-[40px] !rounded-full w-full"
+            onClick={closeModal}
+          >
             <Text>No, Keep it</Text>
           </Button>
-          <Button customColor="red" className=" !h-[40px] !rounded-full w-full">
+          <Button
+            customColor="red"
+            className=" !h-[40px] !rounded-full w-full"
+            onClick={handleDelete}
+            loading={isLoading}
+          >
             <Text color="white">Yes, Delete!</Text>
           </Button>
         </div>
