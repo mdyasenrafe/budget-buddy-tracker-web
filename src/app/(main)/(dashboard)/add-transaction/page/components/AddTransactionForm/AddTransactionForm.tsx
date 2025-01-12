@@ -16,9 +16,15 @@ import {
   getExpenseCategories,
   getIncomeCategories,
 } from "@/redux/features/category";
-import { formatCardSelectOptions, getCategoryOptions } from "@/utils";
+import {
+  formatBudgetSelectOptions,
+  formatCardSelectOptions,
+  getCategoryOptions,
+} from "@/utils";
 import { TCard } from "@/redux/features/cardOverview";
 import { useGetCardsQuery } from "@/redux/features/card";
+import { TBudget, useGetBudgetQuery } from "@/redux/features/budget";
+import dayjs from "dayjs";
 
 const transactionTypes = ["Income", "Expense"] as const;
 type TTransactionType = (typeof transactionTypes)[number];
@@ -33,6 +39,9 @@ export const AddTransactionForm: React.FC = () => {
   const isLoading = useAppSelector(getCateogryLoadingState);
   // api hooks
   const { data: cardsData, isLoading: isCardLoading } = useGetCardsQuery();
+  const { data: budgetsData, isLoading: isBudgetLoading } = useGetBudgetQuery(
+    dayjs().month()
+  );
 
   const categoryOptions = useMemo(
     () =>
@@ -45,6 +54,10 @@ export const AddTransactionForm: React.FC = () => {
   );
   const cardOptions = useMemo(
     () => formatCardSelectOptions(cardsData?.data as TCard[]),
+    [cardsData, isCardLoading]
+  );
+  const budgetOptions = useMemo(
+    () => formatBudgetSelectOptions(budgetsData?.data as TBudget[]),
     [cardsData, isCardLoading]
   );
 
@@ -96,6 +109,17 @@ export const AddTransactionForm: React.FC = () => {
         } category`}
         loading={isLoading}
       />
+
+      {selectedTransactionType == "Expense" && (
+        <FormSelect
+          name="budget"
+          label="Budget"
+          options={budgetOptions}
+          showSearch
+          placeholder={`Select the budget to track this expense`}
+          loading={isBudgetLoading}
+        />
+      )}
 
       <FormSelect
         name="card"
