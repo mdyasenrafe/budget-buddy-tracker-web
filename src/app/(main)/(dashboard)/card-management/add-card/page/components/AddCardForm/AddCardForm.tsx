@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useCallback } from "react";
 import { TCreateCardPayload } from "@/redux/features/card";
 import { formatExpireDate } from "@/utils/formatExpireDate";
