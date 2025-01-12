@@ -1,10 +1,7 @@
-import { Button, Text } from "@/components/atoms";
+import { Text } from "@/components/atoms";
 import { TCard } from "@/redux/features/cardOverview";
 import { formatCardNumber } from "@/utils";
-import { Dropdown, MenuProps } from "antd";
-import Link from "next/link";
 import React from "react";
-import { FiMoreVertical } from "react-icons/fi";
 import { CardOverviewDropdown } from "./components";
 
 interface CardOverviewProps {
