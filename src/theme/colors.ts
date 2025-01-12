@@ -13,6 +13,7 @@ export const colors = {
   primaryLight1: "#3E9C96",
   primaryLight2: "#4BB2AE",
   primaryLight3: "#5FC8C3",
+  red: "#FA3F56",
 };
 
 export type ColorKey = keyof typeof colors;
