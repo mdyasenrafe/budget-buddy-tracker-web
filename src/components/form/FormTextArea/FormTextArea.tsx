@@ -37,7 +37,7 @@ export const FormTextArea: React.FC<TFormTextAreaProps> = ({
               className="font-poppins text-[14px]"
             />
             {error && (
-              <Text variant={"p5"} style={{ color: "red" }} className="mt-2">
+              <Text variant={"p5"} className="mt-2" color="red">
                 {error.message}
               </Text>
             )}
