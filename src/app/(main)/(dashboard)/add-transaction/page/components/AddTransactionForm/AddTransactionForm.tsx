@@ -98,7 +98,6 @@ export const AddTransactionForm: React.FC = () => {
         label="Title"
         placeholder="Enter transaction title (e.g., Salary, Rent)"
       />
-
       <FormSelect
         name="category"
         label="Category"
@@ -108,6 +107,14 @@ export const AddTransactionForm: React.FC = () => {
           selectedTransactionType === "Income" ? "income" : "expense"
         } category`}
         loading={isLoading}
+      />
+      <FormInput
+        name="amount"
+        type="number"
+        label="Amount"
+        placeholder={`Enter ${
+          selectedTransactionType === "Income" ? "income" : "expense"
+        } amount`}
       />
 
       {selectedTransactionType == "Expense" && (
@@ -148,6 +155,15 @@ export const AddTransactionForm: React.FC = () => {
           selectedTransactionType === "Income" ? "proof of income" : "receipt"
         }`}
       />
+      <Button
+        htmlType="submit"
+        customColor="primary"
+        className="w-full !h-[44px] hover:bg-primary-dark transition duration-300 mt-4"
+      >
+        <Text className="text-white" variant="p3">
+          Submit
+        </Text>
+      </Button>
     </FormWrapper>
   );
 };
