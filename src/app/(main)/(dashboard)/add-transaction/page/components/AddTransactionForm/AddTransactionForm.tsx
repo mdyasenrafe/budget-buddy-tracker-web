@@ -25,6 +25,10 @@ import { TCard } from "@/redux/features/cardOverview";
 import { useGetCardsQuery } from "@/redux/features/card";
 import { TBudget, useGetBudgetQuery } from "@/redux/features/budget";
 import dayjs from "dayjs";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { TAddTransactionFormValues, addTransactionSchema } from "@/schema";
+import { toast } from "sonner";
+import { useFileUploadMutation } from "@/api/updloadApi";
 
 const transactionTypes = ["Income", "Expense"] as const;
 type TTransactionType = (typeof transactionTypes)[number];
@@ -42,6 +46,7 @@ export const AddTransactionForm: React.FC = () => {
   const { data: budgetsData, isLoading: isBudgetLoading } = useGetBudgetQuery(
     dayjs().month()
   );
+  const [imageUpload, { isLoading: imageLoading }] = useFileUploadMutation();
 
   const categoryOptions = useMemo(
     () =>
@@ -65,12 +70,29 @@ export const AddTransactionForm: React.FC = () => {
     setSelectedTransactionType(type);
   }, []);
 
-  const handleSubmit = useCallback(() => {
-    const formData = {};
+  const handleSubmit = useCallback(async (data: TAddTransactionFormValues) => {
+    try {
+      if (data.photo) {
+        const thumbRes = await imageUpload({ file: data.photo }).unwrap();
+        if (thumbRes?.data?.url) {
+          data.photo = thumbRes.data.url;
+        } else {
+          toast.error("Something went wrong! Please try again");
+          return;
+        }
+      }
+    } catch (err: any) {
+      const errorMessage =
+        err?.data?.message || "An unexpected error occurred. Please try again.";
+      toast.error(errorMessage);
+    }
   }, []);
 
   return (
-    <FormWrapper onSubmit={handleSubmit}>
+    <FormWrapper
+      onSubmit={handleSubmit}
+      resolver={zodResolver(addTransactionSchema)}
+    >
       <Text variant="p3" className="!font-semibold !mb-3">
         Transaction Type
       </Text>

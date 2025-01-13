@@ -10,10 +10,7 @@ export const addTransactionSchema = z.object({
   budget: z.string().optional(),
   card: z.string().optional(),
   date: z.date({ invalid_type_error: "Invalid date format" }),
-  description: z
-    .string()
-    .max(500, "Description cannot exceed 500 characters")
-    .optional(),
+  description: z.string().max(500, "Description cannot exceed 500 characters"),
   photo: z.any().optional().nullable(),
 });
 
