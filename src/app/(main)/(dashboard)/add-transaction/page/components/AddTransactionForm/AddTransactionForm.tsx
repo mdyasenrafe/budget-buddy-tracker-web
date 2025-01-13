@@ -29,6 +29,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { TAddTransactionFormValues, addTransactionSchema } from "@/schema";
 import { toast } from "sonner";
 import { useFileUploadMutation } from "@/api/updloadApi";
+import {
+  TTransactionCreatePayload,
+  TTransactionTypeValue,
+} from "@/redux/features/transaction";
 
 const transactionTypes = ["Income", "Expense"] as const;
 type TTransactionType = (typeof transactionTypes)[number];
@@ -81,6 +85,15 @@ export const AddTransactionForm: React.FC = () => {
           return;
         }
       }
+      const payload: TTransactionCreatePayload = {
+        ...data,
+        attachment: data?.photo,
+        type: selectedTransactionType.toLowerCase() as TTransactionTypeValue,
+        status: "active",
+        amount: Number(data?.amount),
+        date: data?.date as Date,
+      };
+      console.log(payload);
     } catch (err: any) {
       const errorMessage =
         err?.data?.message || "An unexpected error occurred. Please try again.";

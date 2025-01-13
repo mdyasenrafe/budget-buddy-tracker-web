@@ -22,17 +22,16 @@ export type TTransaction = {
 };
 
 export const TTransactionStatusValues = ["active", "deleted"] as const;
-export const TTransactionTypeValues = ["income", "expense"] as const;
+export type TTransactionTypeValue = "income" | "expense";
 
 export type TTransactionCreatePayload = {
   title: string;
   description: string;
   amount: number;
   date: Date;
-  type: (typeof TTransactionTypeValues)[number];
+  type: TTransactionTypeValue;
   budget?: string;
   category: string;
-  user: string;
   card?: string;
   status: (typeof TTransactionStatusValues)[number];
   attachment?: string;
