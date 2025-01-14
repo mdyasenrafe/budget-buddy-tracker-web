@@ -32,6 +32,7 @@ import { useFileUploadMutation } from "@/api/updloadApi";
 import {
   TTransactionCreatePayload,
   TTransactionTypeValue,
+  useCreateTransactionMutation,
 } from "@/redux/features/transaction";
 
 const transactionTypes = ["Income", "Expense"] as const;
@@ -51,6 +52,8 @@ export const AddTransactionForm: React.FC = () => {
     dayjs().month()
   );
   const [imageUpload, { isLoading: imageLoading }] = useFileUploadMutation();
+  const [addTransaction, { isLoading: transactionLoading }] =
+    useCreateTransactionMutation();
 
   const categoryOptions = useMemo(
     () =>
@@ -93,7 +96,8 @@ export const AddTransactionForm: React.FC = () => {
         amount: Number(data?.amount),
         date: data?.date as Date,
       };
-      console.log(payload);
+      const res = await addTransaction(payload).unwrap();
+      toast.success("Transaction added successfully! 🎉 ");
     } catch (err: any) {
       const errorMessage =
         err?.data?.message || "An unexpected error occurred. Please try again.";
