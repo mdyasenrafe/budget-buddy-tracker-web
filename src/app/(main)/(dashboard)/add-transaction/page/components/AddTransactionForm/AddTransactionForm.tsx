@@ -76,34 +76,40 @@ export const AddTransactionForm: React.FC = () => {
   const handleTransactionTypeSelect = useCallback((type: TTransactionType) => {
     setSelectedTransactionType(type);
   }, []);
-
-  const handleSubmit = useCallback(async (data: TAddTransactionFormValues) => {
-    try {
-      if (data.photo) {
-        const thumbRes = await imageUpload({ file: data.photo }).unwrap();
-        if (thumbRes?.data?.url) {
-          data.photo = thumbRes.data.url;
-        } else {
-          toast.error("Something went wrong! Please try again");
-          return;
+  console.log(selectedTransactionType);
+  const handleSubmit = useCallback(
+    async (data: TAddTransactionFormValues) => {
+      try {
+        if (data.photo) {
+          const thumbRes = await imageUpload({ file: data.photo }).unwrap();
+          if (thumbRes?.data?.url) {
+            data.photo = thumbRes.data.url;
+          } else {
+            toast.error("Something went wrong! Please try again");
+            return;
+          }
         }
+
+        const payload: TTransactionCreatePayload = {
+          ...data,
+          attachment: data?.photo,
+          type: selectedTransactionType.toLowerCase() as TTransactionTypeValue,
+          status: "active",
+          amount: Number(data?.amount),
+          date: data?.date as Date,
+        };
+        console.log(payload);
+        // const res = await addTransaction(payload).unwrap();
+        // toast.success("Transaction added successfully! 🎉 ");
+      } catch (err: any) {
+        const errorMessage =
+          err?.data?.message ||
+          "An unexpected error occurred. Please try again.";
+        toast.error(errorMessage);
       }
-      const payload: TTransactionCreatePayload = {
-        ...data,
-        attachment: data?.photo,
-        type: selectedTransactionType.toLowerCase() as TTransactionTypeValue,
-        status: "active",
-        amount: Number(data?.amount),
-        date: data?.date as Date,
-      };
-      const res = await addTransaction(payload).unwrap();
-      toast.success("Transaction added successfully! 🎉 ");
-    } catch (err: any) {
-      const errorMessage =
-        err?.data?.message || "An unexpected error occurred. Please try again.";
-      toast.error(errorMessage);
-    }
-  }, []);
+    },
+    [selectedTransactionType]
+  );
 
   return (
     <FormWrapper
@@ -198,6 +204,7 @@ export const AddTransactionForm: React.FC = () => {
         htmlType="submit"
         customColor="primary"
         className="w-full !h-[44px] hover:bg-primary-dark transition duration-300 mt-4"
+        loading={imageLoading || transactionLoading}
       >
         <Text className="text-white" variant="p3">
           Submit
