@@ -24,6 +24,7 @@ export const transactionService = baseApi.injectEndpoints({
         method: "POST",
         body: payload,
       }),
+      invalidatesTags: ["Transaction"],
     }),
   }),
 });

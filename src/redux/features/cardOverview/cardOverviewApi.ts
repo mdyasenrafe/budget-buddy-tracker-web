@@ -20,7 +20,7 @@ export const cardOverviewApi = baseApi.injectEndpoints({
         url: "/card-overview",
         method: "GET",
       }),
-      providesTags: ["CardOverview", "Card"],
+      providesTags: ["CardOverview", "Card", "Transaction"],
       onQueryStarted: async (arg, { dispatch, queryFulfilled }) => {
         try {
           const { data } = await queryFulfilled;
