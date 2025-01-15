@@ -99,8 +99,8 @@ export const AddTransactionForm: React.FC = () => {
           date: data?.date as Date,
         };
         console.log(payload);
-        // const res = await addTransaction(payload).unwrap();
-        // toast.success("Transaction added successfully! 🎉 ");
+        const res = await addTransaction(payload).unwrap();
+        toast.success("Transaction added successfully! 🎉 ");
       } catch (err: any) {
         const errorMessage =
           err?.data?.message ||
