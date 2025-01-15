@@ -58,7 +58,10 @@ export const BudgetDetails = memo(({ budgetDetails }: BudgetDetailsProps) => {
         </div>
       </div>
 
-      <BudgetSpendingTrendChart budgetId={budgetDetails?._id} />
+      <BudgetSpendingTrendChart
+        budgetId={budgetDetails?._id}
+        key={budgetDetails?._id}
+      />
     </div>
   );
 });

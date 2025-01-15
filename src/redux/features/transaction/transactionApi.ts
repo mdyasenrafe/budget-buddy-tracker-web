@@ -1,6 +1,10 @@
 import { baseApi } from "@/api/baseApi";
 import { TQueryParams, TResponse } from "../types";
-import { TTransaction, TTransactionCreatePayload } from ".";
+import {
+  TTransaction,
+  TTransactionCreatePayload,
+  TWeeklyBudgetTransactionsParams,
+} from ".";
 
 export const transactionService = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -14,6 +18,17 @@ export const transactionService = baseApi.injectEndpoints({
         }
         return { url: "/transaction", params: params };
       },
+      providesTags: ["Transaction"],
+    }),
+    getWeeklyBudgetTransactions: builder.query<
+      TResponse<number[]>,
+      TWeeklyBudgetTransactionsParams
+    >({
+      query: ({ budgetId, year, monthIndex, timezone }) => ({
+        url: `/transaction/weekly-budget-transactions/${budgetId}`,
+        params: { year, monthIndex, timezone },
+      }),
+      providesTags: ["Transaction"],
     }),
     createTransaction: builder.mutation<
       TResponse<TTransaction>,
@@ -29,5 +44,8 @@ export const transactionService = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetTransactionsQuery, useCreateTransactionMutation } =
-  transactionService;
+export const {
+  useGetTransactionsQuery,
+  useCreateTransactionMutation,
+  useGetWeeklyBudgetTransactionsQuery,
+} = transactionService;

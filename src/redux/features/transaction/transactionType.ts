@@ -36,3 +36,10 @@ export type TTransactionCreatePayload = {
   status: (typeof TTransactionStatusValues)[number];
   attachment?: string;
 };
+
+export type TWeeklyBudgetTransactionsParams = {
+  budgetId: string;
+  year: number;
+  monthIndex: number;
+  timezone: string;
+};
