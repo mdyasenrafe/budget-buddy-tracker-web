@@ -1,10 +1,8 @@
 import React, { memo } from "react";
 import { Text } from "@/components/atoms";
-import { colors } from "@/theme";
-import { LineChart } from "@/components/molecules/chart";
 import { TBudget } from "@/redux/features/budget";
 import { BudgetDetailCard, BudgetDetailSwiper } from "./components";
-import { ChartCard } from "@/components/molecules";
+import { BudgetSpendingTrendChart } from "@/components/organism/chart";
 
 type BudgetDetailsProps = {
   budgetDetails: TBudget | null;
@@ -60,23 +58,7 @@ export const BudgetDetails = memo(({ budgetDetails }: BudgetDetailsProps) => {
         </div>
       </div>
 
-      <ChartCard title="Spending Trend">
-        <LineChart
-          labels={["Week 1", "Week 2", "Week 3", "Week 4"]}
-          datasets={[
-            {
-              label: "Spending",
-              data: [0, 0, 2000, 0, 20],
-              backgroundColor: "rgba(75,192,192,0.4)",
-              borderColor: "rgba(75,192,192,1)",
-              pointBackgroundColor: colors.grey,
-              pointBorderColor: colors.grey,
-              pointHoverBackgroundColor: colors.grey,
-              pointHoverBorderColor: colors.grey,
-            },
-          ]}
-        />
-      </ChartCard>
+      <BudgetSpendingTrendChart budgetId={budgetDetails?._id} />
     </div>
   );
 });
