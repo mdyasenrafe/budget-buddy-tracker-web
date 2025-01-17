@@ -21,7 +21,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
         {showEdit && (
           <div className="flex justify-end">
             <TransactionItemDropdown
-              transactionId={transaction?._id as string}
+              transaction={transaction as TTransaction}
             />
           </div>
         )}

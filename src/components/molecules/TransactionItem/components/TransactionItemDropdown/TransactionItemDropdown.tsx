@@ -1,18 +1,26 @@
 import { Text } from "@/components/atoms";
+import { TransactionViewModal } from "@/components/molecules/modals";
+import { useModal } from "@/hooks";
+import { TTransaction } from "@/redux/features/transaction";
 import { Dropdown, MenuProps } from "antd";
 import Link from "next/link";
 import React from "react";
-import { FiMoreHorizontal, FiMoreVertical } from "react-icons/fi";
+import { FiMoreHorizontal } from "react-icons/fi";
 
 type Props = {
-  transactionId: string;
+  transaction: TTransaction;
 };
 
-export const TransactionItemDropdown: React.FC<Props> = ({ transactionId }) => {
+export const TransactionItemDropdown: React.FC<Props> = ({ transaction }) => {
+  const { openModal, isModalOpen, closeModal } = useModal();
   const menuItems: MenuProps["items"] = [
     {
       key: "1",
-      label: <Text>View</Text>,
+      label: (
+        <Text className="!cursor-pointer" onClick={openModal}>
+          View
+        </Text>
+      ),
     },
     {
       key: "2",
@@ -28,6 +36,13 @@ export const TransactionItemDropdown: React.FC<Props> = ({ transactionId }) => {
           color={"black"}
         />
       </Dropdown>
+      {isModalOpen && (
+        <TransactionViewModal
+          isModalOpen={isModalOpen}
+          closeModal={closeModal}
+          transaction={transaction}
+        />
+      )}
     </>
   );
 };
