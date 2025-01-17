@@ -8,6 +8,7 @@ import {
 import { Text } from "@/components/atoms";
 import { ChartCard } from "@/components/molecules";
 import { colors } from "@/theme";
+import { CardTransactions } from "./components";
 
 type CardDetailsProps = {
   selectedCard: TCard;
@@ -100,6 +101,12 @@ export const CardDetails: React.FC<CardDetailsProps> = ({ selectedCard }) => {
           <div></div>
         </ChartCard>
       </div>
+      <ChartCard title="Transaction History" className=" mt-6">
+        <CardTransactions
+          selectedCardId={selectedCard?._id}
+          key={selectedCard?._id}
+        />
+      </ChartCard>
     </div>
   );
 };

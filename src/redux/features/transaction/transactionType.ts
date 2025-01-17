@@ -9,7 +9,7 @@ export type TTransaction = {
   description: string;
   amount: number;
   date: string;
-  type: string;
+  type: TTransactionTypeValue;
   category: TCategory;
   user: TUser;
   card: TCard;

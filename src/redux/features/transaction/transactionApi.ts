@@ -8,7 +8,7 @@ import {
 
 export const transactionService = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getTransactions: builder.query<TResponse<TTransaction>, TQueryParams[]>({
+    getTransactions: builder.query<TResponse<TTransaction[]>, TQueryParams[]>({
       query: (args) => {
         const params = new URLSearchParams();
         if (args) {
