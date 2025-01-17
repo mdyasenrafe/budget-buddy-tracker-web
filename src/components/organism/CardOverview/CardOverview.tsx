@@ -8,12 +8,14 @@ interface CardOverviewProps {
   activeCard: TCard;
   showHeaderBankName?: boolean;
   selected?: boolean;
+  showEdit?: boolean;
 }
 
 export const CardOverview: React.FC<CardOverviewProps> = ({
   activeCard,
   showHeaderBankName = false,
   selected = false,
+  showEdit = true,
 }) => {
   return (
     <div className="h-full w-full">
@@ -22,7 +24,9 @@ export const CardOverview: React.FC<CardOverviewProps> = ({
           <Text variant="h3">{activeCard.bankName}</Text>
         </div>
       )}
-      <CardOverviewDropdown selected={selected} activeCard={activeCard} />
+      {showEdit && (
+        <CardOverviewDropdown selected={selected} activeCard={activeCard} />
+      )}
       <div className="flex justify-center mt-4">
         <div
           className={`rounded-lg px-4 shadow-lg w-full max-w-[400px] py-6 h-full ${

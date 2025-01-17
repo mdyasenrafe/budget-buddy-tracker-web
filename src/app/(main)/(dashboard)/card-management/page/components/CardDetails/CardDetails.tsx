@@ -101,7 +101,7 @@ export const CardDetails: React.FC<CardDetailsProps> = ({ selectedCard }) => {
           <div></div>
         </ChartCard>
       </div>
-      <ChartCard title="Transaction History" className=" mt-6">
+      <ChartCard title="Transaction History" className=" mt-6 !mb-20">
         <CardTransactions
           selectedCardId={selectedCard?._id}
           key={selectedCard?._id}

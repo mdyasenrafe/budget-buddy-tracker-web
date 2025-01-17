@@ -8,6 +8,7 @@ import { Table } from "antd";
 import { AiOutlineEye, AiOutlineDelete } from "react-icons/ai";
 import dayjs from "dayjs";
 import React from "react";
+import { TransactionItem } from "@/components/molecules";
 
 type CardTransactionsProps = {
   selectedCardId: string;
@@ -51,7 +52,12 @@ export const CardTransactions: React.FC<CardTransactionsProps> = ({
       dataIndex: "amount",
       key: "amount",
       render: (amount: number, item: TTransaction) => (
-        <Text variant="p4" color={item.type === "expense" ? "red" : "primary"}>
+        <Text
+          variant="p4"
+          className={`${
+            item?.type == "expense" ? "text-red-500" : "text-green-500"
+          }`}
+        >
           {item?.type === "expense" ? "-" : "+"}${amount.toFixed(2)}
         </Text>
       ),
@@ -89,12 +95,23 @@ export const CardTransactions: React.FC<CardTransactionsProps> = ({
   ];
 
   return (
-    <Table
-      dataSource={data?.data.map((txn) => ({ ...txn, key: txn._id }))}
-      columns={columns}
-      pagination={{ pageSize: 5 }}
-      loading={isLoading}
-      scroll={{ x: "100%" }}
-    />
+    <div>
+      <div className="hidden lg:block">
+        <Table
+          dataSource={data?.data.map((txn) => ({ ...txn, key: txn._id }))}
+          columns={columns}
+          pagination={{ pageSize: 5 }}
+          loading={isLoading}
+          scroll={{ x: "100%" }}
+        />
+      </div>
+      <div className="block lg:hidden">
+        {data?.data.map((txn) => (
+          <div key={txn._id}>
+            <TransactionItem transaction={txn} showEdit={true} />
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
