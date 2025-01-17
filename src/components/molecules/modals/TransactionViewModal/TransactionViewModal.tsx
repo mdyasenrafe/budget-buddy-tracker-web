@@ -13,6 +13,19 @@ type TransactionViewModalProps = {
   closeModal: () => void;
 };
 
+const DetailRow: React.FC<{
+  label: string;
+  value: string;
+  valueClassName?: string;
+}> = ({ label, value, valueClassName = "" }) => (
+  <div className="flex justify-between mb-3">
+    <Text variant="p5" className="text-gray-600">
+      {label}
+    </Text>
+    <Text className={`font-semibold ${valueClassName}`}>{value}</Text>
+  </div>
+);
+
 export const TransactionViewModal: React.FC<TransactionViewModalProps> = ({
   transaction,
   isModalOpen,
@@ -20,7 +33,6 @@ export const TransactionViewModal: React.FC<TransactionViewModalProps> = ({
 }) => {
   const isExpense = transaction.type === "expense";
 
-  // Dynamic icon and colors
   const icon = isExpense ? HiOutlineArrowDownCircle : HiOutlineArrowUpCircle;
   const iconColor = isExpense ? "red" : "green";
   const bgColor = isExpense ? "bg-red-100" : "bg-green-100";
@@ -49,62 +61,33 @@ export const TransactionViewModal: React.FC<TransactionViewModalProps> = ({
         </div>
 
         <div className="w-full bg-gray-50 border rounded-lg p-4 shadow">
-          <div className="flex justify-between items-center mb-3">
-            <div>
-              <Text variant="p5" className="text-gray-600">
-                Amount
-              </Text>
-              <Text
-                className={`${
-                  isExpense ? "text-red-500" : "text-green-500"
-                } font-semibold`}
-              >
-                {isExpense ? "-" : "+"}৳{transaction.amount}
-              </Text>
-            </div>
-            <div>
-              <Text variant="p5" className="text-gray-600">
-                Category
-              </Text>
-              <Text className="!font-semibold">
-                {transaction.category?.label}
-              </Text>
-            </div>
-          </div>
-          <div className="mb-3">
-            <Text variant="p4" className="text-gray-600">
-              Date
-            </Text>
-            <Text className="text-gray-900">
-              {new Date(transaction.date).toLocaleDateString()}
-            </Text>
-          </div>
-          <div className="flex justify-between mb-3 ">
-            {transaction?.budget && (
-              <div className={`${!transaction?.budget ? "w-full" : "w-[45%]"}`}>
-                <Text variant="p5" className="text-gray-600">
-                  Budget
-                </Text>
-                <Text className="!font-semibold">
-                  {transaction?.budget?.name}
-                </Text>
-              </div>
-            )}
-            {transaction?.card && (
-              <div className={`${!transaction?.budget ? "w-full" : "w-[45%]"}`}>
-                <Text variant="p5" className="text-gray-600">
-                  Card
-                </Text>
-                <Text className="!font-semibold">
-                  {transaction?.card?.bankName}
-                </Text>
-              </div>
-            )}
-          </div>
+          <DetailRow
+            label="Amount"
+            value={`${isExpense ? "-" : "+"}৳${transaction.amount}`}
+            valueClassName={isExpense ? "text-red-500" : "text-green-500"}
+          />
+          <DetailRow
+            label="Category"
+            value={transaction.category?.label || "N/A"}
+          />
+          <DetailRow
+            label="Date"
+            value={new Date(transaction.date).toLocaleDateString()}
+          />
+
+          {/* Budget and Card Info */}
+          {transaction.budget && (
+            <DetailRow label="Budget" value={transaction.budget.name} />
+          )}
+          {transaction.card && (
+            <DetailRow label="Card" value={transaction.card.bankName} />
+          )}
         </div>
+
         <Button
           customColor="primary"
-          className=" !h-[40px] !rounded-full w-full"
+          className="!h-[40px] !rounded-full w-full"
+          onClick={closeModal}
         >
           <Text color="white">Close</Text>
         </Button>
