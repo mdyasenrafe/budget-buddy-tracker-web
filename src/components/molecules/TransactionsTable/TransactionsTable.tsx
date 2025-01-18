@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { Table } from "antd";
 import { AiOutlineEye, AiOutlineDelete } from "react-icons/ai";
