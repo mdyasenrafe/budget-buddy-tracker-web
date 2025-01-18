@@ -18,13 +18,15 @@ dashboard:
         category analysis
         transcation history
 
-
-we need to add monthly income and expense to metric
-
-ui update
+        feat:
+        we need to add monthly income and expense to metric
 
 
 
     next task:
-    add a delete modal for transaction with proper
+    completed edit and deleted card feature for card management page
+    ui updaetd for budget metric like (card metric or dashboard metric)
+    added transaction history for budget
+    added edit and delete feature for budget list
+    
     
