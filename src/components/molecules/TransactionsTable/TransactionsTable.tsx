@@ -7,7 +7,8 @@ import { TTransaction } from "@/redux/features/transaction";
 import { TCard } from "@/redux/features/cardOverview";
 import { TResponse } from "@/redux/features/types";
 import { TransactionItem } from "..";
-import { TPagination } from "@/types";
+import { useModal } from "@/hooks";
+import { TransactionViewModal } from "../modals";
 
 type TransactionsTableProps = {
   data: TResponse<TTransaction[]>;
@@ -20,6 +21,14 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({
   isLoading,
   onTableChange,
 }) => {
+  const [selectedTransaction, setSelectedTransaction] =
+    useState<TTransaction | null>(null);
+  const {
+    openModal: openViewModal,
+    isModalOpen: viewModalOpen,
+    closeModal: closeViewModal,
+  } = useModal();
+
   const columns = [
     {
       title: "Date",
@@ -73,7 +82,10 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({
                 color: "#1890ff",
               }}
               title="View"
-              onClick={() => console.log("View action for:", record)}
+              onClick={() => {
+                setSelectedTransaction(record); // Set the selected transaction
+                openViewModal(); // Open the modal
+              }}
             />
           </div>
           <div className="action-icon">
@@ -115,6 +127,14 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({
           </div>
         ))}
       </div>
+
+      {selectedTransaction && viewModalOpen && (
+        <TransactionViewModal
+          transaction={selectedTransaction}
+          isModalOpen={viewModalOpen}
+          closeModal={closeViewModal}
+        />
+      )}
     </div>
   );
 };
