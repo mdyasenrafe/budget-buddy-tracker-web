@@ -10,7 +10,7 @@ import { TCard } from "@/redux/features/cardOverview";
 import { TResponse } from "@/redux/features/types";
 import { TransactionItem } from "..";
 import { useModal } from "@/hooks";
-import { TransactionViewModal } from "../modals";
+import { TransactionViewModal, DeleteModal } from "../modals";
 
 type TransactionsTableProps = {
   data: TResponse<TTransaction[]>;
@@ -25,11 +25,33 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({
 }) => {
   const [selectedTransaction, setSelectedTransaction] =
     useState<TTransaction | null>(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
   const {
     openModal: openViewModal,
     isModalOpen: viewModalOpen,
     closeModal: closeViewModal,
   } = useModal();
+
+  const handleOpenDeleteModal = (transaction: TTransaction) => {
+    setSelectedTransaction(transaction);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setSelectedTransaction(null);
+    setIsDeleteModalOpen(false);
+  };
+
+  const handleDeleteConfirm = async () => {
+    try {
+      console.log("Deleting transaction:", selectedTransaction);
+      // Add your delete API call here
+      handleCloseDeleteModal();
+    } catch (error) {
+      console.error("Error deleting transaction:", error);
+    }
+  };
 
   const columns = [
     {
@@ -98,7 +120,7 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({
                 color: "red",
               }}
               title="Delete"
-              onClick={() => console.log("Delete action for:", record)}
+              onClick={() => handleOpenDeleteModal(record)}
             />
           </div>
         </div>
@@ -135,6 +157,24 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({
           transaction={selectedTransaction}
           isModalOpen={viewModalOpen}
           closeModal={closeViewModal}
+        />
+      )}
+
+      {selectedTransaction && isDeleteModalOpen && (
+        <DeleteModal
+          isModalOpen={isDeleteModalOpen}
+          closeModal={handleCloseDeleteModal}
+          title="Delete Transaction?"
+          content={
+            <Text variant="p3" className="mt-2 text-gray-600">
+              Are you sure you want to delete the transaction{" "}
+              <span className="font-semibold">
+                "{selectedTransaction.title}"
+              </span>
+              ? This action cannot be undone.
+            </Text>
+          }
+          onConfirm={handleDeleteConfirm}
         />
       )}
     </div>
