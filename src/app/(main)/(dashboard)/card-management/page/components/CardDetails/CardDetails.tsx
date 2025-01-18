@@ -8,7 +8,7 @@ import {
 import { Text } from "@/components/atoms";
 import { ChartCard } from "@/components/molecules";
 import { colors } from "@/theme";
-import { CardMetrics, CardTransactions } from "./components";
+import { CardMetrics, CardTransactions, CardTrendChart } from "./components";
 
 type CardDetailsProps = {
   selectedCard: TCard;
@@ -60,25 +60,6 @@ export const CardDetails: React.FC<CardDetailsProps> = ({ selectedCard }) => {
     []
   );
 
-  const lineChartData = useMemo(
-    () => ({
-      labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
-      datasets: [
-        {
-          label: "Spending",
-          data: [100, 200, 280, 100],
-          backgroundColor: "rgba(75,192,192,0.4)",
-          borderColor: "rgba(75,192,192,1)",
-          pointBackgroundColor: colors.grey,
-          pointBorderColor: colors.grey,
-          pointHoverBackgroundColor: colors.grey,
-          pointHoverBorderColor: colors.grey,
-        },
-      ],
-    }),
-    []
-  );
-
   return (
     <div className="mt-10">
       <div className="border py-3 rounded-md flex items-center justify-center my-6 px-3 lg:px-0">
@@ -89,9 +70,7 @@ export const CardDetails: React.FC<CardDetailsProps> = ({ selectedCard }) => {
         <ChartCard title="Spending vs. Income">
           <BarChart {...barChartData} />
         </ChartCard>
-        <ChartCard title="Balance Trend" className="mt-6 lg:mt-0">
-          <LineChart {...lineChartData} />
-        </ChartCard>
+        <CardTrendChart cardId={selectedCard?._id} />
         <ChartCard
           title="Spending Categories"
           className="row-span-2 mt-6 lg:mt-0"
