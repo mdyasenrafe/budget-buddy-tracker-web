@@ -13,7 +13,7 @@ type TBudgetSpendingTrendChartProps = {
 export const BudgetSpendingTrendChart: React.FC<
   TBudgetSpendingTrendChartProps
 > = ({ budgetId }) => {
-  const { data, isLoading, error } = useGetWeeklyBudgetTransactionsQuery({
+  const { data, isLoading, isFetching } = useGetWeeklyBudgetTransactionsQuery({
     id: budgetId,
     year: CURRENTYEAR,
     monthIndex: CURRENTMONTHINDEX,
@@ -24,7 +24,7 @@ export const BudgetSpendingTrendChart: React.FC<
   const labels = weeklySpending.map((_, index) => `Week ${index + 1}`);
 
   return (
-    <ChartCard title="Spending Trend">
+    <ChartCard title="Spending Trend" loading={isLoading || isFetching}>
       {isLoading ? (
         <LoadingSpinner />
       ) : (
