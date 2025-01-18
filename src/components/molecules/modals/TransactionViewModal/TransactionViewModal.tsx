@@ -84,6 +84,21 @@ export const TransactionViewModal: React.FC<TransactionViewModalProps> = ({
           )}
         </div>
 
+        {transaction.attachment && (
+          <div className="w-full mt-4">
+            <Text variant="h4" className=" mb-2">
+              Attachment
+            </Text>
+            <div className="w-full flex justify-center">
+              <img
+                src={transaction.attachment}
+                alt="Transaction Attachment"
+                className="max-w-full rounded-lg border shadow-sm"
+              />
+            </div>
+          </div>
+        )}
+
         <Button
           customColor="primary"
           className="!h-[40px] !rounded-full w-full"
