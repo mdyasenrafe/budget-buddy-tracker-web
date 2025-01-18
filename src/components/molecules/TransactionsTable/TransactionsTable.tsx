@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { Table } from "antd";
-import { AiOutlineEye, AiOutlineDelete } from "react-icons/ai";
 import dayjs from "dayjs";
 import { Text } from "@/components/atoms";
 import { TTransaction } from "@/redux/features/transaction";
@@ -11,6 +10,8 @@ import { TResponse } from "@/redux/features/types";
 import { TransactionItem } from "..";
 import { useModal } from "@/hooks";
 import { TransactionViewModal, DeleteModal } from "../modals";
+import { AiOutlineEye, AiOutlineDelete } from "react-icons/ai";
+import { TransactionDeleteModalWrapper } from "./components";
 
 type TransactionsTableProps = {
   data: TResponse<TTransaction[]>;
@@ -25,114 +26,102 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({
 }) => {
   const [selectedTransaction, setSelectedTransaction] =
     useState<TTransaction | null>(null);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
 
   const {
     openModal: openViewModal,
-    isModalOpen: viewModalOpen,
+    isModalOpen: isViewModalOpen,
     closeModal: closeViewModal,
   } = useModal();
 
-  const handleOpenDeleteModal = (transaction: TTransaction) => {
+  const openDeleteModal = useCallback((transaction: TTransaction) => {
     setSelectedTransaction(transaction);
-    setIsDeleteModalOpen(true);
-  };
+    setDeleteModalVisible(true);
+  }, []);
 
-  const handleCloseDeleteModal = () => {
+  const closeDeleteModal = useCallback(() => {
     setSelectedTransaction(null);
-    setIsDeleteModalOpen(false);
-  };
+    setDeleteModalVisible(false);
+  }, []);
 
-  const handleDeleteConfirm = async () => {
-    try {
-      console.log("Deleting transaction:", selectedTransaction);
-      // Add your delete API call here
-      handleCloseDeleteModal();
-    } catch (error) {
-      console.error("Error deleting transaction:", error);
-    }
-  };
-
-  const columns = [
-    {
-      title: "Date",
-      dataIndex: "date",
-      key: "date",
-      render: (text: string) => (
-        <Text variant="p4">{dayjs(text).format("DD MMM, YYYY")}</Text>
-      ),
-    },
-    {
-      title: "Title",
-      dataIndex: "title",
-      key: "title",
-      render: (text: string) => <Text variant="p4">{text}</Text>,
-    },
-    {
-      title: "Method",
-      dataIndex: "card",
-      key: "card",
-      render: (card: TCard) => (
-        <div>
+  const columns = useMemo(
+    () => [
+      {
+        title: "Date",
+        dataIndex: "date",
+        key: "date",
+        render: (text: string) => (
+          <Text variant="p4">{dayjs(text).format("DD MMM, YYYY")}</Text>
+        ),
+      },
+      {
+        title: "Title",
+        dataIndex: "title",
+        key: "title",
+        render: (text: string) => <Text variant="p4">{text}</Text>,
+      },
+      {
+        title: "Method",
+        dataIndex: "card",
+        key: "card",
+        render: (card: TCard) => (
           <Text variant="p4">•••• {card?.last4Digits}</Text>
-        </div>
-      ),
-    },
-    {
-      title: "Amount",
-      dataIndex: "amount",
-      key: "amount",
-      render: (amount: number, item: TTransaction) => (
-        <Text
-          variant="p4"
-          className={`${
-            item?.type === "expense" ? "text-red-500" : "text-green-500"
-          }`}
-        >
-          {item?.type === "expense" ? "-" : "+"}${amount.toFixed(2)}
-        </Text>
-      ),
-    },
-    {
-      title: "Actions",
-      key: "actions",
-      render: (_: any, record: TTransaction) => (
-        <div style={{ display: "flex", gap: "12px", justifyContent: "center" }}>
-          <div className="action-icon">
-            <AiOutlineEye
-              style={{
-                fontSize: "20px",
-                cursor: "pointer",
-                color: "#1890ff",
-              }}
+        ),
+      },
+      {
+        title: "Amount",
+        dataIndex: "amount",
+        key: "amount",
+        render: (amount: number, item: TTransaction) => (
+          <Text
+            variant="p4"
+            className={
+              item?.type === "expense" ? "text-red-500" : "text-green-500"
+            }
+          >
+            {item?.type === "expense" ? "-" : "+"}${amount.toFixed(2)}
+          </Text>
+        ),
+      },
+      {
+        title: "Actions",
+        key: "actions",
+        render: (_: any, record: TTransaction) => (
+          <div className="flex gap-3 justify-center">
+            <button
+              className="action-icon"
               title="View"
               onClick={() => {
-                setSelectedTransaction(record); // Set the selected transaction
-                openViewModal(); // Open the modal
+                setSelectedTransaction(record);
+                openViewModal();
               }}
-            />
-          </div>
-          <div className="action-icon">
-            <AiOutlineDelete
-              style={{
-                fontSize: "20px",
-                cursor: "pointer",
-                color: "red",
-              }}
+            >
+              <AiOutlineEye fontSize={20} color="#1890ff" />
+            </button>
+            <button
+              className="action-icon"
               title="Delete"
-              onClick={() => handleOpenDeleteModal(record)}
-            />
+              onClick={() => openDeleteModal(record)}
+            >
+              <AiOutlineDelete fontSize={20} color="red" />
+            </button>
           </div>
-        </div>
-      ),
-    },
-  ];
+        ),
+      },
+    ],
+    [openViewModal, openDeleteModal]
+  );
+
+  const tableData = useMemo(
+    () => data?.data.map((txn) => ({ ...txn, key: txn._id })),
+    [data]
+  );
 
   return (
     <div>
       <div className="hidden lg:block">
         <Table
-          dataSource={data?.data.map((txn) => ({ ...txn, key: txn._id }))}
+          dataSource={tableData}
           columns={columns}
           loading={isLoading}
           scroll={{ x: "100%" }}
@@ -144,37 +133,26 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({
           onChange={onTableChange}
         />
       </div>
+
       <div className="block lg:hidden">
         {data?.data.map((txn) => (
-          <div key={txn._id}>
-            <TransactionItem transaction={txn} showEdit={true} />
-          </div>
+          <TransactionItem key={txn._id} transaction={txn} showEdit={true} />
         ))}
       </div>
 
-      {selectedTransaction && viewModalOpen && (
+      {selectedTransaction && isViewModalOpen && (
         <TransactionViewModal
           transaction={selectedTransaction}
-          isModalOpen={viewModalOpen}
+          isModalOpen={isViewModalOpen}
           closeModal={closeViewModal}
         />
       )}
 
-      {selectedTransaction && isDeleteModalOpen && (
-        <DeleteModal
-          isModalOpen={isDeleteModalOpen}
-          closeModal={handleCloseDeleteModal}
-          title="Delete Transaction?"
-          content={
-            <Text variant="p3" className="mt-2 text-gray-600">
-              Are you sure you want to delete the transaction{" "}
-              <span className="font-semibold">
-                "{selectedTransaction.title}"
-              </span>
-              ? This action cannot be undone.
-            </Text>
-          }
-          onConfirm={handleDeleteConfirm}
+      {selectedTransaction && isDeleteModalVisible && (
+        <TransactionDeleteModalWrapper
+          isModalOpen={isDeleteModalVisible}
+          selectedTransaction={selectedTransaction}
+          closeModal={closeDeleteModal}
         />
       )}
     </div>
