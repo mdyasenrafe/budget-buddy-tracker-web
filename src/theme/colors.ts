@@ -14,6 +14,14 @@ export const colors = {
   primaryLight2: "#4BB2AE",
   primaryLight3: "#5FC8C3",
   red: "#FA3F56",
+  blue100: "#ebf8ff",
+  blue500: "#2B6CB0",
+  yellow100: "#fefcbf",
+  yellow500: "#D69E2E",
+  green100: "#f0fff4",
+  green500: "#38A169",
+  purple100: "#faf5ff",
+  purple500: "#805AD5",
 };
 
 export type ColorKey = keyof typeof colors;

@@ -8,7 +8,7 @@ import {
 import { Text } from "@/components/atoms";
 import { ChartCard } from "@/components/molecules";
 import { colors } from "@/theme";
-import { CardTransactions } from "./components";
+import { CardMetrics, CardTransactions } from "./components";
 
 type CardDetailsProps = {
   selectedCard: TCard;
@@ -84,6 +84,7 @@ export const CardDetails: React.FC<CardDetailsProps> = ({ selectedCard }) => {
       <div className="border py-3 rounded-md flex items-center justify-center my-6 px-3 lg:px-0">
         <Text variant="h3">{selectedCard?.bankName}</Text>
       </div>
+      <CardMetrics />
       <div className="lg:grid grid-cols-2 grid-rows-2 grid-flow-col justify-between w-full gap-6">
         <ChartCard title="Spending vs. Income">
           <BarChart {...barChartData} />

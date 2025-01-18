@@ -18,10 +18,12 @@ export const DashboardMetric: React.FC<DashboardMetricProps> = ({
 }) => {
   return (
     <div
-      className={`flex flex-col items-center justify-center gap-4 p-4 rounded-lg shadow-sm transition hover:shadow-lg ${bgColor}`}
+      className="flex flex-col items-center justify-center gap-4 p-4 rounded-lg shadow-sm transition hover:shadow-lg"
+      style={{ backgroundColor: bgColor }}
     >
       <div
-        className={`flex items-center justify-center rounded-full ${iconColor} bg-white p-4`}
+        className="flex items-center justify-center rounded-full bg-white p-4"
+        style={{ color: iconColor }}
       >
         {icon}
       </div>
