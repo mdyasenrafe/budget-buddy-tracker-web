@@ -76,7 +76,7 @@ export const AddTransactionForm: React.FC = () => {
   const handleTransactionTypeSelect = useCallback((type: TTransactionType) => {
     setSelectedTransactionType(type);
   }, []);
-  console.log(selectedTransactionType);
+
   const handleSubmit = useCallback(
     async (data: TAddTransactionFormValues) => {
       try {

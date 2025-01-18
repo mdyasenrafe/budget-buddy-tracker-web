@@ -17,6 +17,7 @@ const budgetApi = baseApi.injectEndpoints({
       providesTags: ["Budget", "Transaction"],
     }),
   }),
+  overrideExisting: false,
 });
 
 export const { useCreateBudgetMutation, useGetBudgetQuery } = budgetApi;
