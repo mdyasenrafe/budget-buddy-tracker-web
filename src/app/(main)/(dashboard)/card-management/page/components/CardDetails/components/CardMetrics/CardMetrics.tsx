@@ -14,6 +14,7 @@ import {
   useGetCardMetricsQuery,
 } from "@/redux/features/card";
 import { CURRENTMONTHINDEX, CURRENTYEAR, TIMEZONE } from "@/utils";
+import { LoadingSpinner } from "@/components/atoms/LoadingSpinner";
 
 type CardMetricsProps = {
   cardId: string;
@@ -79,7 +80,7 @@ export const CardMetrics: React.FC<CardMetricsProps> = React.memo(
     );
 
     if (isLoading) {
-      return <div className="my-6 text-center">Loading metrics...</div>;
+      return <LoadingSpinner />;
     }
 
     if (error) {
