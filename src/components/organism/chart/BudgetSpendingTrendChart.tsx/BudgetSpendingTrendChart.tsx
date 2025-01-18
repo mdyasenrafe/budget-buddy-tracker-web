@@ -14,7 +14,7 @@ export const BudgetSpendingTrendChart: React.FC<
   TBudgetSpendingTrendChartProps
 > = ({ budgetId }) => {
   const { data, isLoading, error } = useGetWeeklyBudgetTransactionsQuery({
-    budgetId,
+    id: budgetId,
     year: CURRENTYEAR,
     monthIndex: CURRENTMONTHINDEX,
     timezone: TIMEZONE,

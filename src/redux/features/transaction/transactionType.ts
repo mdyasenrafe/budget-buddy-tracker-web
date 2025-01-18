@@ -37,8 +37,8 @@ export type TTransactionCreatePayload = {
   attachment?: string;
 };
 
-export type TWeeklyBudgetTransactionsParams = {
-  budgetId: string;
+export type TWeeklyTransactionsParams = {
+  id: string;
   year: number;
   monthIndex: number;
   timezone: string;
