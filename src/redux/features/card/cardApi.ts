@@ -37,6 +37,7 @@ const cardApi = baseApi.injectEndpoints({
         url: `/card/${cardId}/metrics`,
         params: { year, monthIndex, timezone },
       }),
+      providesTags: ["Card", "Transaction"],
     }),
   }),
 });
