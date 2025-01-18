@@ -1,13 +1,14 @@
 import React from "react";
 import { Text } from "@/components/atoms";
 
-export type TBudgetDeailsCard = {
-  label: string;
+type DashboardMetricProps = {
+  title: string;
   value: string;
+  icon: React.ReactNode;
   bgColor: string;
   iconColor: string;
-  icon: React.ReactNode;
 };
+
 export const DashboardMetric: React.FC<DashboardMetricProps> = ({
   title,
   value,
