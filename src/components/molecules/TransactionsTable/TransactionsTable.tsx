@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Table } from "antd";
 import { AiOutlineEye, AiOutlineDelete } from "react-icons/ai";
 import dayjs from "dayjs";
@@ -7,15 +7,18 @@ import { TTransaction } from "@/redux/features/transaction";
 import { TCard } from "@/redux/features/cardOverview";
 import { TResponse } from "@/redux/features/types";
 import { TransactionItem } from "..";
+import { TPagination } from "@/types";
 
 type TransactionsTableProps = {
   data: TResponse<TTransaction[]>;
   isLoading: boolean;
+  onTableChange: (pagination: any) => void;
 };
 
 export const TransactionsTable: React.FC<TransactionsTableProps> = ({
   data,
   isLoading,
+  onTableChange,
 }) => {
   const columns = [
     {
@@ -95,9 +98,14 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({
         <Table
           dataSource={data?.data.map((txn) => ({ ...txn, key: txn._id }))}
           columns={columns}
-          pagination={{ pageSize: 5 }}
           loading={isLoading}
           scroll={{ x: "100%" }}
+          pagination={{
+            current: data?.meta?.page || 1,
+            pageSize: data?.meta?.limit || 10,
+            total: data?.meta?.total || 0,
+          }}
+          onChange={onTableChange}
         />
       </div>
       <div className="block lg:hidden">

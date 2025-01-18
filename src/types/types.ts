@@ -12,3 +12,8 @@ export type NavItem = {
   icon: IconType;
   desktop: boolean;
 };
+
+export type TPagination = {
+  page: number;
+  pageSize: number;
+};
