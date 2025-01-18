@@ -46,6 +46,7 @@ export const transactionService = baseApi.injectEndpoints({
         url: `/transaction/${transactionId}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Transaction"],
     }),
   }),
 });
