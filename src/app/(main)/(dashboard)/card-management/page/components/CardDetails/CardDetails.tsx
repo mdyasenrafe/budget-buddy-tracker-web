@@ -84,7 +84,7 @@ export const CardDetails: React.FC<CardDetailsProps> = ({ selectedCard }) => {
       <div className="border py-3 rounded-md flex items-center justify-center my-6 px-3 lg:px-0">
         <Text variant="h3">{selectedCard?.bankName}</Text>
       </div>
-      <CardMetrics />
+      <CardMetrics cardId={selectedCard?._id as string} />
       <div className="lg:grid grid-cols-2 grid-rows-2 grid-flow-col justify-between w-full gap-6">
         <ChartCard title="Spending vs. Income">
           <BarChart {...barChartData} />

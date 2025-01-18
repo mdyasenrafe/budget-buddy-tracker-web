@@ -45,4 +45,5 @@ export const {
   useGetCardsQuery,
   useCreateCardMutation,
   useDeleteCardMutation,
+  useGetCardMetricsQuery,
 } = cardApi;
