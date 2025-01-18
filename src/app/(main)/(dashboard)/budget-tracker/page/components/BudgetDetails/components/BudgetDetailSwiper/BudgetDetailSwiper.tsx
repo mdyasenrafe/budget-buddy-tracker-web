@@ -1,7 +1,6 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
-import { BudgetDetailCard } from "../BudgetDetailCard";
 import { TBudgetDeailsCard } from "../..";
 import { DashboardMetric } from "@/app/(main)/(dashboard)/dashboard/page/components";
 

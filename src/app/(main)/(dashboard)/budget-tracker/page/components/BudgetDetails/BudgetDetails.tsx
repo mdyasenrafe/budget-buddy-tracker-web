@@ -1,15 +1,11 @@
 import React, { memo } from "react";
 import { Text } from "@/components/atoms";
 import { TBudget } from "@/redux/features/budget";
-import {
-  BudgetDetailCard,
-  BudgetDetailSwiper,
-  BudgetTransaction,
-} from "./components";
+import { BudgetDetailSwiper, BudgetTransaction } from "./components";
 import { BudgetSpendingTrendChart } from "@/components/organism/chart";
 import { DashboardMetric } from "@/app/(main)/(dashboard)/dashboard/page/components";
 import { colors } from "@/theme";
-import { FaMoneyBillWave, FaPiggyBank, FaWallet } from "react-icons/fa";
+import { FaPiggyBank } from "react-icons/fa";
 import { BiMoney, BiWallet } from "react-icons/bi";
 import { ChartCard } from "@/components/molecules";
 
