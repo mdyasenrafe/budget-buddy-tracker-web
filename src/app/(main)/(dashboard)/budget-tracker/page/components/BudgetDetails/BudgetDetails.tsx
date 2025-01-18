@@ -1,12 +1,17 @@
 import React, { memo } from "react";
 import { Text } from "@/components/atoms";
 import { TBudget } from "@/redux/features/budget";
-import { BudgetDetailCard, BudgetDetailSwiper } from "./components";
+import {
+  BudgetDetailCard,
+  BudgetDetailSwiper,
+  BudgetTransaction,
+} from "./components";
 import { BudgetSpendingTrendChart } from "@/components/organism/chart";
 import { DashboardMetric } from "@/app/(main)/(dashboard)/dashboard/page/components";
 import { colors } from "@/theme";
 import { FaMoneyBillWave, FaPiggyBank, FaWallet } from "react-icons/fa";
 import { BiMoney, BiWallet } from "react-icons/bi";
+import { ChartCard } from "@/components/molecules";
 
 type BudgetDetailsProps = {
   budgetDetails: TBudget | null;
@@ -80,6 +85,12 @@ export const BudgetDetails = memo(({ budgetDetails }: BudgetDetailsProps) => {
         budgetId={budgetDetails?._id}
         key={budgetDetails?._id}
       />
+      <ChartCard title="Transaction History" className=" mt-6 !mb-20">
+        <BudgetTransaction
+          budgetId={budgetDetails?._id}
+          key={budgetDetails?._id}
+        />
+      </ChartCard>
     </div>
   );
 });
