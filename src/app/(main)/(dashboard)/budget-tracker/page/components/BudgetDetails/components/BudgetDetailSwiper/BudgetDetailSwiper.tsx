@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import { BudgetDetailCard } from "../BudgetDetailCard";
 import { TBudgetDeailsCard } from "../..";
+import { DashboardMetric } from "@/app/(main)/(dashboard)/dashboard/page/components";
 
 type BudgetDetailSwiperProps = {
   details: TBudgetDeailsCard[];
@@ -14,12 +15,15 @@ export const BudgetDetailSwiper: React.FC<BudgetDetailSwiperProps> = ({
   return (
     <div className="block lg:hidden">
       <Swiper spaceBetween={16} slidesPerView={1.4}>
-        {details.map((detail, index) => (
+        {details.map((metric, index) => (
           <SwiperSlide key={index}>
-            <BudgetDetailCard
-              label={detail.label}
-              value={detail.value}
-              className={detail.className}
+            <DashboardMetric
+              key={index}
+              title={metric.label}
+              value={metric.value}
+              icon={metric.icon}
+              bgColor={metric.bgColor}
+              iconColor={metric.iconColor}
             />
           </SwiperSlide>
         ))}

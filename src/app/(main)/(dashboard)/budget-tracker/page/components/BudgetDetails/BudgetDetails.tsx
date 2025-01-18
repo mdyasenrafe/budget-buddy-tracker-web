@@ -3,6 +3,10 @@ import { Text } from "@/components/atoms";
 import { TBudget } from "@/redux/features/budget";
 import { BudgetDetailCard, BudgetDetailSwiper } from "./components";
 import { BudgetSpendingTrendChart } from "@/components/organism/chart";
+import { DashboardMetric } from "@/app/(main)/(dashboard)/dashboard/page/components";
+import { colors } from "@/theme";
+import { FaMoneyBillWave, FaPiggyBank, FaWallet } from "react-icons/fa";
+import { BiMoney, BiWallet } from "react-icons/bi";
 
 type BudgetDetailsProps = {
   budgetDetails: TBudget | null;
@@ -10,8 +14,10 @@ type BudgetDetailsProps = {
 
 export type TBudgetDeailsCard = {
   label: string;
-  value: number;
-  className: string;
+  value: string;
+  bgColor: string;
+  iconColor: string;
+  icon: React.ReactNode;
 };
 
 export const BudgetDetails = memo(({ budgetDetails }: BudgetDetailsProps) => {
@@ -24,16 +30,26 @@ export const BudgetDetails = memo(({ budgetDetails }: BudgetDetailsProps) => {
   }
 
   const details: TBudgetDeailsCard[] = [
-    { label: "Budget Limit", value: budgetDetails.limit, className: "" },
+    {
+      label: "Budget Limit",
+      value: `৳${budgetDetails.limit}`,
+      bgColor: colors.blue100,
+      iconColor: colors.blue500,
+      icon: <BiWallet size={24} />,
+    },
     {
       label: "Amount Spent",
-      value: budgetDetails.spent,
-      className: "text-red-500",
+      value: `৳${budgetDetails.spent}`,
+      bgColor: colors.yellow100,
+      iconColor: colors.yellow500,
+      icon: <BiMoney size={24} />,
     },
     {
       label: "Remaining",
-      value: budgetDetails.limit - budgetDetails.spent,
-      className: "text-green-500",
+      value: `৳${budgetDetails.limit - budgetDetails.spent}`,
+      bgColor: colors.green100,
+      iconColor: colors.green500,
+      icon: <FaPiggyBank size={24} />,
     },
   ];
 
@@ -47,12 +63,14 @@ export const BudgetDetails = memo(({ budgetDetails }: BudgetDetailsProps) => {
         <BudgetDetailSwiper details={details} />
 
         <div className="hidden lg:grid grid-cols-3 gap-4">
-          {details.map((detail, index) => (
-            <BudgetDetailCard
+          {details.map((metric, index) => (
+            <DashboardMetric
               key={index}
-              label={detail.label}
-              value={detail.value}
-              className={detail.className}
+              title={metric.label}
+              value={metric.value}
+              icon={metric.icon}
+              bgColor={metric.bgColor}
+              iconColor={metric.iconColor}
             />
           ))}
         </div>
