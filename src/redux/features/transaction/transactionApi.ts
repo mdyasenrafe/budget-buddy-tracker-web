@@ -41,6 +41,12 @@ export const transactionService = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Transaction"],
     }),
+    deleteTransaction: builder.mutation<TResponse<TTransaction>, string>({
+      query: (transactionId) => ({
+        url: `/transaction/${transactionId}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
@@ -48,4 +54,5 @@ export const {
   useGetTransactionsQuery,
   useCreateTransactionMutation,
   useGetWeeklyBudgetTransactionsQuery,
+  useDeleteTransactionMutation,
 } = transactionService;
