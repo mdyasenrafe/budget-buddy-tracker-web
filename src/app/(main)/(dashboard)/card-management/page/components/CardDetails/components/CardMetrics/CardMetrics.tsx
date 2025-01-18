@@ -7,6 +7,9 @@ import {
   FaMoneyBillWave,
   FaExchangeAlt,
 } from "react-icons/fa";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.css";
+
 export const CardMetrics = () => {
   const metrics = [
     {
@@ -40,17 +43,43 @@ export const CardMetrics = () => {
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-4 my-6 lg:grid-cols-4">
-      {metrics.map((metric, index) => (
-        <DashboardMetric
-          key={index}
-          title={metric.title}
-          value={metric.value}
-          icon={metric.icon}
-          bgColor={metric.bgColor}
-          iconColor={metric.iconColor}
-        />
-      ))}
+    <div className="my-6">
+      <div className="block lg:hidden">
+        <Swiper
+          spaceBetween={16}
+          slidesPerView={1.3}
+          breakpoints={{
+            768: {
+              slidesPerView: 2.3,
+            },
+          }}
+        >
+          {metrics.map((metric, index) => (
+            <SwiperSlide key={index} className="flex justify-center">
+              <DashboardMetric
+                title={metric.title}
+                value={metric.value}
+                icon={metric.icon}
+                bgColor={metric.bgColor}
+                iconColor={metric.iconColor}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+
+      <div className="hidden lg:grid grid-cols-2 gap-4 lg:grid-cols-2 xl:grid-cols-4">
+        {metrics.map((metric, index) => (
+          <DashboardMetric
+            key={index}
+            title={metric.title}
+            value={metric.value}
+            icon={metric.icon}
+            bgColor={metric.bgColor}
+            iconColor={metric.iconColor}
+          />
+        ))}
+      </div>
     </div>
   );
 };
