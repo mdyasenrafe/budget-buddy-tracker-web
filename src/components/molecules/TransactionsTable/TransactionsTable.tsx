@@ -79,7 +79,7 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({
               item?.type === "expense" ? "text-red-500" : "text-green-500"
             }
           >
-            {item?.type === "expense" ? "-" : "+"}${amount.toFixed(2)}
+            {item?.type === "expense" ? "-" : "+"}৳{amount.toFixed(2)}
           </Text>
         ),
       },
