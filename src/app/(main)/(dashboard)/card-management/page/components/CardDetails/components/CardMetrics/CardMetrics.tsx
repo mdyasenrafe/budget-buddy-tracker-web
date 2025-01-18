@@ -22,7 +22,7 @@ type CardMetricsProps = {
 
 export const CardMetrics: React.FC<CardMetricsProps> = React.memo(
   ({ cardId }) => {
-    const { data, isLoading, error } = useGetCardMetricsQuery({
+    const { data, isLoading, error, isFetching } = useGetCardMetricsQuery({
       cardId,
       year: CURRENTYEAR,
       monthIndex: CURRENTMONTHINDEX,
@@ -79,7 +79,7 @@ export const CardMetrics: React.FC<CardMetricsProps> = React.memo(
       ]
     );
 
-    if (isLoading) {
+    if (isLoading || isFetching) {
       return <LoadingSpinner />;
     }
 
