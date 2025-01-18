@@ -93,7 +93,7 @@ export const TransactionViewModal: React.FC<TransactionViewModalProps> = ({
               <img
                 src={transaction.attachment}
                 alt="Transaction Attachment"
-                className="max-w-full rounded-lg border shadow-sm"
+                className="w-full rounded-lg border shadow-sm h-[250px] object-contain"
               />
             </div>
           </div>
