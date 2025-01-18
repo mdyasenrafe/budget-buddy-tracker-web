@@ -1,7 +1,11 @@
 import { baseApi } from "@/api/baseApi";
 import { TCard } from "../cardOverview";
 import { TResponse } from "../types";
-import { TCreateCardPayload } from ".";
+import {
+  TCardMetricsParams,
+  TCardMetricsResponse,
+  TCreateCardPayload,
+} from ".";
 
 const cardApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -24,6 +28,15 @@ const cardApi = baseApi.injectEndpoints({
         method: "DELETE",
       }),
       invalidatesTags: ["Card"],
+    }),
+    getCardMetrics: build.query<
+      TResponse<TCardMetricsResponse>,
+      TCardMetricsParams
+    >({
+      query: ({ cardId, year, monthIndex, timezone }) => ({
+        url: `/card/${cardId}/metrics`,
+        params: { year, monthIndex, timezone },
+      }),
     }),
   }),
 });
