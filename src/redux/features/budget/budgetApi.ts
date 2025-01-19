@@ -16,8 +16,15 @@ const budgetApi = baseApi.injectEndpoints({
       query: (monthIndex) => `/budget/month/${monthIndex}`,
       providesTags: ["Budget", "Transaction"],
     }),
+    getBudgetById: build.query<TResponse<TBudget[]>, string>({
+      query: (id) => `/budget/${id}`,
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useCreateBudgetMutation, useGetBudgetQuery } = budgetApi;
+export const {
+  useCreateBudgetMutation,
+  useGetBudgetQuery,
+  useGetBudgetByIdQuery,
+} = budgetApi;
