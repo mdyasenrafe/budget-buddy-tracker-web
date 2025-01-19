@@ -13,7 +13,7 @@ const budgetApi = baseApi.injectEndpoints({
       invalidatesTags: ["Budget"],
     }),
     getBudget: build.query<TResponse<TBudget[]>, number>({
-      query: (monthIndex) => `/budget/${monthIndex}`,
+      query: (monthIndex) => `/month/budget/${monthIndex}`,
       providesTags: ["Budget", "Transaction"],
     }),
   }),
