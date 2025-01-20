@@ -3,6 +3,7 @@
 import { LoadingSpinner } from "@/components/atoms/LoadingSpinner";
 import { BudgetForm } from "@/components/organism";
 import { useGetBudgetByIdQuery } from "@/redux/features/budget";
+import { TCategory } from "@/redux/features/category";
 import { TCreateBudgetFormData } from "@/schema";
 import React, { useCallback } from "react";
 
@@ -19,7 +20,7 @@ export const EditBudgetForm: React.FC<EditBudgetFormProps> = ({ budgetId }) => {
   const initialValues: TCreateBudgetFormData = {
     name: data?.data?.name as string,
     limit: data?.data?.limit.toString() as string,
-    category: data?.data?.category?.label as string,
+    category: data?.data?.category as any,
   };
 
   return isLoading || isFetching ? (
