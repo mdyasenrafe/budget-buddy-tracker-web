@@ -1,4 +1,5 @@
 import { Text } from "@/components/atoms";
+import { BudgetDeleteModal } from "@/components/organism";
 import { useModal } from "@/hooks";
 import { TBudget } from "@/redux/features/budget";
 import { Dropdown, MenuProps } from "antd";
@@ -33,6 +34,13 @@ export const BudgetListDropdown: React.FC<BudgetListDropdown> = ({
       <Dropdown menu={{ items: menuItems }} placement="bottomLeft">
         <FiMoreVertical className="h-5 w-5 text-gray-500" />
       </Dropdown>
+      {isModalOpen && (
+        <BudgetDeleteModal
+          isModalOpen={isModalOpen}
+          closeModal={closeModal}
+          budget={activeBudget}
+        />
+      )}
     </>
   );
 };
