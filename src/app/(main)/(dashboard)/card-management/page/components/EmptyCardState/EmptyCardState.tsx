@@ -10,7 +10,7 @@ export const EmptyCardState: React.FC = () => {
   };
 
   return (
-    <div className="mt-10 flex flex-col items-center border py-5 rounded-lg">
+    <div className="mt-10 flex flex-col items-center border py-5 rounded-lg mb-10">
       <div className="text-center">
         <Text variant="h3" className="text-gray-600">
           No Card Selected

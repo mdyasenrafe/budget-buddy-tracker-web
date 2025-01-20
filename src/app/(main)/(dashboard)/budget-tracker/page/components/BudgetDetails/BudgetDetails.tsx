@@ -24,7 +24,7 @@ export type TBudgetDeailsCard = {
 export const BudgetDetails = memo(({ budgetDetails }: BudgetDetailsProps) => {
   if (!budgetDetails) {
     return (
-      <div className="text-center p-10 border rounded">
+      <div className="text-center p-10 border rounded-lg !mb-20">
         <Text variant="p3">Select a budget to view details</Text>
       </div>
     );
