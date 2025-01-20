@@ -7,6 +7,11 @@ export type TBudgetCreateRequest = {
   limit: number;
 };
 
+export type TBudgetUpdateRequest = {
+  payload: TBudgetCreateRequest;
+  budgetId: string;
+};
+
 export type TBudget = {
   _id: string;
   userId: TUser;

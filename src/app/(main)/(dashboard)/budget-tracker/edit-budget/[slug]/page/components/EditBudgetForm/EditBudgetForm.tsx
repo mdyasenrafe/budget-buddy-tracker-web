@@ -6,6 +6,7 @@ import { useGetBudgetByIdQuery } from "@/redux/features/budget";
 import { TCategory } from "@/redux/features/category";
 import { TCreateBudgetFormData } from "@/schema";
 import React, { useCallback } from "react";
+import { toast } from "sonner";
 
 type EditBudgetFormProps = {
   budgetId: string;
@@ -14,7 +15,13 @@ type EditBudgetFormProps = {
 export const EditBudgetForm: React.FC<EditBudgetFormProps> = ({ budgetId }) => {
   const { data, isLoading, isFetching } = useGetBudgetByIdQuery(budgetId);
   const handleSubmit = useCallback(async (data: TCreateBudgetFormData) => {
-    console.log("Edit card payload:", data);
+    try {
+      toast.success("Budget updated successfully! 🎉");
+    } catch (err: any) {
+      const errorMessage =
+        err?.data?.message || "An unexpected error occurred. Please try again.";
+      toast.error(`Failed to add card: ${errorMessage}`);
+    }
   }, []);
 
   const initialValues: TCreateBudgetFormData = {
