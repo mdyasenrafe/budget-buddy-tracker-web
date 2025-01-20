@@ -6,7 +6,7 @@ type Props = {
   budgetId: string;
 };
 
-export const EditBudgetPage: React.FC<Props> = () => {
+export const EditBudgetPage: React.FC<Props> = ({ budgetId }) => {
   return (
     <div className="pt-10 pb-32 lg:pb-10">
       <SectionHeader
@@ -15,7 +15,7 @@ export const EditBudgetPage: React.FC<Props> = () => {
       />
 
       <div className="p-6 border rounded-lg shadow-lg bg-[#ecf4e9] mt-6 max-w-[900px] w-full mx-auto">
-        <EditBudgetForm />
+        <EditBudgetForm budgetId={budgetId} />
       </div>
     </div>
   );

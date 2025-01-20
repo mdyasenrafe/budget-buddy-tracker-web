@@ -40,6 +40,7 @@ export const FormSelect: React.FC<TFormSelectProps> = React.forwardRef(
                 className={`font-poppins text-[14px] ${
                   error && "border-red-500"
                 }`}
+                value={field.value || undefined}
               />
               {error && (
                 <Text variant={"p5"} className="mt-2 !text-red-500">

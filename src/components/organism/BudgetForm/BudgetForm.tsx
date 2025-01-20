@@ -53,7 +53,7 @@ export const BudgetForm: React.FC<Props> = ({
       />
       <FormSelect
         name="category"
-        label="Expense Category"
+        label="Category"
         placeholder="Select a category for this budget"
         options={categoryOptions}
         showSearch

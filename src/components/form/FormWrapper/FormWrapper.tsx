@@ -26,6 +26,7 @@ export const FormWrapper: React.FC<TFormProps> = ({
   defaultValues,
   resolver,
 }) => {
+  console.log(defaultValues);
   const formConfig: TFormConfig = {};
 
   if (defaultValues) {
