@@ -5,6 +5,7 @@ import {
   TCardMetricsParams,
   TCardMetricsResponse,
   TCreateCardPayload,
+  TEditCardPayload,
 } from ".";
 
 const cardApi = baseApi.injectEndpoints({
@@ -18,6 +19,14 @@ const cardApi = baseApi.injectEndpoints({
       query: (payload) => ({
         url: "/card",
         method: "POST",
+        body: payload,
+      }),
+      invalidatesTags: ["Card"],
+    }),
+    editCard: build.mutation<TResponse<TCard>, TEditCardPayload>({
+      query: ({ payload, cardId }) => ({
+        url: `/card/${cardId}`,
+        method: "PUT",
         body: payload,
       }),
       invalidatesTags: ["Card"],
@@ -47,4 +56,5 @@ export const {
   useCreateCardMutation,
   useDeleteCardMutation,
   useGetCardMetricsQuery,
+  useEditCardMutation,
 } = cardApi;

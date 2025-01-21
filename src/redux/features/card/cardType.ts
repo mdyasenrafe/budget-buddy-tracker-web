@@ -8,6 +8,11 @@ export type TCreateCardPayload = {
   expireDate: string;
 };
 
+export type TEditCardPayload = {
+  payload: TCreateCardPayload;
+  cardId: string;
+};
+
 export type TCardState = {
   cards: TCard[] | null;
   isLoading: boolean;
