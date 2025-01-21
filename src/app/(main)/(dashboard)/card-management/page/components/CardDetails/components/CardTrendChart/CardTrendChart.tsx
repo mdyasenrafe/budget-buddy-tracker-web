@@ -10,7 +10,7 @@ type CardTrendChartProps = {
 };
 
 export const CardTrendChart: React.FC<CardTrendChartProps> = ({ cardId }) => {
-  const { data } = useGetWeeklyCardTransactionsQuery({
+  const { data, isLoading, isFetching } = useGetWeeklyCardTransactionsQuery({
     id: cardId,
     year: CURRENTYEAR,
     monthIndex: CURRENTMONTHINDEX,
@@ -39,7 +39,11 @@ export const CardTrendChart: React.FC<CardTrendChartProps> = ({ cardId }) => {
   );
 
   return (
-    <ChartCard title="Balance Trend" className="mt-6 lg:mt-0">
+    <ChartCard
+      title="Balance Trend"
+      className="mt-6 lg:mt-0"
+      loading={isLoading || isFetching}
+    >
       <LineChart {...lineChartData} />
     </ChartCard>
   );
