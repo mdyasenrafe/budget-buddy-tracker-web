@@ -35,7 +35,7 @@ export const CardFormWrapper: React.FC<CardFormProps> = ({
   );
 
   const disablePastDates = (currentDate: Dayjs | null): boolean => {
-    return !!currentDate && currentDate.isBefore(dayjs().startOf("day"));
+    return !!currentDate && dayjs(currentDate).isBefore(dayjs().startOf("day"));
   };
 
   return (

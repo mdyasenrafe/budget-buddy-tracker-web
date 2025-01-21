@@ -8,6 +8,7 @@ import { CardFormWrapper } from "@/components/organism";
 import { useGetBudgetByIdQuery } from "@/redux/features/budget";
 import { LoadingSpinner } from "@/components/atoms/LoadingSpinner";
 import { TCard } from "@/redux/features/cardOverview";
+import dayjs from "dayjs";
 
 type EditCardFormProps = {
   cardId: string;
@@ -23,15 +24,17 @@ export const EditCardForm: React.FC<EditCardFormProps> = ({ cardId }) => {
       totalBalance: Number(data.totalBalance),
       expireDate: formattedExpireDate,
     };
-
-    console.log("Edit card payload:", payload);
   }, []);
   const activeCard = data?.data as TCard;
+
   const initialValues: Partial<TCardFormValues> = {
     accountHolderName: activeCard?.accountHolderName as string,
     last4Digits: activeCard?.last4Digits,
     totalBalance: activeCard?.totalBalance.toString() as string,
     bankName: activeCard?.bankName,
+    expireDate: activeCard?.expireDate
+      ? dayjs(activeCard.expireDate, "MMM/YY").toDate()
+      : undefined,
   };
 
   return isLoading ? (

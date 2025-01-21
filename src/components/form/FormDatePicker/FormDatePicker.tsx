@@ -4,6 +4,7 @@ import { DatePicker, DatePickerProps, Form } from "antd";
 import React from "react";
 import { Controller } from "react-hook-form";
 import { Text } from "../../atoms";
+import dayjs from "dayjs";
 
 type FormDatePickerProps = {
   label: string;
@@ -33,6 +34,7 @@ export const FormDatePicker: React.FC<FormDatePickerProps> = ({
               style={{ width: "100%" }}
               size={"large"}
               className={`font-poppins text-[14px] `}
+              value={field.value ? dayjs(field.value) : null}
             />
             {error && (
               <Text variant={"p5"} className="mt-2 !text-red-500">
