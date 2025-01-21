@@ -1,7 +1,11 @@
 "use client";
 
 import React, { useCallback } from "react";
-import { TCreateCardPayload, useGetCardByIdQuery } from "@/redux/features/card";
+import {
+  TCreateCardPayload,
+  useEditCardMutation,
+  useGetCardByIdQuery,
+} from "@/redux/features/card";
 import { formatExpireDate } from "@/utils/formatExpireDate";
 import { TCardFormValues } from "@/schema";
 import { CardFormWrapper } from "@/components/organism";
@@ -9,6 +13,7 @@ import { useGetBudgetByIdQuery } from "@/redux/features/budget";
 import { LoadingSpinner } from "@/components/atoms/LoadingSpinner";
 import { TCard } from "@/redux/features/cardOverview";
 import dayjs from "dayjs";
+import { toast } from "sonner";
 
 type EditCardFormProps = {
   cardId: string;
@@ -16,6 +21,7 @@ type EditCardFormProps = {
 
 export const EditCardForm: React.FC<EditCardFormProps> = ({ cardId }) => {
   const { data, isLoading } = useGetCardByIdQuery(cardId);
+  const [editCard, { isLoading: editLoading }] = useEditCardMutation();
 
   const handleSubmit = useCallback(async (data: TCardFormValues) => {
     const formattedExpireDate = formatExpireDate(data.expireDate);
@@ -24,6 +30,13 @@ export const EditCardForm: React.FC<EditCardFormProps> = ({ cardId }) => {
       totalBalance: Number(data.totalBalance),
       expireDate: formattedExpireDate,
     };
+    try {
+      editCard({ cardId: cardId, payload: payload });
+    } catch (error: any) {
+      toast.error(
+        error?.data?.message || "Failed to sign up. Please try again."
+      );
+    }
   }, []);
   const activeCard = data?.data as TCard;
 
@@ -44,6 +57,7 @@ export const EditCardForm: React.FC<EditCardFormProps> = ({ cardId }) => {
       onSubmit={handleSubmit}
       submitButtonText="Update Card"
       initialValues={initialValues}
+      isLoading={editLoading}
     />
   );
 };
