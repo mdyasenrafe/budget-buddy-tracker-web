@@ -59,6 +59,7 @@ export const CardFormWrapper: React.FC<CardFormProps> = ({
         label="Current Balance"
         placeholder="Enter your card's current balance"
         type="number"
+        disabled={!!initialValues?.totalBalance}
       />
       <FormSelect
         name="bankName"

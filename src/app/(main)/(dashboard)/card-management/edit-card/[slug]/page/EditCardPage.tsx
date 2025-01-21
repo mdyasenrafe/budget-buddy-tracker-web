@@ -6,7 +6,7 @@ type EditCardPageProps = {
   cardId: string;
 };
 
-export const EditCardPage: React.FC<EditCardPageProps> = () => {
+export const EditCardPage: React.FC<EditCardPageProps> = ({ cardId }) => {
   return (
     <div className="pt-10 pb-32 lg:pb-10">
       <SectionHeader
@@ -17,7 +17,7 @@ export const EditCardPage: React.FC<EditCardPageProps> = () => {
       />
 
       <div className="p-6 border rounded-lg shadow-lg bg-[#ecf4e9] mt-6 max-w-[900px] w-full mx-auto">
-        <EditCardForm />
+        <EditCardForm cardId={cardId} />
       </div>
     </div>
   );

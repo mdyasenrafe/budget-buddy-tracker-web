@@ -14,6 +14,9 @@ const cardApi = baseApi.injectEndpoints({
       query: () => `/card`,
       providesTags: ["Card", "Transaction"],
     }),
+    getCardById: build.query<TResponse<TCard>, string>({
+      query: (id) => `/card/${id}`,
+    }),
 
     createCard: build.mutation<TResponse<TCard>, TCreateCardPayload>({
       query: (payload) => ({
@@ -57,4 +60,5 @@ export const {
   useDeleteCardMutation,
   useGetCardMetricsQuery,
   useEditCardMutation,
+  useGetCardByIdQuery,
 } = cardApi;
