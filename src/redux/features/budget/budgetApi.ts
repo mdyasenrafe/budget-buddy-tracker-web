@@ -31,6 +31,13 @@ const budgetApi = baseApi.injectEndpoints({
     getBudgetById: build.query<TResponse<TBudget>, string>({
       query: (id) => `/budget/${id}`,
     }),
+    deleteBudget: build.mutation<TResponse<TBudget>, string>({
+      query: (id) => ({
+        url: `/budget/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Budget"],
+    }),
   }),
   overrideExisting: false,
 });
@@ -40,4 +47,5 @@ export const {
   useGetBudgetQuery,
   useGetBudgetByIdQuery,
   useEditBudgetMutation,
+  useDeleteBudgetMutation,
 } = budgetApi;
