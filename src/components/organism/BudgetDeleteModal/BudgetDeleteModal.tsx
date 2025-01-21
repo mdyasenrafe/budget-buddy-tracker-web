@@ -46,6 +46,7 @@ export const BudgetDeleteModal: React.FC<BudgetDeleteModalProps> = ({
         </Text>
       }
       onConfirm={confirmDelete}
+      isLoading={isLoading}
     />
   );
 };
