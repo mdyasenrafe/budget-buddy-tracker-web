@@ -1,6 +1,6 @@
 import { Text } from "@/components/atoms";
 import { DeleteModal } from "@/components/molecules/modals";
-import { TBudget } from "@/redux/features/budget";
+import { TBudget, useDeleteBudgetMutation } from "@/redux/features/budget";
 import {
   TTransaction,
   useDeleteTransactionMutation,
@@ -19,8 +19,10 @@ export const BudgetDeleteModal: React.FC<BudgetDeleteModalProps> = ({
   closeModal,
   budget,
 }) => {
+  const [deleteBudget, { isLoading }] = useDeleteBudgetMutation();
   const confirmDelete = async () => {
     try {
+      const res = await deleteBudget(budget?._id).unwrap();
       closeModal();
       toast.success("Budget deleted successfully! 🎉 ");
     } catch (error: any) {
