@@ -1,7 +1,7 @@
 import { LoadingSpinner } from "@/components/atoms/LoadingSpinner";
 import { ChartCard } from "@/components/molecules";
 import { LineChart } from "@/components/molecules/chart";
-import { useGetWeeklyBudgetTransactionsQuery } from "@/redux/features/transaction";
+import { useGetWeeklyBudgetTransactionsQuery } from "@/redux/features/budget";
 import { colors } from "@/theme";
 import { CURRENTMONTHINDEX, CURRENTYEAR, TIMEZONE } from "@/utils";
 import React from "react";

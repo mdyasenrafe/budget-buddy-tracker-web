@@ -5,6 +5,7 @@ import {
   TBudgetCreateRequest,
   TBudgetUpdateRequest,
 } from "./budgetType";
+import { TWeeklyTransactionsParams } from "../transaction";
 
 const budgetApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -38,6 +39,16 @@ const budgetApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Budget"],
     }),
+    getWeeklyBudgetTransactions: build.query<
+      TResponse<number[]>,
+      TWeeklyTransactionsParams
+    >({
+      query: ({ id, year, monthIndex, timezone }) => ({
+        url: `/budget/weekly-transactions/${id}`,
+        params: { year, monthIndex, timezone },
+      }),
+      providesTags: ["Transaction"],
+    }),
   }),
   overrideExisting: false,
 });
@@ -48,4 +59,5 @@ export const {
   useGetBudgetByIdQuery,
   useEditBudgetMutation,
   useDeleteBudgetMutation,
+  useGetWeeklyBudgetTransactionsQuery,
 } = budgetApi;

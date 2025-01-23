@@ -20,16 +20,6 @@ export const transactionService = baseApi.injectEndpoints({
       },
       providesTags: ["Transaction"],
     }),
-    getWeeklyBudgetTransactions: builder.query<
-      TResponse<number[]>,
-      TWeeklyTransactionsParams
-    >({
-      query: ({ id, year, monthIndex, timezone }) => ({
-        url: `/transaction/weekly-budget-transactions/${id}`,
-        params: { year, monthIndex, timezone },
-      }),
-      providesTags: ["Transaction"],
-    }),
     getWeeklyCardTransactions: builder.query<
       TResponse<number[]>,
       TWeeklyTransactionsParams
@@ -64,7 +54,6 @@ export const transactionService = baseApi.injectEndpoints({
 export const {
   useGetTransactionsQuery,
   useCreateTransactionMutation,
-  useGetWeeklyBudgetTransactionsQuery,
   useDeleteTransactionMutation,
   useGetWeeklyCardTransactionsQuery,
 } = transactionService;
