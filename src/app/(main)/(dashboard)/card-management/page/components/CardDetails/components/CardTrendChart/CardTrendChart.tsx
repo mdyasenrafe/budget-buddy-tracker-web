@@ -1,6 +1,6 @@
 import { ChartCard } from "@/components/molecules";
 import { LineChart } from "@/components/molecules/chart";
-import { useGetWeeklyCardTransactionsQuery } from "@/redux/features/transaction";
+import { useGetWeeklyCardTransactionsQuery } from "@/redux/features/card";
 import { colors } from "@/theme";
 import { CURRENTMONTHINDEX, CURRENTYEAR, TIMEZONE } from "@/utils";
 import React, { useEffect, useMemo } from "react";

@@ -7,6 +7,7 @@ import {
   TCreateCardPayload,
   TEditCardPayload,
 } from ".";
+import { TWeeklyTransactionsParams } from "../transaction";
 
 const cardApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -51,6 +52,16 @@ const cardApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Card", "Transaction"],
     }),
+    getWeeklyCardTransactions: build.query<
+      TResponse<number[]>,
+      TWeeklyTransactionsParams
+    >({
+      query: ({ id, year, monthIndex, timezone }) => ({
+        url: `/card/weekly-transactions/${id}`,
+        params: { year, monthIndex, timezone },
+      }),
+      providesTags: ["Transaction"],
+    }),
   }),
 });
 
@@ -61,4 +72,5 @@ export const {
   useGetCardMetricsQuery,
   useEditCardMutation,
   useGetCardByIdQuery,
+  useGetWeeklyCardTransactionsQuery,
 } = cardApi;
