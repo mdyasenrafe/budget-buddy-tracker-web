@@ -1,3 +1,5 @@
+"use client";
+
 import { Text } from "@/components/atoms";
 import { TransactionDeleteModalWrapper } from "@/components/molecules/TransactionsTable/components";
 import { TransactionViewModal } from "@/components/molecules/modals";
