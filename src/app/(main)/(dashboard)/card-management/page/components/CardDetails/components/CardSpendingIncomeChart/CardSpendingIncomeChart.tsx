@@ -46,21 +46,23 @@ export const CardSpendingIncomeChart: React.FC<TProps> = ({ cardId }) => {
     }),
     [weeklyData]
   );
-  const legends = [
-    {
-      label: "Spending",
-      bg: colors.primary,
-    },
-    {
-      label: "Income",
-      bg: colors.primaryLight3,
-    },
-  ];
+  const legends = useMemo(
+    () => [
+      { label: "Spending", bg: colors.primary },
+      { label: "Income", bg: colors.primaryLight3 },
+    ],
+    []
+  );
+
   return (
     <ChartCard title="Spending vs. Income" loading={isLoading || isFetching}>
       <div className="flex justify-center gap-x-2 mb-6">
-        {legends.map((legend) => (
-          <div className="flex gap-x-2">
+        {legends.map((legend, index) => (
+          <div
+            className="flex gap-x-2"
+            key={index}
+            aria-label={`Legend color for ${legend.label}`}
+          >
             <div
               className="w-5 h-5 rounded"
               style={{ backgroundColor: legend.bg }}
@@ -69,6 +71,7 @@ export const CardSpendingIncomeChart: React.FC<TProps> = ({ cardId }) => {
           </div>
         ))}
       </div>
+
       <BarChart {...barChartData} />
     </ChartCard>
   );
