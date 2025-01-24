@@ -6,6 +6,7 @@ import {
   TCardMetricsResponse,
   TCreateCardPayload,
   TEditCardPayload,
+  TWeeklyCardSummaryRes,
 } from ".";
 import { TWeeklyTransactionsParams } from "../transaction";
 
@@ -18,7 +19,6 @@ const cardApi = baseApi.injectEndpoints({
     getCardById: build.query<TResponse<TCard>, string>({
       query: (id) => `/card/${id}`,
     }),
-
     createCard: build.mutation<TResponse<TCard>, TCreateCardPayload>({
       query: (payload) => ({
         url: "/card",
@@ -62,6 +62,16 @@ const cardApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Transaction"],
     }),
+    getWeeklyCardSummary: build.query<
+      TResponse<TWeeklyCardSummaryRes>,
+      TWeeklyTransactionsParams
+    >({
+      query: ({ id, year, monthIndex, timezone }) => ({
+        url: `/card/weekly-summary/${id}`,
+        params: { year, monthIndex, timezone },
+      }),
+      providesTags: ["Transaction"],
+    }),
   }),
 });
 
@@ -73,4 +83,5 @@ export const {
   useEditCardMutation,
   useGetCardByIdQuery,
   useGetWeeklyCardTransactionsQuery,
+  useGetWeeklyCardSummaryQuery,
 } = cardApi;
