@@ -1,39 +1,21 @@
 import React, { useMemo } from "react";
 import { TCard } from "@/redux/features/cardOverview";
-import {
-  BarChart,
-  DoughnutChart,
-  LineChart,
-} from "@/components/molecules/chart";
+import { DoughnutChart } from "@/components/molecules/chart";
 import { Text } from "@/components/atoms";
 import { ChartCard } from "@/components/molecules";
 import { colors } from "@/theme";
-import { CardMetrics, CardTransactions, CardTrendChart } from "./components";
+import {
+  CardMetrics,
+  CardSpendingIncomeChart,
+  CardTransactions,
+  CardTrendChart,
+} from "./components";
 
 type CardDetailsProps = {
   selectedCard: TCard;
 };
 
 export const CardDetails: React.FC<CardDetailsProps> = ({ selectedCard }) => {
-  const barChartData = useMemo(
-    () => ({
-      labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
-      datasets: [
-        {
-          label: "Spending",
-          data: [400, 300, 500, 600],
-          backgroundColor: colors.primary,
-        },
-        {
-          label: "Income",
-          data: [600, 700, 800, 900],
-          backgroundColor: colors.primaryLight3,
-        },
-      ],
-    }),
-    []
-  );
-
   const doughnutChartData = useMemo(
     () => ({
       labels: ["Food", "Travel", "Shopping", "Bills", "Others"],
@@ -67,9 +49,7 @@ export const CardDetails: React.FC<CardDetailsProps> = ({ selectedCard }) => {
       </div>
       <CardMetrics cardId={selectedCard?._id as string} />
       <div className="lg:grid grid-cols-2 grid-rows-2 grid-flow-col justify-between w-full gap-6">
-        <ChartCard title="Spending vs. Income">
-          <BarChart {...barChartData} />
-        </ChartCard>
+        <CardSpendingIncomeChart cardId={selectedCard?._id} />
         <CardTrendChart cardId={selectedCard?._id} />
         <ChartCard
           title="Spending Categories"
