@@ -2,7 +2,7 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import { TBudgetDeailsCard } from "../..";
-import { DashboardMetric } from "@/app/(main)/(dashboard)/dashboard/page/components";
+import { DashboardMetric } from "@/components/molecules";
 
 type BudgetDetailSwiperProps = {
   details: TBudgetDeailsCard[];

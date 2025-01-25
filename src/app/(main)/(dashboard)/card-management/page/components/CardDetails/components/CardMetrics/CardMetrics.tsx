@@ -1,7 +1,6 @@
 import React, { useMemo } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
-import { DashboardMetric } from "@/app/(main)/(dashboard)/dashboard/page/components";
 import { colors } from "@/theme";
 import {
   FaWallet,
@@ -15,6 +14,7 @@ import {
 } from "@/redux/features/card";
 import { CURRENTMONTHINDEX, CURRENTYEAR, TIMEZONE } from "@/utils";
 import { LoadingSpinner } from "@/components/atoms/LoadingSpinner";
+import { DashboardMetric } from "@/components/molecules";
 
 type CardMetricsProps = {
   cardId: string;

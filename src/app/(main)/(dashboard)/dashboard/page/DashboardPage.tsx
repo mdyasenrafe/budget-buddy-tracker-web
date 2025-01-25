@@ -4,12 +4,12 @@ import React from "react";
 import { useAppSelector } from "@/redux";
 import { TCard, selectCard } from "@/redux/features/cardOverview";
 import { CardOverview } from "@/components/organism";
-import { DashboardMetric } from "./components";
 import { dashboardMetrics } from "./constant";
 import { getCateogryLoadingState } from "@/redux/features/category";
 import { LoadingSpinner } from "@/components/atoms/LoadingSpinner";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
+import { DashboardMetric } from "@/components/molecules";
 
 export const DashboardPage = () => {
   const activeCard = useAppSelector(selectCard);

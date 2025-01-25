@@ -3,11 +3,10 @@ import { Text } from "@/components/atoms";
 import { TBudget } from "@/redux/features/budget";
 import { BudgetDetailSwiper, BudgetTransaction } from "./components";
 import { BudgetSpendingTrendChart } from "@/components/organism/chart";
-import { DashboardMetric } from "@/app/(main)/(dashboard)/dashboard/page/components";
 import { colors } from "@/theme";
 import { FaPiggyBank } from "react-icons/fa";
 import { BiMoney, BiWallet } from "react-icons/bi";
-import { ChartCard } from "@/components/molecules";
+import { ChartCard, DashboardMetric } from "@/components/molecules";
 
 type BudgetDetailsProps = {
   budgetDetails: TBudget | null;
