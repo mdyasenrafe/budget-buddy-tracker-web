@@ -2,6 +2,7 @@ import { TUser } from "../auth";
 
 export type TCardState = {
   card: TCard | null;
+  loading: boolean;
 };
 
 export type TCard = {

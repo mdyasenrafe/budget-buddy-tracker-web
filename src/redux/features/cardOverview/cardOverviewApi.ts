@@ -1,6 +1,11 @@
 import { baseApi } from "@/api/baseApi";
 import { TResponse } from "../types";
-import { TCard, TCardOverviewPayload, setInitialCard } from ".";
+import {
+  TCard,
+  TCardOverviewPayload,
+  setCardLoadingState,
+  setInitialCard,
+} from ".";
 
 export const cardOverviewApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -22,10 +27,14 @@ export const cardOverviewApi = baseApi.injectEndpoints({
       }),
       providesTags: ["CardOverview", "Card", "Transaction"],
       onQueryStarted: async (arg, { dispatch, queryFulfilled }) => {
+        dispatch(setCardLoadingState(true));
         try {
           const { data } = await queryFulfilled;
           dispatch(setInitialCard(data.data));
-        } catch (error) {}
+        } catch (error) {
+        } finally {
+          dispatch(setCardLoadingState(false));
+        }
       },
     }),
   }),
