@@ -2,12 +2,12 @@
 
 import React, { useCallback, useEffect, useState } from "react";
 import { SectionHeader } from "@/components/molecules";
-import { EmptyCardState, MyCard } from "./components";
+import { MyCard } from "./components";
 import { TCard } from "@/redux/features/cardOverview";
-import { colors } from "@/theme";
 import { CardDetails } from "./components/CardDetails";
 import { useGetCardsQuery } from "@/redux/features/card";
 import { LoadingSpinner } from "@/components/atoms/LoadingSpinner";
+import { EmptyCardState } from "./components/EmptyCardState";
 
 export const CardManagementPage: React.FC = () => {
   const [selectedCard, setSelectedCard] = useState<TCard | null>(null);
@@ -38,20 +38,28 @@ export const CardManagementPage: React.FC = () => {
       {isLoading ? (
         <LoadingSpinner />
       ) : (
-        <>
-          <div className="py-20 md:py-10">
+        <div className="py-20 md:py-10">
+          {data?.data && data?.data.length !== 0 && (
             <MyCard
               selectedCardId={selectedCard?._id as string}
               onSelectedCard={handleSelectedCard}
               cards={data?.data as TCard[]}
             />
-            {!selectedCard ? (
-              <EmptyCardState />
-            ) : (
-              <CardDetails selectedCard={selectedCard} />
-            )}
-          </div>
-        </>
+          )}
+          {data?.data?.length === 0 ? (
+            <EmptyCardState
+              title="No Cards Added"
+              description="You don't have any cards yet. Add a new card to start tracking your spending and savings."
+            />
+          ) : !selectedCard ? (
+            <EmptyCardState
+              title="No Card Selected"
+              description="Select a card to view detailed insights about your spending, income, and trends."
+            />
+          ) : (
+            <CardDetails selectedCard={selectedCard} />
+          )}
+        </div>
       )}
     </div>
   );

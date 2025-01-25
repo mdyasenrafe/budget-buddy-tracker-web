@@ -18,4 +18,4 @@ const budgetApi = baseApi.injectEndpoints({
   overrideExisting: false,
 });
 
-export const {} = budgetApi;
+export const { useGetDashboardMetricQuery } = budgetApi;

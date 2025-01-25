@@ -42,7 +42,7 @@ export const BudgetList = memo(
               grabCursor
               style={{ padding: "1rem" }}
             >
-              {budgets.map((budget) => (
+              {budgets?.map((budget) => (
                 <SwiperSlide key={budget.name} className="h-full">
                   <BudgetItem
                     budget={budget}
@@ -55,7 +55,7 @@ export const BudgetList = memo(
           </div>
 
           <div className="hidden md:block p-3">
-            {budgets.map((budget) => (
+            {budgets?.map((budget) => (
               <BudgetItem
                 key={budget.name}
                 budget={budget}
