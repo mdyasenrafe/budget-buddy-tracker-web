@@ -4,6 +4,7 @@ import { TResponse } from "../types";
 import {
   TCardMetricsParams,
   TCardMetricsResponse,
+  TCardSpendingCategoryRes,
   TCreateCardPayload,
   TEditCardPayload,
   TWeeklyCardSummaryRes,
@@ -72,6 +73,16 @@ const cardApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Transaction"],
     }),
+    getCardSpendingCategory: build.query<
+      TResponse<TCardSpendingCategoryRes>,
+      TWeeklyTransactionsParams
+    >({
+      query: ({ id, year, monthIndex, timezone }) => ({
+        url: `/card/weekly-summary/${id}`,
+        params: { year, monthIndex, timezone },
+      }),
+      providesTags: ["Transaction"],
+    }),
   }),
 });
 
@@ -84,4 +95,5 @@ export const {
   useGetCardByIdQuery,
   useGetWeeklyCardTransactionsQuery,
   useGetWeeklyCardSummaryQuery,
+  useGetCardSpendingCategoryQuery,
 } = cardApi;

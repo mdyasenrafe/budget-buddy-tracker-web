@@ -36,3 +36,8 @@ export type TWeeklyCardSummaryRes = {
   income: string[];
   expense: string[];
 };
+
+export type TCardSpendingCategoryRes = {
+  label: string;
+  amount: number;
+}[];

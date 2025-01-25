@@ -6,7 +6,6 @@ import { TransactionViewModal } from "@/components/molecules/modals";
 import { useModal } from "@/hooks";
 import { TTransaction } from "@/redux/features/transaction";
 import { Dropdown, MenuProps } from "antd";
-import Link from "next/link";
 import React from "react";
 import { FiMoreHorizontal } from "react-icons/fi";
 
