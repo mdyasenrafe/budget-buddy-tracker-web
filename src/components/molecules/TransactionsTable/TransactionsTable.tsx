@@ -12,6 +12,7 @@ import { useModal } from "@/hooks";
 import { TransactionViewModal, DeleteModal } from "../modals";
 import { AiOutlineEye, AiOutlineDelete } from "react-icons/ai";
 import { TransactionDeleteModalWrapper } from "./components";
+import { LoadingSpinner } from "@/components/atoms/LoadingSpinner";
 
 type TransactionsTableProps = {
   data: TResponse<TTransaction[]>;
@@ -117,7 +118,7 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({
     [data]
   );
 
-  const noTransactions = !data?.data || data?.data.length === 0;
+  const noTransactions = !isLoading && (!data?.data || data?.data.length === 0);
 
   return (
     <div>
@@ -149,13 +150,17 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({
           </div>
 
           <div className="block lg:hidden">
-            {data?.data.map((txn) => (
-              <TransactionItem
-                key={txn._id}
-                transaction={txn}
-                showEdit={true}
-              />
-            ))}
+            {isLoading ? (
+              <LoadingSpinner />
+            ) : (
+              data?.data.map((txn) => (
+                <TransactionItem
+                  key={txn._id}
+                  transaction={txn}
+                  showEdit={true}
+                />
+              ))
+            )}
           </div>
         </>
       )}

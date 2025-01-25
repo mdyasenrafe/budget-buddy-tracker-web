@@ -14,6 +14,7 @@ export const BudgetTransaction: React.FC<BudgetTransactionProps> = ({
         { name: "status", value: "active" },
         { name: "budget", value: budgetId },
       ]}
+      key={budgetId}
     />
   );
 };

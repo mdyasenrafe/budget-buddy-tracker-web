@@ -14,6 +14,7 @@ export const CardTransactions: React.FC<CardTransactionsProps> = ({
         { name: "status", value: "active" },
         { name: "card", value: selectedCardId },
       ]}
+      key={selectedCardId}
     />
   );
 };
