@@ -3,7 +3,6 @@ import { TCard } from "@/redux/features/cardOverview";
 import { DoughnutChart } from "@/components/molecules/chart";
 import { Text } from "@/components/atoms";
 import { ChartCard } from "@/components/molecules";
-import { colors } from "@/theme";
 import {
   CardMetrics,
   CardSpendingIncomeChart,

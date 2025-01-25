@@ -78,7 +78,7 @@ const cardApi = baseApi.injectEndpoints({
       TWeeklyTransactionsParams
     >({
       query: ({ id, year, monthIndex, timezone }) => ({
-        url: `/card/weekly-summary/${id}`,
+        url: `/card/spending-category/${id}`,
         params: { year, monthIndex, timezone },
       }),
       providesTags: ["Transaction"],
