@@ -5,6 +5,7 @@ import { useGetCardSpendingCategoryQuery } from "@/redux/features/card";
 import { colors } from "@/theme";
 import { CURRENTMONTHINDEX, CURRENTYEAR, TIMEZONE } from "@/utils";
 import React, { useMemo } from "react";
+import { Legend } from "./components/Legend";
 
 type Props = {
   cardId: string;
@@ -58,25 +59,7 @@ export const DoughnutCardSpendingChart: React.FC<Props> = ({ cardId }) => {
       <div className="w-full h-[350px]">
         <DoughnutChart {...doughnutChartData} />
       </div>
-      <div className="mt-4">
-        {labels.map((label, index) => (
-          <div
-            key={index}
-            className="flex items-center justify-between py-2 border-b border-gray-200 last:border-0"
-          >
-            <div className="flex items-center gap-3">
-              <div
-                className="w-4 h-4 rounded-full"
-                style={{ backgroundColor: bgColors[index] }}
-              ></div>
-              <Text className="text-sm font-medium text-gray-700">{label}</Text>
-            </div>
-            <Text className="text-sm font-medium text-gray-900">
-              ${values[index]?.toFixed(2)}
-            </Text>
-          </div>
-        ))}
-      </div>
+      <Legend labels={labels} values={values} bgColors={bgColors} />
     </ChartCard>
   );
 };
