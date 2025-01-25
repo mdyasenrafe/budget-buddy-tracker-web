@@ -117,28 +117,48 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({
     [data]
   );
 
+  const noTransactions = !data?.data || data?.data.length === 0;
+
   return (
     <div>
-      <div className="hidden lg:block">
-        <Table
-          dataSource={tableData}
-          columns={columns}
-          loading={isLoading}
-          scroll={{ x: "100%" }}
-          pagination={{
-            current: data?.meta?.page || 1,
-            pageSize: data?.meta?.limit || 10,
-            total: data?.meta?.total || 0,
-          }}
-          onChange={onTableChange}
-        />
-      </div>
+      {noTransactions ? (
+        <div className="text-center p-6">
+          <Text variant="h4" className="font-semibold text-gray-700">
+            No Transactions Found
+          </Text>
+          <Text className="text-gray-500">
+            It seems like you haven’t added any transactions yet. Start adding
+            transactions to see them here.
+          </Text>
+        </div>
+      ) : (
+        <>
+          <div className="hidden lg:block">
+            <Table
+              dataSource={tableData}
+              columns={columns}
+              loading={isLoading}
+              scroll={{ x: "100%" }}
+              pagination={{
+                current: data?.meta?.page || 1,
+                pageSize: data?.meta?.limit || 10,
+                total: data?.meta?.total || 0,
+              }}
+              onChange={onTableChange}
+            />
+          </div>
 
-      <div className="block lg:hidden">
-        {data?.data.map((txn) => (
-          <TransactionItem key={txn._id} transaction={txn} showEdit={true} />
-        ))}
-      </div>
+          <div className="block lg:hidden">
+            {data?.data.map((txn) => (
+              <TransactionItem
+                key={txn._id}
+                transaction={txn}
+                showEdit={true}
+              />
+            ))}
+          </div>
+        </>
+      )}
 
       {selectedTransaction && isViewModalOpen && (
         <TransactionViewModal
