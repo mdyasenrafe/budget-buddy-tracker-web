@@ -22,7 +22,7 @@ export const Legend: React.FC<LegendProps> = ({ labels, values, bgColors }) => (
           <Text className="text-sm font-medium text-gray-700">{label}</Text>
         </div>
         <Text className="text-sm font-medium text-gray-900">
-          ${values[index]?.toFixed(2)}
+          ৳{values[index]?.toFixed(2)}
         </Text>
       </div>
     ))}
