@@ -10,7 +10,6 @@ import {
   useSignupMutation,
 } from "@/redux/features/auth";
 import { useAppDispatch } from "@/redux";
-import { saveAccessToken } from "@/utils/auth";
 import {
   SignupFooter,
   SignupForm,
@@ -61,7 +60,6 @@ export const SignupPage = () => {
         secure: true,
         sameSite: "Strict",
       });
-      saveAccessToken(res.token as string);
       dispatch(addUser({ user: res.data, token: res.token as string }));
       toast.success(res?.message);
       router.push(redirect);

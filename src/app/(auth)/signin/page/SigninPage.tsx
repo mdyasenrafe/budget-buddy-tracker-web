@@ -5,7 +5,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { useLoginMutation } from "@/redux/features/auth";
 import { useAppDispatch } from "@/redux";
-import { saveAccessToken } from "@/utils/auth";
 import { addUser } from "@/redux/features/auth";
 import {
   SigninFooter,
@@ -35,7 +34,6 @@ export default function SigninPage() {
         secure: true,
         sameSite: "Strict",
       });
-      saveAccessToken(res?.token as string);
       dispatch(addUser({ user: res.data, token: res.token as string }));
       toast.success(res?.message);
       router.push(redirect as string);
