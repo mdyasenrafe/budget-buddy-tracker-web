@@ -11,7 +11,7 @@ import React, { useEffect, useState } from "react";
 import { MdLogout } from "react-icons/md";
 import { LogoutModal } from "./components";
 import { LuCirclePlus } from "react-icons/lu";
-import { navItems } from "@/utils";
+import { clearCookies, navItems } from "@/utils";
 import { useGetCardOverviewQuery } from "@/redux/features/cardOverview";
 import { CardModal } from "@/components/molecules/modals";
 import { useFetchCategoriesQuery } from "@/redux/features/category";
@@ -33,6 +33,7 @@ export const LeftSideBar = () => {
   const handleLogout = () => {
     dispatch(logout());
     closeModal();
+    clearCookies();
   };
 
   useEffect(() => {

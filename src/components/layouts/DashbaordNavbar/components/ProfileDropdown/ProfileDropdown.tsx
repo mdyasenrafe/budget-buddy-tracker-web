@@ -2,24 +2,30 @@
 
 import React, { useCallback, useEffect, useState } from "react";
 import { Button, Text } from "@/components/atoms";
-import { useAppSelector } from "@/redux";
-import { getCurrentUser } from "@/redux/features/auth";
+import { useAppDispatch, useAppSelector } from "@/redux";
+import { getCurrentUser, logout } from "@/redux/features/auth";
 import { Avatar, Menu, Spin } from "antd";
 import { FiLogOut, FiUser, FiX } from "react-icons/fi";
+import { LogoutModal } from "@/components/layouts/CommonLayout/components/LeftSideBar/components";
+import { useModal } from "@/hooks";
+import { clearCookies } from "@/utils";
 
 export const ProfileDropdown: React.FC = () => {
   // State and hooks
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const currentUser = useAppSelector(getCurrentUser);
-
+  const { isModalOpen, openModal, closeModal } = useModal();
+  const dispatch = useAppDispatch();
   // Handlers
   const handleToggleDropdown = useCallback(() => {
     setIsDropdownOpen((prev) => !prev);
   }, []);
 
   const handleLogout = useCallback(() => {
-    console.log("User logged out");
+    dispatch(logout());
+    closeModal();
+    clearCookies();
   }, []);
 
   // Lifecycle
@@ -44,7 +50,10 @@ export const ProfileDropdown: React.FC = () => {
       key: "logout",
       label: (
         <Button
-          onClick={handleLogout}
+          onClick={() => {
+            openModal();
+            handleToggleDropdown();
+          }}
           className="!border-0 py-2"
           icon={<FiLogOut className="w-5 h-5" color="red" />}
         >
@@ -90,6 +99,11 @@ export const ProfileDropdown: React.FC = () => {
           />
         </div>
       )}
+      <LogoutModal
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        onConfirmLogout={handleLogout}
+      />
     </div>
   );
 };

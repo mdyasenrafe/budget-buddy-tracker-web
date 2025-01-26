@@ -7,6 +7,7 @@ import { BudgetDetails, BudgetList, MonthNavigator } from "./components";
 import { Col, Row } from "antd";
 import { TBudget, useGetBudgetQuery } from "@/redux/features/budget";
 import { LoadingSpinner } from "@/components/atoms/LoadingSpinner";
+import { EmptyBudgetState } from "./components/EmptyBudgetState";
 
 export const BudgetTrackerPage = () => {
   // states
@@ -27,7 +28,7 @@ export const BudgetTrackerPage = () => {
 
   const selectedBudgetDetails = useMemo(
     () => data?.data.find((budget) => budget.name === selectedBudget),
-    [selectedBudget]
+    [selectedBudget, data?.data]
   );
 
   return (
@@ -37,14 +38,11 @@ export const BudgetTrackerPage = () => {
         description="Easily track your expenses, set monthly budgets, and stay on top of your finances with simple charts and progress updates. Keep your spending organized and make better financial decisions effortlessly."
       />
 
-      {/* <MonthNavigator
-        selectedMonth={selectedMonth}
-        onChange={handleMonthChange}
-      /> */}
-
       <div className="py-10">
         {isLoading ? (
           <LoadingSpinner />
+        ) : data?.data?.length === 0 || !data?.data ? (
+          <EmptyBudgetState />
         ) : (
           <Row gutter={[16, 16]}>
             <Col xs={24} md={8}>

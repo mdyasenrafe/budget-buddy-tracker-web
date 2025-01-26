@@ -5,7 +5,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { useLoginMutation } from "@/redux/features/auth";
 import { useAppDispatch } from "@/redux";
-import { saveAccessToken } from "@/utils/auth";
 import { addUser } from "@/redux/features/auth";
 import {
   SigninFooter,
@@ -13,6 +12,7 @@ import {
   SigninHeader,
   SigninLayout,
 } from "./components";
+import Cookies from "js-cookie";
 
 export type SignInFormFields = {
   email: string;
@@ -29,7 +29,11 @@ export default function SigninPage() {
   const onSubmit = async (data: SignInFormFields) => {
     try {
       const res = await login(data).unwrap();
-      saveAccessToken(res?.token as string);
+      Cookies.set("token", res.token as string, {
+        path: "/",
+        secure: true,
+        sameSite: "Strict",
+      });
       dispatch(addUser({ user: res.data, token: res.token as string }));
       toast.success(res?.message);
       router.push(redirect as string);

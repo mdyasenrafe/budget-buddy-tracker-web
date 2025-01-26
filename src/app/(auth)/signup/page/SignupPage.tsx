@@ -10,13 +10,13 @@ import {
   useSignupMutation,
 } from "@/redux/features/auth";
 import { useAppDispatch } from "@/redux";
-import { saveAccessToken } from "@/utils/auth";
 import {
   SignupFooter,
   SignupForm,
   SignupHeader,
   SignupLayout,
 } from "./components";
+import Cookies from "js-cookie";
 
 export type SignupFormFields = {
   name: string;
@@ -55,7 +55,11 @@ export const SignupPage = () => {
       };
 
       const res = await signup(payload).unwrap();
-      saveAccessToken(res.token as string);
+      Cookies.set("token", res.token as string, {
+        path: "/",
+        secure: true,
+        sameSite: "Strict",
+      });
       dispatch(addUser({ user: res.data, token: res.token as string }));
       toast.success(res?.message);
       router.push(redirect);
