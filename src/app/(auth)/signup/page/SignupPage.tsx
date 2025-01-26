@@ -17,6 +17,7 @@ import {
   SignupHeader,
   SignupLayout,
 } from "./components";
+import Cookies from "js-cookie";
 
 export type SignupFormFields = {
   name: string;
@@ -55,6 +56,11 @@ export const SignupPage = () => {
       };
 
       const res = await signup(payload).unwrap();
+      Cookies.set("token", res.token as string, {
+        path: "/",
+        secure: true,
+        sameSite: "Strict",
+      });
       saveAccessToken(res.token as string);
       dispatch(addUser({ user: res.data, token: res.token as string }));
       toast.success(res?.message);

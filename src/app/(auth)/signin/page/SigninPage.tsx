@@ -13,6 +13,7 @@ import {
   SigninHeader,
   SigninLayout,
 } from "./components";
+import Cookies from "js-cookie";
 
 export type SignInFormFields = {
   email: string;
@@ -29,6 +30,11 @@ export default function SigninPage() {
   const onSubmit = async (data: SignInFormFields) => {
     try {
       const res = await login(data).unwrap();
+      Cookies.set("token", res.token as string, {
+        path: "/",
+        secure: true,
+        sameSite: "Strict",
+      });
       saveAccessToken(res?.token as string);
       dispatch(addUser({ user: res.data, token: res.token as string }));
       toast.success(res?.message);
