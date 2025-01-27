@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useAppSelector } from "@/redux";
 import { TCard, selectCard } from "@/redux/features/cardOverview";
 import { CardOverview } from "@/components/organism";
@@ -15,6 +15,9 @@ import dayjs from "dayjs";
 import { BudgetList } from "../../budget-tracker/page/components";
 import { useRouter } from "next/navigation";
 import { BudgetItem } from "../../budget-tracker/page/components/BudgetList/components";
+import { EmptyBudgetState } from "../../budget-tracker/page/components/EmptyBudgetState";
+import { LineChart } from "@/components/molecules/chart";
+import { colors } from "@/theme";
 
 export const DashboardPage = () => {
   // hooks
@@ -39,8 +42,25 @@ export const DashboardPage = () => {
     },
     [router]
   );
+  const lineChartData = useMemo(
+    () => ({
+      labels: ["week 1", "week 2", "week 3"],
+      datasets: [
+        {
+          label: "Total Balance",
+          data: [12, 23, 23],
+          backgroundColor: "rgba(75,192,192,0.4)",
+          borderColor: "rgba(75,192,192,1)",
+          pointBackgroundColor: colors.grey,
+          pointBorderColor: colors.grey,
+          pointHoverBackgroundColor: colors.grey,
+          pointHoverBorderColor: colors.grey,
+        },
+      ],
+    }),
+    []
+  );
 
-  // Move the conditional return after hooks are declared
   if (isLoading || metricLoading || budgetLoading) {
     return <LoadingSpinner />;
   }
@@ -62,15 +82,31 @@ export const DashboardPage = () => {
         monthlyIncome={metricData?.monthlyIncome || 0}
         totalCard={metricData?.totalCard || 0}
       />
-      <div className="lg:grid grid-cols-2 w-full gap-6">
-        <ChartCard className="" title="Top Budgets">
-          {budgetData?.data?.map((budget) => (
-            <BudgetItem
-              budget={budget}
-              isSelected={false}
-              onClick={() => handleBudgetClick(budget.name)}
-            />
-          ))}
+      <div className="lg:grid grid-cols-2 w-full gap-6 !mb-10">
+        <ChartCard
+          className=""
+          title="Top Budgets"
+          clickableTextProps={{
+            text: "View All",
+            onClick: () => handleBudgetClick("View All Budgets clicked"),
+          }}
+        >
+          {budgetData?.data.length === 0 ? (
+            <EmptyBudgetState />
+          ) : (
+            budgetData?.data
+              ?.slice(0, 3)
+              .map((budget) => (
+                <BudgetItem
+                  budget={budget}
+                  isSelected={false}
+                  onClick={() => handleBudgetClick(budget.name)}
+                />
+              ))
+          )}
+        </ChartCard>
+        <ChartCard title="Balance Trend" className="mt-6 lg:mt-0">
+          <LineChart {...lineChartData} />
         </ChartCard>
       </div>
     </div>
