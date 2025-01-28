@@ -33,6 +33,7 @@ export default function SigninPage() {
         path: "/",
         secure: true,
         sameSite: "Strict",
+        expires: 365,
       });
       dispatch(addUser({ user: res.data, token: res.token as string }));
       toast.success(res?.message);
