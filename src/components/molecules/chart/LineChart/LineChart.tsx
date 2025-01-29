@@ -13,7 +13,7 @@ export const LineChart = ({ labels, datasets }: LineChartProps) => {
       ...dataset,
       fill: dataset.backgroundColor ? true : false,
       borderWidth: dataset?.borderWidth ?? 2,
-      tension: dataset?.tension ?? 0.6,
+      tension: dataset?.tension ?? 0.2,
       pointRadius: dataset?.pointRadius ? dataset?.pointRadius : 4,
     })),
   };

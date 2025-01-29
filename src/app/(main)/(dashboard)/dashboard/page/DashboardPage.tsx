@@ -9,7 +9,8 @@ import { DashboardBudgetSection } from "./components/DashboardBudgetSection";
 import { DashboardBalanceTrendChart } from "./components/DashboardBalanceTrendChart";
 
 export const DashboardPage = () => {
-  const { isLoading, metricData, activeCard, budgetData } = useDashboardData();
+  const { isLoading, metricData, activeCard, budgetData, balanceTrendData } =
+    useDashboardData();
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -34,7 +35,7 @@ export const DashboardPage = () => {
 
       <div className="lg:grid grid-cols-2 w-full gap-6 !mb-10">
         <DashboardBudgetSection budgetData={budgetData} />
-        <DashboardBalanceTrendChart />
+        <DashboardBalanceTrendChart balanceTrendData={balanceTrendData} />
       </div>
     </div>
   );
