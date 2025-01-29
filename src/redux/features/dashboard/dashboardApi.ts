@@ -1,12 +1,12 @@
 import { baseApi } from "@/api/baseApi";
 import { TResponse } from "../types";
-import { TDashbaordMetricParams, TDashboardMetricRes } from ".";
+import { TDashbaordParams, TDashboardMetricRes } from ".";
 
 const budgetApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getDashboardMetric: build.query<
       TResponse<TDashboardMetricRes>,
-      TDashbaordMetricParams
+      TDashbaordParams
     >({
       query: ({ year, monthIndex, timezone }) => ({
         url: `/dashboard/metric`,
@@ -14,8 +14,19 @@ const budgetApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Transaction", "Card"],
     }),
+    getDashboardBalanceTrend: build.query<
+      TResponse<number[]>,
+      TDashbaordParams
+    >({
+      query: ({ year, monthIndex, timezone }) => ({
+        url: `/dashboard/balance-trend`,
+        params: { year, monthIndex, timezone },
+      }),
+      providesTags: ["Transaction"],
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useGetDashboardMetricQuery } = budgetApi;
+export const { useGetDashboardMetricQuery, useGetDashboardBalanceTrendQuery } =
+  budgetApi;
