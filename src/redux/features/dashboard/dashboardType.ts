@@ -1,4 +1,4 @@
-export type TDashbaordMetricParams = {
+export type TDashbaordParams = {
   year: number;
   monthIndex: number;
   timezone: string;

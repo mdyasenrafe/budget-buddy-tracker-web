@@ -1,48 +1,42 @@
 "use client";
 
 import React from "react";
-import { useAppSelector } from "@/redux";
-import { TCard, selectCard } from "@/redux/features/cardOverview";
-import { CardOverview } from "@/components/organism";
-import { getCateogryLoadingState } from "@/redux/features/category";
 import { LoadingSpinner } from "@/components/atoms/LoadingSpinner";
+import { useDashboardData } from "@/hooks";
+import { CardOverview } from "@/components/organism";
 import { DashboardMetrics } from "./components";
-import { useGetDashboardMetricQuery } from "@/redux/features/dashboard";
-import { CURRENTMONTHINDEX, CURRENTYEAR, TIMEZONE } from "@/utils";
+import { DashboardBudgetSection } from "./components/DashboardBudgetSection";
+import { DashboardBalanceTrendChart } from "./components/DashboardBalanceTrendChart";
 
 export const DashboardPage = () => {
-  const { data, isLoading: metricLoading } = useGetDashboardMetricQuery({
-    year: CURRENTYEAR,
-    monthIndex: CURRENTMONTHINDEX,
-    timezone: TIMEZONE,
-  });
+  const { isLoading, metricData, activeCard, budgetData, balanceTrendData } =
+    useDashboardData();
 
-  const activeCard = useAppSelector(selectCard);
-  const isLoading = useAppSelector(getCateogryLoadingState);
-
-  if (isLoading || metricLoading) {
+  if (isLoading) {
     return <LoadingSpinner />;
   }
 
-  const metricData = data?.data;
-  console.log(metricData);
   return (
     <div className="p-6 space-y-6">
       {activeCard && (
-        <div>
-          <CardOverview
-            activeCard={activeCard as TCard}
-            selected={true}
-            showEdit={false}
-          />
-        </div>
+        <CardOverview
+          activeCard={activeCard}
+          selected={true}
+          showEdit={false}
+        />
       )}
+
       <DashboardMetrics
         totalBalance={metricData?.totalBalance || 0}
         monthlySpending={metricData?.monthlySpending || 0}
         monthlyIncome={metricData?.monthlyIncome || 0}
         totalCard={metricData?.totalCard || 0}
       />
+
+      <div className="lg:grid grid-cols-2 w-full gap-6 !mb-10">
+        <DashboardBudgetSection budgetData={budgetData} />
+        <DashboardBalanceTrendChart balanceTrendData={balanceTrendData} />
+      </div>
     </div>
   );
 };
