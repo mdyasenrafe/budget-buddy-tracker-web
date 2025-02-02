@@ -4,9 +4,13 @@ import React from "react";
 import { LoadingSpinner } from "@/components/atoms/LoadingSpinner";
 import { useDashboardData } from "@/hooks";
 import { CardOverview } from "@/components/organism";
-import { DashboardMetrics } from "./components";
-import { DashboardBudgetSection } from "./components/DashboardBudgetSection";
-import { DashboardBalanceTrendChart } from "./components/DashboardBalanceTrendChart";
+import {
+  DashboardBalanceTrendChart,
+  DashboardBudgetSection,
+  DashboardMetrics,
+  DashboardSpendingIncomeChart,
+  DashboardTransactions,
+} from "./components";
 
 export const DashboardPage = () => {
   const { isLoading, metricData, activeCard, budgetData, balanceTrendData } =
@@ -34,8 +38,17 @@ export const DashboardPage = () => {
       />
 
       <div className="lg:grid grid-cols-2 w-full gap-6 !mb-10">
-        <DashboardBudgetSection budgetData={budgetData} />
+        <DashboardSpendingIncomeChart />
+
         <DashboardBalanceTrendChart balanceTrendData={balanceTrendData} />
+      </div>
+      <div className="lg:grid grid-cols-3 w-full gap-6 !mb-20">
+        <div className="col-span-1">
+          <DashboardBudgetSection budgetData={budgetData} />
+        </div>
+        <div className="col-span-2">
+          <DashboardTransactions />
+        </div>
       </div>
     </div>
   );
