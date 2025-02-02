@@ -23,7 +23,12 @@ dashboard:
 
 
 
-    next task:
-    completed card management graph thing
-    added new graph on dashboard page
-    
+
+
+    <!-- top priority -->
+        Dashboard page
+        Spending vs. Income Overview  
+        
+        Analytics Page:
+        income breakdown
+        expense breakdown
