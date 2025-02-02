@@ -1,7 +1,9 @@
 dashboard:
         we need to show compare our balance by monthly by line chart or bar chart
         we need to show total balance compare by line chart 
-        we need to breakdown our cost by category using pie chart
+
+
+    card manage        we need to breakdown our cost by category using pie chart
         Monthly Budgets
 
  Analytics Page:
@@ -10,9 +12,7 @@ dashboard:
         expense breakdown
         transcation history
         Trend Analysis
-        Visual Comparison of Budget vs. Actual Spending.
-
-    card management:
+        Visual Comparison of Budget vs. Actual Spending.ment:
         Spending vs. Income Overview:
         Trend Analysis
         category analysis
@@ -32,3 +32,6 @@ dashboard:
         Analytics Page:
         income breakdown
         expense breakdown
+
+        /bug:
+        need to check starting month date 1 feb transaction at card metrics api 
