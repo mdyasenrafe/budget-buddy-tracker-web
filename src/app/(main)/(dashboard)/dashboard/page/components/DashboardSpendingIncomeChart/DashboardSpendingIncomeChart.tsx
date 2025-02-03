@@ -5,12 +5,16 @@ import { TWeeklyCardSummaryRes } from "@/redux/features/card";
 import { colors } from "@/theme";
 import React, { useMemo } from "react";
 
-type TProps = {};
+type TProps = {
+  weeklySpendIncomeData: TWeeklyCardSummaryRes;
+};
 
-export const DashboardSpendingIncomeChart: React.FC<TProps> = ({}) => {
-  const weeklyData: TWeeklyCardSummaryRes = {
-    income: ["34", "87"],
-    expense: ["34", "54"],
+export const DashboardSpendingIncomeChart: React.FC<TProps> = ({
+  weeklySpendIncomeData,
+}) => {
+  const weeklyData: TWeeklyCardSummaryRes = weeklySpendIncomeData ?? {
+    income: [],
+    expense: [],
   };
   const labels = weeklyData?.income.map((_, index) => `Week ${index + 1}`);
 

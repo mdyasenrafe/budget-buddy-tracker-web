@@ -13,8 +13,14 @@ import {
 } from "./components";
 
 export const DashboardPage = () => {
-  const { isLoading, metricData, activeCard, budgetData, balanceTrendData } =
-    useDashboardData();
+  const {
+    isLoading,
+    metricData,
+    activeCard,
+    budgetData,
+    balanceTrendData,
+    weeklySpendIncomeData,
+  } = useDashboardData();
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -38,8 +44,9 @@ export const DashboardPage = () => {
       />
 
       <div className="lg:grid grid-cols-2 w-full gap-6 !mb-10">
-        <DashboardSpendingIncomeChart />
-
+        <DashboardSpendingIncomeChart
+          weeklySpendIncomeData={weeklySpendIncomeData}
+        />
         <DashboardBalanceTrendChart balanceTrendData={balanceTrendData} />
       </div>
       <div className="lg:grid grid-cols-3 w-full gap-6 !mb-20">
