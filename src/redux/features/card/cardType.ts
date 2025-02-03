@@ -33,8 +33,8 @@ export type TCardMetricsResponse = {
 };
 
 export type TWeeklyCardSummaryRes = {
-  income: string[];
-  expense: string[];
+  income: number[];
+  expense: number[];
 };
 
 export type TCardSpendingCategoryRes = {

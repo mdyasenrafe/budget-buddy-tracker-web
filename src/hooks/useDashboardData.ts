@@ -4,11 +4,13 @@ import { getCateogryLoadingState } from "@/redux/features/category";
 import {
   useGetDashboardBalanceTrendQuery,
   useGetDashboardMetricQuery,
+  useGetWeeklySpendIncomeComparisonQuery,
 } from "@/redux/features/dashboard";
 import { useGetBudgetQuery } from "@/redux/features/budget";
 import { CURRENTMONTHINDEX, CURRENTYEAR, TIMEZONE } from "@/utils";
 import dayjs from "dayjs";
 import { TResponse } from "@/redux/features/types";
+import { TWeeklyCardSummaryRes } from "@/redux/features/card";
 
 export const useDashboardData = () => {
   const { isLoading: budgetLoading, data: budgetData } = useGetBudgetQuery(
@@ -29,13 +31,25 @@ export const useDashboardData = () => {
     timezone: TIMEZONE,
   });
 
+  const {
+    data: weeklySpendIncomeData,
+    isLoading: weeklySpendIncomeLoading,
+    isFetching: weeklySpendIncomeFetching,
+  } = useGetWeeklySpendIncomeComparisonQuery({
+    year: CURRENTYEAR,
+    monthIndex: CURRENTMONTHINDEX,
+    timezone: TIMEZONE,
+  });
+
   const activeCard = useAppSelector(selectCard);
   const isLoading =
     useAppSelector(getCateogryLoadingState) ||
     metricLoading ||
     budgetLoading ||
     BalanceTrendLoading ||
-    isFetching;
+    weeklySpendIncomeLoading ||
+    isFetching ||
+    weeklySpendIncomeFetching;
 
   return {
     isLoading,
@@ -43,5 +57,6 @@ export const useDashboardData = () => {
     activeCard,
     budgetData: budgetData?.data || [],
     balanceTrendData: BalanceTrendData as TResponse<number[]>,
+    weeklySpendIncomeData: weeklySpendIncomeData?.data as TWeeklyCardSummaryRes,
   };
 };
