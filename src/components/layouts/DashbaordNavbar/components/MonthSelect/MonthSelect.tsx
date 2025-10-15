@@ -104,7 +104,7 @@ export const MonthSelect: React.FC<Props> = ({ onChangeMonth, className }) => {
         <Button
           aria-label="Previous year"
           disabled={prevYearDisabled}
-          className="!p-2 !h-9 !w-9 !rounded-md border border-gray-200 hover:!bg-gray-100 disabled:!opacity-50 dark:border-gray-700 dark:hover:!bg-gray-700 flex items-center justify-center"
+          className="!p-2 !h-9 !w-9 !rounded-md border border-gray-200 hover:!bg-gray-100 disabled:!opacity-50 dark:border-gray-700 dark:hover:!bg-gray-700 flex items-center justify-center "
           onClick={() =>
             !prevYearDisabled && setView((v) => v.subtract(1, "year"))
           }
@@ -116,7 +116,7 @@ export const MonthSelect: React.FC<Props> = ({ onChangeMonth, className }) => {
         <Button
           aria-label="Next year"
           disabled={nextYearDisabled}
-          className="!p-2 !h-9 !w-9 !rounded-md border border-gray-200 hover:!bg-gray-100 disabled:!opacity-50 dark:border-gray-700 dark:hover:!bg-gray-700 flex items-center justify-center"
+          className="!p-2 !h-9 !w-9 !rounded-md border border-gray-200 hover:!bg-gray-100 disabled:!opacity-50 dark:border-gray-700 dark:hover:!bg-gray-700flex items-center justify-center"
           onClick={() => !nextYearDisabled && setView((v) => v.add(1, "year"))}
           icon={<FiChevronRight />}
         />
@@ -173,15 +173,17 @@ export const MonthSelect: React.FC<Props> = ({ onChangeMonth, className }) => {
       className={["flex items-center gap-2", className].join(" ")}
       onKeyDown={handleKey}
     >
-      <Tooltip title="Previous month (←)">
-        <Button
-          aria-label="Previous month"
-          disabled={!canGoPrev}
-          onClick={() => go(-1)}
-          className="!h-9 !w-9 !rounded-full border border-gray-200 hover:!bg-gray-100 disabled:!opacity-50 dark:border-gray-700 dark:hover:!bg-gray-700 flex items-center justify-center"
-          icon={<FiChevronLeft />}
-        />
-      </Tooltip>
+      <div className="hidden md:flex">
+        <Tooltip title="Previous month (←)">
+          <Button
+            aria-label="Previous month"
+            disabled={!canGoPrev}
+            onClick={() => go(-1)}
+            className="!h-9 !w-9 !rounded-full border border-gray-200 hover:!bg-gray-100 disabled:!opacity-50 dark:border-gray-700 dark:hover:!bg-gray-700  lg:flex items-center justify-center"
+            icon={<FiChevronLeft />}
+          />
+        </Tooltip>
+      </div>
 
       <Popover
         open={open}
@@ -207,15 +209,17 @@ export const MonthSelect: React.FC<Props> = ({ onChangeMonth, className }) => {
         </Button>
       </Popover>
 
-      <Tooltip title="Next month (→)">
-        <Button
-          aria-label="Next month"
-          disabled={!canGoNext}
-          onClick={() => go(1)}
-          className="!h-9 !w-9 !rounded-full border border-gray-200 hover:!bg-gray-100 disabled:!opacity-50 dark:border-gray-700 dark:hover:!bg-gray-700 flex items-center justify-center"
-          icon={<FiChevronRight />}
-        />
-      </Tooltip>
+      <div className="hidden md:flex">
+        <Tooltip title="Next month (→)">
+          <Button
+            aria-label="Next month"
+            disabled={!canGoNext}
+            onClick={() => go(1)}
+            className="!h-9 !w-9 !rounded-full border border-gray-200 hover:!bg-gray-100 disabled:!opacity-50 dark:border-gray-700 dark:hover:!bg-gray-700 flex items-center justify-center"
+            icon={<FiChevronRight />}
+          />
+        </Tooltip>
+      </div>
     </div>
   );
 };
