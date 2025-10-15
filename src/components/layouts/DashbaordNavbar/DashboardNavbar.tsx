@@ -1,5 +1,10 @@
 import { Container } from "@/components/atoms";
-import { ProfileDropdown, ThemeToggle, HeaderContent } from "./components";
+import {
+  ProfileDropdown,
+  ThemeToggle,
+  HeaderContent,
+  MonthSelect,
+} from "./components";
 
 export const DashboardNavbar = () => {
   return (
@@ -8,6 +13,7 @@ export const DashboardNavbar = () => {
         <div className="flex items-center justify-between">
           <HeaderContent />
           <div className="flex items-center justify-end gap-3">
+            <MonthSelect />
             <ThemeToggle />
             <ProfileDropdown />
           </div>
