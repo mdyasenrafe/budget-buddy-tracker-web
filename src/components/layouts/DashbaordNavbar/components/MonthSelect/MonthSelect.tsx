@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useMemo, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { Popover, Tooltip } from "antd";
@@ -53,26 +55,14 @@ export const MonthSelect: React.FC<Props> = ({ onChangeMonth, className }) => {
   const min = useMemo(() => dayjs(`${minIso}-01`).startOf("month"), [minIso]);
   const max = useMemo(() => dayjs(`${maxIso}-01`).startOf("month"), [maxIso]);
 
-  // Local UI state
   const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
-  // "View" pointer inside the popover to browse years without committing
   const [view, setView] = useState<Dayjs>(current);
 
   useEffect(() => setMounted(true), []);
-  // When current changes in store, keep the view in sync if popover is closed
   useEffect(() => {
     if (!open) setView(current);
   }, [current, open]);
-
-  // Initialize from URL (?month=YYYY-MM) if you want:
-  // If you also keep a query param elsewhere, hydrate here.
-  // Example:
-  // const sp = useSearchParams();
-  // useEffect(() => {
-  //   const q = sp.get("month");
-  //   if (q) dispatch(setFromIso(q));
-  // }, [sp, dispatch]);
 
   const canGoPrev = current.isAfter(min, "month");
   const canGoNext = current.isBefore(max, "month");
