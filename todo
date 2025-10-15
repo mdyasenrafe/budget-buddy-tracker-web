@@ -1,10 +1,10 @@
+top header:
+    add a option for selecting which month 
+
+
 dashboard:
-        we need to show compare our balance by monthly by line chart or bar chart
-        we need to show total balance compare by line chart 
+    add a option weekly, monthtly, yearly on the chat header such spending vs income and balance trend
 
-
-    card manage        we need to breakdown our cost by category using pie chart
-        Monthly Budgets
 
  Analytics Page:
         Spending vs. Income Overview:
@@ -21,17 +21,8 @@ dashboard:
         feat:
         we need to add monthly income and expense to metric
 
-
-
-
-
-    <!-- top priority -->
-        Dashboard page
-        Spending vs. Income Overview  
-        
-        Analytics Page:
-        income breakdown
-        expense breakdown
-
         /bug:
         need to check starting month date 1 feb transaction at card metrics api 
+
+add transaction:
+    need to add top transcation by using our backend ai so it will be shown top added transactions
