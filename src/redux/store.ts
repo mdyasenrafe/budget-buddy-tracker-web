@@ -8,6 +8,7 @@ import authSlice from "./features/auth/authSlice";
 import { baseApi } from "@/api/baseApi";
 import cardOverviewSlice from "./features/cardOverview/cardOverviewSlice";
 import categorySlice from "./features/category/categorySlice";
+import monthSlice from "./features/month/monthSlice";
 
 // Persist config for theme slice
 const themePersistConfig = {
@@ -28,8 +29,8 @@ export const store = configureStore({
     auth: persistedAuthReducer,
     themeMode: persistedThemeReducer,
     cardOverview: cardOverviewSlice,
-
     category: categorySlice,
+    month: monthSlice,
     [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

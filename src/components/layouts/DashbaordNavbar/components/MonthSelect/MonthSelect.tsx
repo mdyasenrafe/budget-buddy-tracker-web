@@ -1,8 +1,5 @@
-"use client";
-
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
-import { useRouter, useSearchParams } from "next/navigation";
 import { Popover, Tooltip } from "antd";
 import {
   FiChevronLeft,
@@ -11,6 +8,13 @@ import {
   FiChevronDown,
 } from "react-icons/fi";
 import { Text, Button } from "@/components/atoms";
+import { useAppDispatch, useAppSelector } from "@/redux";
+import {
+  selectDayjs as selectCurrentDayjs,
+  selectBounds,
+  setFromIso,
+  step,
+} from "@/redux/features/month";
 
 type Props = {
   onChangeMonth?: (month: string) => void;
@@ -32,56 +36,60 @@ const MONTHS = [
   "Dec",
 ];
 
-// bounds
-const MIN_MONTH = dayjs("2025-01-01").startOf("month");
-const MAX_MONTH = dayjs().startOf("month");
-
-const clampToBounds = (d: Dayjs) => {
-  if (d.isBefore(MIN_MONTH, "month")) return MIN_MONTH;
-  if (d.isAfter(MAX_MONTH, "month")) return MAX_MONTH;
-  return d.startOf("month");
+/** Helper: clamp a date within [min,max] at month precision */
+const clampMonth = (d: Dayjs, min: Dayjs, max: Dayjs) => {
+  const s = d.startOf("month");
+  if (s.isBefore(min, "month")) return min.startOf("month");
+  if (s.isAfter(max, "month")) return max.startOf("month");
+  return s;
 };
 
 export const MonthSelect: React.FC<Props> = ({ onChangeMonth, className }) => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+  const dispatch = useAppDispatch();
 
+  // Global month from store (authoritative)
+  const current = useAppSelector(selectCurrentDayjs);
+  const { minIso, maxIso } = useAppSelector(selectBounds);
+  const min = useMemo(() => dayjs(`${minIso}-01`).startOf("month"), [minIso]);
+  const max = useMemo(() => dayjs(`${maxIso}-01`).startOf("month"), [maxIso]);
+
+  // Local UI state
   const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-
-  const initialFromQuery = searchParams.get("month");
-  const initial = useMemo(() => {
-    const parsed = initialFromQuery ? dayjs(`${initialFromQuery}-01`) : dayjs();
-    return clampToBounds(parsed);
-  }, [initialFromQuery]);
-
-  const [current, setCurrent] = useState<Dayjs>(initial);
   const [open, setOpen] = useState(false);
-  const gridRef = useRef<HTMLDivElement | null>(null);
+  // "View" pointer inside the popover to browse years without committing
+  const [view, setView] = useState<Dayjs>(current);
 
-  useEffect(() => setCurrent(initial), [initial]);
+  useEffect(() => setMounted(true), []);
+  // When current changes in store, keep the view in sync if popover is closed
+  useEffect(() => {
+    if (!open) setView(current);
+  }, [current, open]);
 
-  const pushToUrl = (d: Dayjs) => {
-    const clamped = clampToBounds(d);
-    const monthStr = clamped.format("YYYY-MM");
-    const params = new URLSearchParams(Array.from(searchParams.entries()));
-    params.set("month", monthStr);
-    router.replace(`?${params.toString()}`, { scroll: false });
-    onChangeMonth?.(monthStr);
+  // Initialize from URL (?month=YYYY-MM) if you want:
+  // If you also keep a query param elsewhere, hydrate here.
+  // Example:
+  // const sp = useSearchParams();
+  // useEffect(() => {
+  //   const q = sp.get("month");
+  //   if (q) dispatch(setFromIso(q));
+  // }, [sp, dispatch]);
+
+  const canGoPrev = current.isAfter(min, "month");
+  const canGoNext = current.isBefore(max, "month");
+
+  const onChange = (d: Dayjs) => {
+    const clamped = clampMonth(d, min, max);
+    const iso = clamped.format("YYYY-MM");
+    dispatch(setFromIso(iso));
+    onChangeMonth?.(iso);
   };
 
-  const canGoPrev =
-    !current.isSame(MIN_MONTH, "month") && current.isAfter(MIN_MONTH, "month");
-  const canGoNext =
-    !current.isSame(MAX_MONTH, "month") && current.isBefore(MAX_MONTH, "month");
-
-  const go = (delta: number) => {
-    const next = current.add(delta, "month");
+  const go = (delta: -1 | 1) => {
     if (delta < 0 && !canGoPrev) return;
     if (delta > 0 && !canGoNext) return;
-    const clamped = clampToBounds(next);
-    setCurrent(clamped);
-    pushToUrl(clamped);
+    dispatch(step(delta));
+    const next = clampMonth(current.add(delta, "month"), min, max);
+    onChangeMonth?.(next.format("YYYY-MM"));
   };
 
   const handleKey = (e: React.KeyboardEvent) => {
@@ -93,22 +101,12 @@ export const MonthSelect: React.FC<Props> = ({ onChangeMonth, className }) => {
       e.preventDefault();
       go(1);
     }
-    if ((e.key === "Enter" || e.key === " ") && !open) {
-      setOpen(true);
-    }
+    if ((e.key === "Enter" || e.key === " ") && !open) setOpen(true);
   };
 
-  const year = current.year();
-  const monthIdx = current.month();
-
-  const prevYearDisabled = dayjs(`${year - 1}-12-01`).isBefore(
-    MIN_MONTH,
-    "month"
-  );
-  const nextYearDisabled = dayjs(`${year + 1}-01-01`).isAfter(
-    MAX_MONTH,
-    "month"
-  );
+  const year = view.year();
+  const prevYearDisabled = dayjs(`${year - 1}-12-01`).isBefore(min, "month");
+  const nextYearDisabled = dayjs(`${year + 1}-01-01`).isAfter(max, "month");
 
   const MonthGrid = (
     <div className="p-2 w-[260px]">
@@ -118,7 +116,7 @@ export const MonthSelect: React.FC<Props> = ({ onChangeMonth, className }) => {
           disabled={prevYearDisabled}
           className="!p-2 !h-9 !w-9 !rounded-md border border-gray-200 hover:!bg-gray-100 disabled:!opacity-50 dark:border-gray-700 dark:hover:!bg-gray-700 flex items-center justify-center"
           onClick={() =>
-            !prevYearDisabled && setCurrent((c) => c.subtract(1, "year"))
+            !prevYearDisabled && setView((v) => v.subtract(1, "year"))
           }
           icon={<FiChevronLeft />}
         />
@@ -129,24 +127,20 @@ export const MonthSelect: React.FC<Props> = ({ onChangeMonth, className }) => {
           aria-label="Next year"
           disabled={nextYearDisabled}
           className="!p-2 !h-9 !w-9 !rounded-md border border-gray-200 hover:!bg-gray-100 disabled:!opacity-50 dark:border-gray-700 dark:hover:!bg-gray-700 flex items-center justify-center"
-          onClick={() =>
-            !nextYearDisabled && setCurrent((c) => c.add(1, "year"))
-          }
+          onClick={() => !nextYearDisabled && setView((v) => v.add(1, "year"))}
           icon={<FiChevronRight />}
         />
       </div>
 
       <div
-        ref={gridRef}
         className="grid grid-cols-3 gap-2"
         role="grid"
         aria-label="Choose month"
       >
         {MONTHS.map((m, i) => {
-          const candidate = dayjs().year(year).month(i).startOf("month");
+          const candidate = view.year(year).month(i).startOf("month");
           const disabled =
-            candidate.isBefore(MIN_MONTH, "month") ||
-            candidate.isAfter(MAX_MONTH, "month");
+            candidate.isBefore(min, "month") || candidate.isAfter(max, "month");
           const selected = candidate.isSame(current, "month");
 
           return (
@@ -156,9 +150,7 @@ export const MonthSelect: React.FC<Props> = ({ onChangeMonth, className }) => {
               disabled={disabled}
               onClick={() => {
                 if (disabled) return;
-                const next = clampToBounds(candidate);
-                setCurrent(next);
-                pushToUrl(next);
+                onChange(candidate);
                 setOpen(false);
               }}
               className={[
@@ -203,7 +195,10 @@ export const MonthSelect: React.FC<Props> = ({ onChangeMonth, className }) => {
 
       <Popover
         open={open}
-        onOpenChange={setOpen}
+        onOpenChange={(o) => {
+          setOpen(o);
+          if (o) setView(current); // reset view to current when opening
+        }}
         content={MonthGrid}
         trigger={["click"]}
         placement="bottom"
