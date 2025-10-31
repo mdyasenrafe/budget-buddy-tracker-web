@@ -7,41 +7,45 @@ import {
   useGetWeeklySpendIncomeComparisonQuery,
 } from "@/redux/features/dashboard";
 import { useGetBudgetQuery } from "@/redux/features/budget";
-import { CURRENTMONTHINDEX, CURRENTYEAR, TIMEZONE } from "@/utils";
-import dayjs from "dayjs";
+import { TIMEZONE } from "@/utils";
 import { TResponse } from "@/redux/features/types";
 import { TWeeklyCardSummaryRes } from "@/redux/features/card";
+import { selectMonthIndex, selectYear } from "@/redux/features/month";
+import { useMemo } from "react";
 
 export const useDashboardData = () => {
-  const { isLoading: budgetLoading, data: budgetData } = useGetBudgetQuery(
-    dayjs().month()
+  const year = useAppSelector(selectYear);
+  const monthIndex = useAppSelector(selectMonthIndex);
+
+  const metricParams = useMemo(
+    () => ({ year, monthIndex, timezone: TIMEZONE }),
+    [year, monthIndex]
   );
-  const { data, isLoading: metricLoading } = useGetDashboardMetricQuery({
-    year: CURRENTYEAR,
-    monthIndex: CURRENTMONTHINDEX,
-    timezone: TIMEZONE,
-  });
+
+  const trendParams = metricParams;
+  const weeklyParams = metricParams;
+
+  const { isLoading: budgetLoading, data: budgetData } =
+    useGetBudgetQuery(monthIndex);
+
+  const { data, isLoading: metricLoading } =
+    useGetDashboardMetricQuery(metricParams);
+
   const {
     data: BalanceTrendData,
     isLoading: BalanceTrendLoading,
     isFetching,
-  } = useGetDashboardBalanceTrendQuery({
-    year: CURRENTYEAR,
-    monthIndex: CURRENTMONTHINDEX,
-    timezone: TIMEZONE,
-  });
+  } = useGetDashboardBalanceTrendQuery(trendParams);
 
   const {
     data: weeklySpendIncomeData,
     isLoading: weeklySpendIncomeLoading,
     isFetching: weeklySpendIncomeFetching,
-  } = useGetWeeklySpendIncomeComparisonQuery({
-    year: CURRENTYEAR,
-    monthIndex: CURRENTMONTHINDEX,
-    timezone: TIMEZONE,
-  });
+  } = useGetWeeklySpendIncomeComparisonQuery(weeklyParams);
 
+  // Other UI state
   const activeCard = useAppSelector(selectCard);
+
   const isLoading =
     useAppSelector(getCateogryLoadingState) ||
     metricLoading ||
