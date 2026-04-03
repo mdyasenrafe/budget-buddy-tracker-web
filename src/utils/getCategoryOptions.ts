@@ -1,5 +1,6 @@
 import { TOption } from "@/components/form";
 import { TCategory } from "@/redux/features/category";
+import { sortCategoriesWithOtherLast } from "./categoryUtils";
 
 export const getCategoryOptions = (
   incomeCategories: TCategory[] | null,
@@ -16,7 +17,7 @@ export const getCategoryOptions = (
     categories = [...(incomeCategories || []), ...(expenseCategories || [])];
   }
 
-  return categories.map((category) => ({
+  return sortCategoriesWithOtherLast(categories).map((category) => ({
     value: category?._id as string,
     label: category?.label as string,
   }));

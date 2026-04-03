@@ -4,6 +4,7 @@ import { selectMonthIndex, selectYear } from "@/redux/features/month/monthSlice"
 import { useGetSpendingAnalyticsQuery, useGetIncomeAnalyticsQuery } from "@/redux/features/analytics";
 import { colors } from "@/theme/colors";
 import { TIMEZONE } from "@/utils";
+import { sortCategoriesWithOtherLast } from "@/utils/categoryUtils";
 
 export type CategoryType = "income" | "expense";
 
@@ -42,7 +43,8 @@ export const useCategoryAnalytics = (type: CategoryType) => {
     const data: number[] = [];
     const categoryColors: string[] = [];
 
-    const categories = apiData?.data?.categories || [];
+    const rawCategories = apiData?.data?.categories || [];
+    const categories = sortCategoriesWithOtherLast(rawCategories);
     categories.forEach((cat, index) => {
       labels.push(cat.label);
       data.push(cat.totalAmount);
