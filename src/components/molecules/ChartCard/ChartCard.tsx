@@ -7,6 +7,7 @@ type ChartCardProps = {
   children: React.ReactNode;
   className?: string;
   loading?: boolean;
+  extra?: React.ReactNode;
   clickableTextProps?: {
     text: string;
     onClick: () => void;
@@ -18,13 +19,16 @@ export const ChartCard: React.FC<ChartCardProps> = ({
   children,
   className = "",
   loading = false,
+  extra,
   clickableTextProps,
 }) => (
   <div className={`border w-full rounded-lg ${className}`}>
     <div className="mb-6 border-b p-4 flex justify-between items-center">
       <Text variant="h4">{title}</Text>
 
-      {clickableTextProps && (
+      {extra && <div className="flex items-center">{extra}</div>}
+
+      {clickableTextProps && !extra && (
         <Text
           className="text-primary hover:underline cursor-pointer"
           variant="p4"

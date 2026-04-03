@@ -110,12 +110,12 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({
         ),
       },
     ],
-    [openViewModal, openDeleteModal]
+    [openViewModal, openDeleteModal],
   );
 
   const tableData = useMemo(
     () => data?.data.map((txn) => ({ ...txn, key: txn._id })),
-    [data]
+    [data],
   );
 
   const noTransactions = !isLoading && (!data?.data || data?.data.length === 0);
@@ -127,7 +127,7 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({
           <Text variant="h4" className="font-semibold text-gray-700">
             No Transactions Found
           </Text>
-          <Text className="text-gray-500">
+          <Text variant="p5" className="text-gray-500">
             It seems like you haven’t added any transactions yet. Start adding
             transactions to see them here.
           </Text>

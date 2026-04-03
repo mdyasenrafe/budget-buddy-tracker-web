@@ -47,7 +47,7 @@ export const DoughnutCardSpendingChart: React.FC<Props> = ({ cardId }) => {
         },
       ],
     }),
-    [labels, values]
+    [labels, values],
   );
 
   return (
@@ -68,7 +68,7 @@ export const DoughnutCardSpendingChart: React.FC<Props> = ({ cardId }) => {
           <Text variant="h4" className="font-semibold text-gray-700">
             No Transactions Added Yet
           </Text>
-          <Text className="text-gray-500">
+          <Text className="text-gray-500" variant="p5">
             It looks like you haven’t added any transactions to this card yet.
             Start adding transactions to see your spending breakdown here.
           </Text>
