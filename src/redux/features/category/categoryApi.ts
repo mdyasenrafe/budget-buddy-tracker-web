@@ -1,6 +1,7 @@
 import { baseApi } from "@/api/baseApi";
 import { TResponse } from "../types";
 import { TCategory } from "./type";
+import { sortCategoriesWithOtherLast } from "@/utils/categoryUtils";
 import {
   setCategoryLoadingState,
   updateExpenseCategories,
@@ -26,8 +27,8 @@ export const categoryService = baseApi.injectEndpoints({
               incomeCategories.push(item);
             }
           });
-          dispatch(updateIncomeCategories(incomeCategories));
-          dispatch(updateExpenseCategories(expenseCategories));
+          dispatch(updateIncomeCategories(sortCategoriesWithOtherLast(incomeCategories)));
+          dispatch(updateExpenseCategories(sortCategoriesWithOtherLast(expenseCategories)));
         } catch (error) {
           console.error("Error fetching categories:", error);
         } finally {

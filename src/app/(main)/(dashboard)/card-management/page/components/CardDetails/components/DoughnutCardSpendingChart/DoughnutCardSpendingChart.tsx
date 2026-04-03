@@ -3,6 +3,7 @@ import { DoughnutChart } from "@/components/molecules/chart";
 import { useGetCardSpendingCategoryQuery } from "@/redux/features/card";
 import { colors } from "@/theme";
 import { CURRENTMONTHINDEX, CURRENTYEAR, TIMEZONE } from "@/utils";
+import { sortCategoriesWithOtherLast } from "@/utils/categoryUtils";
 import React, { useMemo } from "react";
 import { Legend } from "./components/Legend";
 import { Text } from "@/components/atoms";
@@ -19,7 +20,7 @@ export const DoughnutCardSpendingChart: React.FC<Props> = ({ cardId }) => {
     timezone: TIMEZONE,
   });
 
-  const spendingData = (data?.data || []).slice(0, 5);
+  const spendingData = sortCategoriesWithOtherLast(data?.data || []).slice(0, 5);
   const labels = spendingData?.map((item) => item?.label);
   const values = spendingData?.map((item) => item?.amount);
   const bgColors = [
