@@ -5,3 +5,5 @@ export * from "./ChartCard";
 export * from "./TransactionItem";
 export * from "./TransactionsTable";
 export * from "./DashboardMetric";
+export * from "./CategoryItem";
+export * from "./CategoryFilter";

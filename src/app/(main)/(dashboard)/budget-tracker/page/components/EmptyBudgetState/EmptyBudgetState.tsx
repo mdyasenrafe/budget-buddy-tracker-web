@@ -12,10 +12,10 @@ export const EmptyBudgetState: React.FC = () => {
   return (
     <div className="mt-10 flex flex-col items-center border py-5 rounded-lg mb-10">
       <div className="text-center">
-        <Text variant="h3" className="text-gray-600">
+        <Text variant="h4" className="text-gray-600">
           No Budgets Found
         </Text>
-        <Text variant="p3" className="text-gray-500 mt-2">
+        <Text variant="p5" className="text-gray-500 mt-2">
           You haven't created any budgets yet. Click below to get started and
           gain insights into your spending and savings.
         </Text>
