@@ -11,14 +11,25 @@ import { Text } from "@/components/atoms";
 import { LoadingSpinner } from "@/components/atoms/LoadingSpinner/LoadingSpinner";
 import { useCategoryAnalytics } from "./useCategoryAnalytics";
 
+export type TSelectedCategoryFilter = {
+  id: string;
+  label: string;
+  type: "income" | "expense";
+  color: string;
+};
+
 type CategoryAnalyticsProps = {
   type: "income" | "expense";
   title: string;
+  selectedCategory?: TSelectedCategoryFilter | null;
+  onSelectCategory?: (category: TSelectedCategoryFilter | null) => void;
 };
 
 export const CategoryAnalytics: React.FC<CategoryAnalyticsProps> = ({
   type,
   title,
+  selectedCategory,
+  onSelectCategory,
 }) => {
   const {
     mockData,
@@ -79,22 +90,36 @@ export const CategoryAnalytics: React.FC<CategoryAnalyticsProps> = ({
             </div>
 
             <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 xl:grid-cols-1">
-              {filteredData.labels.map((label, index) => {
-                const value = filteredData.values[index];
+              {filteredData.categories.map((cat) => {
                 const percent = totalAmount
-                  ? ((value / totalAmount) * 100).toFixed(1)
+                  ? ((cat.value / totalAmount) * 100).toFixed(1)
                   : "0.0";
+
+                const isSelected =
+                  selectedCategory?.id === cat.id &&
+                  selectedCategory?.type === type;
 
                 return (
                   <CategoryItem
-                    key={label}
-                    label={label}
-                    value={value}
+                    key={cat.id || cat.label}
+                    label={cat.label}
+                    value={cat.value}
                     percent={percent}
-                    color={
-                      filteredData.datasets[0].backgroundColor[index] as string
-                    }
+                    color={cat.color}
                     formatCurrency={formatCurrency}
+                    isSelected={isSelected}
+                    onClick={() => {
+                      if (isSelected) {
+                        onSelectCategory?.(null);
+                      } else {
+                        onSelectCategory?.({
+                          id: cat.id,
+                          label: cat.label,
+                          type,
+                          color: cat.color,
+                        });
+                      }
+                    }}
                   />
                 );
               })}
