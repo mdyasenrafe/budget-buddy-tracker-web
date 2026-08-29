@@ -62,7 +62,7 @@ export const CategoryAnalytics: React.FC<CategoryAnalyticsProps> = ({
         <LoadingSpinner />
       ) : filteredData.labels.length > 0 ? (
         <div className="flex flex-col gap-5">
-          <div className="grid grid-cols-1 items-center gap-5 2xl:grid-cols-[1.08fr_0.92fr]">
+          <div className="grid grid-cols-1 items-start gap-5 2xl:grid-cols-[1.08fr_0.92fr]">
             <div className="relative flex items-center justify-center rounded-2xl border border-slate-100 bg-[#F8FAFC] py-[24px]">
               <div className="w-full max-w-[320px] h-[220px]">
                 <DoughnutChart
