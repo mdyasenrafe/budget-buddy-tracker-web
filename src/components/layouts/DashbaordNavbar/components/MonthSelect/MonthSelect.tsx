@@ -12,8 +12,9 @@ import {
 import { Text, Button } from "@/components/atoms";
 import { useAppDispatch, useAppSelector } from "@/redux";
 import {
-  selectDayjs as selectCurrentDayjs,
-  selectBounds,
+  selectIso,
+  selectMinIso,
+  selectMaxIso,
   setFromIso,
   step,
 } from "@/redux/features/month";
@@ -50,8 +51,11 @@ export const MonthSelect: React.FC<Props> = ({ onChangeMonth, className }) => {
   const dispatch = useAppDispatch();
 
   // Global month from store (authoritative)
-  const current = useAppSelector(selectCurrentDayjs);
-  const { minIso, maxIso } = useAppSelector(selectBounds);
+  const iso = useAppSelector(selectIso);
+  const minIso = useAppSelector(selectMinIso);
+  const maxIso = useAppSelector(selectMaxIso);
+
+  const current = useMemo(() => dayjs(`${iso}-01`).startOf("month"), [iso]);
   const min = useMemo(() => dayjs(`${minIso}-01`).startOf("month"), [minIso]);
   const max = useMemo(() => dayjs(`${maxIso}-01`).startOf("month"), [maxIso]);
 

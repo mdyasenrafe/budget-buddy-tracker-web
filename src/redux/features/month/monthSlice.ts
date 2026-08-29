@@ -70,6 +70,8 @@ export const selectMonthState = (s: RootState) => s.month;
 export const selectIso = (s: RootState) => s.month.iso;
 export const selectYear = (s: RootState) => s.month.year;
 export const selectMonthIndex = (s: RootState) => s.month.month;
+export const selectMinIso = (s: RootState) => s.month.minIso;
+export const selectMaxIso = (s: RootState) => s.month.maxIso;
 export const selectBounds = (s: RootState) => ({
   minIso: s.month.minIso,
   maxIso: s.month.maxIso,
