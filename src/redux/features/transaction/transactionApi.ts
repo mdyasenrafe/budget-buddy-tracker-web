@@ -3,6 +3,7 @@ import { TQueryParams, TResponse } from "../types";
 import {
   TTransaction,
   TTransactionCreatePayload,
+  TTransactionUpdatePayload,
   TWeeklyTransactionsParams,
 } from ".";
 
@@ -29,14 +30,25 @@ export const transactionService = baseApi.injectEndpoints({
         method: "POST",
         body: payload,
       }),
-      invalidatesTags: ["Transaction"],
+      invalidatesTags: ["Transaction", "Budget", "Card", "CardOverview"],
+    }),
+    updateTransaction: builder.mutation<
+      TResponse<TTransaction>,
+      { id: string; payload: TTransactionUpdatePayload }
+    >({
+      query: ({ id, payload }) => ({
+        url: `/transaction/${id}`,
+        method: "PATCH",
+        body: payload,
+      }),
+      invalidatesTags: ["Transaction", "Budget", "Card", "CardOverview"],
     }),
     deleteTransaction: builder.mutation<TResponse<TTransaction>, string>({
       query: (transactionId) => ({
         url: `/transaction/${transactionId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Transaction"],
+      invalidatesTags: ["Transaction", "Budget", "Card", "CardOverview"],
     }),
   }),
 });
@@ -44,5 +56,6 @@ export const transactionService = baseApi.injectEndpoints({
 export const {
   useGetTransactionsQuery,
   useCreateTransactionMutation,
+  useUpdateTransactionMutation,
   useDeleteTransactionMutation,
 } = transactionService;

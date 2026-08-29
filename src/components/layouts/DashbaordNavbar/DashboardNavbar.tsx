@@ -13,7 +13,7 @@ export const DashboardNavbar = () => {
         <div className="flex items-center justify-between">
           <HeaderContent />
           <div className="flex items-center justify-end gap-3">
-            {/* <MonthSelect /> */}
+            <MonthSelect />
             <ThemeToggle />
             <ProfileDropdown />
           </div>

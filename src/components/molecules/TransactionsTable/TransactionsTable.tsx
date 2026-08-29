@@ -9,8 +9,8 @@ import { TCard } from "@/redux/features/cardOverview";
 import { TResponse } from "@/redux/features/types";
 import { TransactionItem } from "..";
 import { useModal } from "@/hooks";
-import { TransactionViewModal, DeleteModal } from "../modals";
-import { AiOutlineEye, AiOutlineDelete } from "react-icons/ai";
+import { TransactionViewModal, TransactionEditModal, DeleteModal } from "../modals";
+import { AiOutlineEye, AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { TransactionDeleteModalWrapper } from "./components";
 import { LoadingSpinner } from "@/components/atoms/LoadingSpinner";
 
@@ -33,6 +33,12 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({
     openModal: openViewModal,
     isModalOpen: isViewModalOpen,
     closeModal: closeViewModal,
+  } = useModal();
+
+  const {
+    openModal: openEditModal,
+    isModalOpen: isEditModalOpen,
+    closeModal: closeEditModal,
   } = useModal();
 
   const openDeleteModal = useCallback((transaction: TTransaction) => {
@@ -101,6 +107,16 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({
             </button>
             <button
               className="action-icon"
+              title="Edit"
+              onClick={() => {
+                setSelectedTransaction(record);
+                openEditModal();
+              }}
+            >
+              <AiOutlineEdit fontSize={20} color="#52c41a" />
+            </button>
+            <button
+              className="action-icon"
               title="Delete"
               onClick={() => openDeleteModal(record)}
             >
@@ -110,7 +126,7 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({
         ),
       },
     ],
-    [openViewModal, openDeleteModal],
+    [openViewModal, openEditModal, openDeleteModal],
   );
 
   const tableData = useMemo(
@@ -170,6 +186,15 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({
           transaction={selectedTransaction}
           isModalOpen={isViewModalOpen}
           closeModal={closeViewModal}
+        />
+      )}
+
+      {selectedTransaction && isEditModalOpen && (
+        <TransactionEditModal
+          key={selectedTransaction._id}
+          transaction={selectedTransaction}
+          isModalOpen={isEditModalOpen}
+          closeModal={closeEditModal}
         />
       )}
 

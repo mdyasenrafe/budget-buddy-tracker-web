@@ -15,3 +15,26 @@ export const addTransactionSchema = z.object({
 });
 
 export type TAddTransactionFormValues = z.infer<typeof addTransactionSchema>;
+
+export const updateTransactionSchema = z.object({
+  title: z
+    .string()
+    .min(1, "Title is required")
+    .max(100, "Title cannot exceed 100 characters"),
+  type: z.enum(["income", "expense"]).optional(),
+  category: z.string().min(1, "Category is required"),
+  amount: z.any().optional(),
+  budget: z.string().optional().nullable(),
+  card: z.string().optional().nullable(),
+  date: z.any(),
+  description: z
+    .string()
+    .max(500, "Description cannot exceed 500 characters")
+    .optional()
+    .nullable(),
+  photo: z.any().optional().nullable(),
+});
+
+export type TUpdateTransactionFormValues = z.infer<
+  typeof updateTransactionSchema
+>;

@@ -37,6 +37,17 @@ export type TTransactionCreatePayload = {
   attachment?: string;
 };
 
+export type TTransactionUpdatePayload = {
+  title?: string;
+  description?: string;
+  type?: TTransactionTypeValue;
+  date?: Date | string;
+  budget?: string;
+  category?: string;
+  card?: string;
+  attachment?: string;
+};
+
 export type TWeeklyTransactionsParams = {
   id: string;
   year: number;
