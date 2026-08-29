@@ -89,40 +89,51 @@ export const CategoryAnalytics: React.FC<CategoryAnalyticsProps> = ({
               </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 xl:grid-cols-1">
-              {filteredData.categories.map((cat) => {
-                const percent = totalAmount
-                  ? ((cat.value / totalAmount) * 100).toFixed(1)
-                  : "0.0";
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center justify-between px-1">
+                <Text variant="p5" className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                  Categories ({filteredData.categories.length})
+                </Text>
+                <span className="text-[11px] text-primaryBase font-medium tracking-wide">
+                  Tap to inspect
+                </span>
+              </div>
 
-                const isSelected =
-                  selectedCategory?.id === cat.id &&
-                  selectedCategory?.type === type;
+              <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 xl:grid-cols-1">
+                {filteredData.categories.map((cat) => {
+                  const percent = totalAmount
+                    ? ((cat.value / totalAmount) * 100).toFixed(1)
+                    : "0.0";
 
-                return (
-                  <CategoryItem
-                    key={cat.id || cat.label}
-                    label={cat.label}
-                    value={cat.value}
-                    percent={percent}
-                    color={cat.color}
-                    formatCurrency={formatCurrency}
-                    isSelected={isSelected}
-                    onClick={() => {
-                      if (isSelected) {
-                        onSelectCategory?.(null);
-                      } else {
-                        onSelectCategory?.({
-                          id: cat.id,
-                          label: cat.label,
-                          type,
-                          color: cat.color,
-                        });
-                      }
-                    }}
-                  />
-                );
-              })}
+                  const isSelected =
+                    selectedCategory?.id === cat.id &&
+                    selectedCategory?.type === type;
+
+                  return (
+                    <CategoryItem
+                      key={cat.id || cat.label}
+                      label={cat.label}
+                      value={cat.value}
+                      percent={percent}
+                      color={cat.color}
+                      formatCurrency={formatCurrency}
+                      isSelected={isSelected}
+                      onClick={() => {
+                        if (isSelected) {
+                          onSelectCategory?.(null);
+                        } else {
+                          onSelectCategory?.({
+                            id: cat.id,
+                            label: cat.label,
+                            type,
+                            color: cat.color,
+                          });
+                        }
+                      }}
+                    />
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
