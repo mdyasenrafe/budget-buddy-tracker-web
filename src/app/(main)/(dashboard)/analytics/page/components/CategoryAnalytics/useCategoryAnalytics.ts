@@ -42,19 +42,33 @@ export const useCategoryAnalytics = (type: CategoryType) => {
     const labels: string[] = [];
     const data: number[] = [];
     const categoryColors: string[] = [];
+    const categoriesList: {
+      id: string;
+      label: string;
+      value: number;
+      color: string;
+    }[] = [];
 
     const rawCategories = apiData?.data?.categories || [];
     const categories = sortCategoriesWithOtherLast(rawCategories);
     categories.forEach((cat, index) => {
+      const color = CHART_COLORS[index % CHART_COLORS.length];
       labels.push(cat.label);
       data.push(cat.totalAmount);
-      categoryColors.push(CHART_COLORS[index % CHART_COLORS.length]);
+      categoryColors.push(color);
+      categoriesList.push({
+        id: cat._id,
+        label: cat.label,
+        value: cat.totalAmount,
+        color,
+      });
     });
 
     return {
       labels,
       data,
       colors: categoryColors,
+      categories: categoriesList,
     };
   }, [apiData]);
 
@@ -75,10 +89,12 @@ export const useCategoryAnalytics = (type: CategoryType) => {
     const labels = indices.map((i) => mockData.labels[i]);
     const values = indices.map((i) => mockData.data[i]);
     const backgroundColor = indices.map((i) => mockData.colors[i]);
+    const categories = indices.map((i) => mockData.categories[i]);
 
     return {
       labels,
       values,
+      categories,
       datasets: [
         {
           label: type === "expense" ? "Expenses" : "Income",
