@@ -1,6 +1,7 @@
 import React from "react";
 import { Text } from "@/components/atoms";
 import { FiCheck, FiChevronRight } from "react-icons/fi";
+import { Category3DBadge } from "@/utils/categoryIcons";
 
 type CategoryItemProps = {
   label: string;
@@ -25,24 +26,15 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({
     <button
       type="button"
       onClick={onClick}
-      className={`group w-full text-left relative flex items-center justify-between rounded-2xl border px-4 py-3 transition-all duration-200 cursor-pointer select-none outline-none focus-visible:ring-2 focus-visible:ring-primaryBase/40 ${
+      className={`group w-full text-left relative flex items-center justify-between rounded-2xl border px-3.5 py-2.5 sm:px-4 sm:py-3 transition-all duration-200 cursor-pointer select-none outline-none font-poppins focus-visible:ring-2 focus-visible:ring-primaryBase/40 ${
         isSelected
           ? "border-primaryBase bg-primaryBase/[0.06] shadow-md ring-2 ring-primaryBase/25 -translate-y-0.5"
           : "border-slate-200/90 bg-white hover:border-primaryBase/60 hover:bg-slate-50/80 hover:shadow-md hover:-translate-y-0.5 active:scale-[0.98] active:shadow-inner shadow-[0_1px_3px_rgba(15,23,42,0.05)]"
       }`}
     >
       <div className="flex min-w-0 items-center gap-3">
-        {/* Category Color Pill */}
-        <div className="relative flex items-center justify-center">
-          <div
-            className={`h-4 w-4 shrink-0 rounded-full transition-transform duration-200 group-hover:scale-110 shadow-sm ${
-              isSelected ? "ring-2 ring-white ring-offset-1" : ""
-            }`}
-            style={{
-              backgroundColor: color,
-            }}
-          />
-        </div>
+        {/* 3D Category Badge */}
+        <Category3DBadge categoryName={label} size="sm" />
 
         {/* Category Label & Percentage */}
         <div className="min-w-0">
@@ -58,14 +50,20 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({
               {label}
             </Text>
             {isSelected && (
-              <span className="flex items-center justify-center w-4 h-4 rounded-full bg-primaryBase text-white text-[10px] shadow-sm">
+              <span className="flex items-center justify-center w-4 h-4 rounded-full bg-primaryBase text-white text-[10px] shadow-sm shrink-0">
                 <FiCheck className="stroke-[3]" />
               </span>
             )}
           </div>
-          <Text variant="p5" className="text-slate-400 text-xs font-medium">
-            {percent}% of total
-          </Text>
+          <div className="flex items-center gap-1.5">
+            <span
+              className="w-1.5 h-1.5 rounded-full shrink-0"
+              style={{ backgroundColor: color }}
+            />
+            <Text variant="p5" className="text-slate-400 text-xs font-medium">
+              {percent}% of total
+            </Text>
+          </div>
         </div>
       </div>
 

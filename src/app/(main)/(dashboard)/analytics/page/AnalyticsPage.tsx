@@ -58,7 +58,7 @@ export const AnalyticsPage = () => {
   }, [selectedCategory, monthStart, monthEnd]);
 
   return (
-    <div className="pb-24 pt-8 lg:pb-10">
+    <div className="pb-24 pt-8 lg:pb-10 font-poppins">
       <SectionHeader
         title="Financial Analytics"
         description="Track where your money comes from and where it goes with category breakdowns, monthly totals, and transaction history."
