@@ -2,7 +2,10 @@
 
 import { Text } from "@/components/atoms";
 import { TransactionDeleteModalWrapper } from "@/components/molecules/TransactionsTable/components";
-import { TransactionViewModal } from "@/components/molecules/modals";
+import {
+  TransactionViewModal,
+  TransactionEditModal,
+} from "@/components/molecules/modals";
 import { useModal } from "@/hooks";
 import { TTransaction } from "@/redux/features/transaction";
 import { Dropdown, MenuProps } from "antd";
@@ -15,6 +18,11 @@ type Props = {
 
 export const TransactionItemDropdown: React.FC<Props> = ({ transaction }) => {
   const { openModal, isModalOpen, closeModal } = useModal();
+  const {
+    openModal: openEditModal,
+    isModalOpen: isEditModalOpen,
+    closeModal: closeEditModal,
+  } = useModal();
   const {
     openModal: openDeleteModal,
     isModalOpen: isDeleteModalVisible,
@@ -32,6 +40,14 @@ export const TransactionItemDropdown: React.FC<Props> = ({ transaction }) => {
     },
     {
       key: "2",
+      label: (
+        <Text className="!cursor-pointer" onClick={openEditModal}>
+          Edit
+        </Text>
+      ),
+    },
+    {
+      key: "3",
       label: (
         <Text className="!cursor-pointer" onClick={openDeleteModal}>
           Delete
@@ -52,6 +68,14 @@ export const TransactionItemDropdown: React.FC<Props> = ({ transaction }) => {
         <TransactionViewModal
           isModalOpen={isModalOpen}
           closeModal={closeModal}
+          transaction={transaction}
+        />
+      )}
+      {isEditModalOpen && (
+        <TransactionEditModal
+          key={transaction._id}
+          isModalOpen={isEditModalOpen}
+          closeModal={closeEditModal}
           transaction={transaction}
         />
       )}

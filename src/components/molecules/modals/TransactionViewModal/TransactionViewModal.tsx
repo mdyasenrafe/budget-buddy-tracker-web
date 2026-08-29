@@ -44,68 +44,72 @@ export const TransactionViewModal: React.FC<TransactionViewModalProps> = ({
       title="Transaction Details"
       centered
     >
-      <div className="flex flex-col items-center space-y-4">
-        <div
-          className={`w-14 h-14 ${bgColor} rounded-full flex items-center justify-center`}
-        >
-          {React.createElement(icon, { color: iconColor, size: 32 })}
-        </div>
-
-        <div className="text-center">
-          <Text variant="h4" className="font-semibold text-gray-900">
-            {transaction.title}
-          </Text>
-          <Text variant="p4" className="text-gray-500">
-            {transaction.description || "No description available"}
-          </Text>
-        </div>
-
-        <div className="w-full bg-gray-50 border rounded-lg p-4 shadow">
-          <DetailRow
-            label="Amount"
-            value={`${isExpense ? "-" : "+"}৳${transaction.amount}`}
-            valueClassName={isExpense ? "text-red-500" : "text-green-500"}
-          />
-          <DetailRow
-            label="Category"
-            value={transaction.category?.label || "N/A"}
-          />
-          <DetailRow
-            label="Date"
-            value={new Date(transaction.date).toLocaleDateString()}
-          />
-
-          {/* Budget and Card Info */}
-          {transaction.budget && (
-            <DetailRow label="Budget" value={transaction.budget.name} />
-          )}
-          {transaction.card && (
-            <DetailRow label="Card" value={transaction.card.bankName} />
-          )}
-        </div>
-
-        {transaction.attachment && (
-          <div className="w-full mt-4">
-            <Text variant="h4" className=" mb-2">
-              Attachment
-            </Text>
-            <div className="w-full flex justify-center">
-              <img
-                src={transaction.attachment}
-                alt="Transaction Attachment"
-                className="w-full rounded-lg border shadow-sm h-[250px] object-contain"
-              />
-            </div>
+      <div>
+        <div className="flex flex-col items-center space-y-4 max-h-[58vh] overflow-y-auto pr-1">
+          <div
+            className={`w-14 h-14 ${bgColor} rounded-full flex items-center justify-center`}
+          >
+            {React.createElement(icon, { color: iconColor, size: 32 })}
           </div>
-        )}
 
-        <Button
-          customColor="primary"
-          className="!h-[40px] !rounded-full w-full"
-          onClick={closeModal}
-        >
-          <Text color="white">Close</Text>
-        </Button>
+          <div className="text-center">
+            <Text variant="h4" className="font-semibold text-gray-900">
+              {transaction.title}
+            </Text>
+            <Text variant="p4" className="text-gray-500">
+              {transaction.description || "No description available"}
+            </Text>
+          </div>
+
+          <div className="w-full bg-gray-50 border rounded-lg p-4 shadow">
+            <DetailRow
+              label="Amount"
+              value={`${isExpense ? "-" : "+"}৳${transaction.amount}`}
+              valueClassName={isExpense ? "text-red-500" : "text-green-500"}
+            />
+            <DetailRow
+              label="Category"
+              value={transaction.category?.label || "N/A"}
+            />
+            <DetailRow
+              label="Date"
+              value={new Date(transaction.date).toLocaleDateString()}
+            />
+
+            {/* Budget and Card Info */}
+            {transaction.budget && (
+              <DetailRow label="Budget" value={transaction.budget.name} />
+            )}
+            {transaction.card && (
+              <DetailRow label="Card" value={transaction.card.bankName} />
+            )}
+          </div>
+
+          {transaction.attachment && (
+            <div className="w-full mt-4">
+              <Text variant="h4" className=" mb-2">
+                Attachment
+              </Text>
+              <div className="w-full flex justify-center">
+                <img
+                  src={transaction.attachment}
+                  alt="Transaction Attachment"
+                  className="w-full rounded-lg border shadow-sm h-[250px] object-contain"
+                />
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="pt-4 mt-2 border-t">
+          <Button
+            customColor="primary"
+            className="!h-[40px] !rounded-full w-full"
+            onClick={closeModal}
+          >
+            <Text color="white">Close</Text>
+          </Button>
+        </div>
       </div>
     </Modal>
   );
